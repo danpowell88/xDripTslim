@@ -111,8 +111,8 @@ class TandemPumpController private constructor(
         // fetching them all over an unstable BLE link never completes. Reconnects then extend forward
         // via the persisted cursor.
         private const val MAX_INITIAL_LOGS = 2000L
-        private const val WATCHDOG_MS = 6000L
-        private const val MAX_STALLS = 8
+        private const val WATCHDOG_MS = 2500L
+        private const val MAX_STALLS = 12
         private const val CURSOR_KEY = "tandem_last_seq"
         private fun uuidFor(kind: String, seq: Long): String =
             java.util.UUID.nameUUIDFromBytes("tandem-$kind-$seq".toByteArray()).toString()
@@ -140,6 +140,7 @@ class TandemPumpController private constructor(
     private var chunkEndExcl = 0L
     private var stalls = 0
     private var lastSeenAtWatchdog = -1
+    @Volatile private var maxSeqSeen = 0L
     @Volatile private var historyStarted = false
     @Volatile private var historyComplete = false
 
@@ -354,6 +355,7 @@ class TandemPumpController private constructor(
             else -> maxOf(resp.firstSequenceNum, histLast - MAX_INITIAL_LOGS + 1) // first sync: recent only
         }
         nextSeq = startSeq
+        maxSeqSeen = startSeq - 1
         val sessionTotal = if (histLast >= startSeq) histLast - startSeq + 1 else 0
         meta.historyTotal = sessionTotal; emitMeta()
         log("HISTORY: seq $startSeq..$histLast ($sessionTotal new, cursor=$cursor)")
@@ -374,12 +376,15 @@ class TandemPumpController private constructor(
     private fun onHistoryStream(resp: HistoryLogStreamResponse) {
         for (hl in (resp.historyLogs ?: emptyList())) {
             val seq = hl.sequenceNum
+            if (seq > maxSeqSeen) maxSeqSeen = seq
             if (!seenSeq.add(seq)) continue
             ingest(hl)
         }
         meta.historyReceived = seenSeq.size; emitMeta()
-        val have = (chunkStart until chunkEndExcl).count { seenSeq.contains(it) }
-        if (have >= (chunkEndExcl - chunkStart)) requestNextChunk()
+        // The pump streams logs in ascending order; the moment we've seen the chunk's last sequence,
+        // request the next chunk immediately rather than waiting on the stall watchdog. This keeps
+        // the pull continuous instead of crawling one chunk per watchdog tick.
+        if (!historyComplete && maxSeqSeen >= chunkEndExcl - 1) requestNextChunk()
     }
 
     private fun ingest(hl: HistoryLog) {
