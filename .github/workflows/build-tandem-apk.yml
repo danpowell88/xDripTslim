@@ -7,7 +7,7 @@ name: Build Tandem APK
 
 on:
   push:
-    branches: [ tandem-pump ]
+    branches: [ tandem-pump, tandem-tslim ]
   workflow_dispatch:
 
 jobs:
