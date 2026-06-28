@@ -7216,3 +7216,1266 @@
 06-28 22:57:09.317 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
 06-28 22:57:09.317 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
 06-28 22:57:09.317 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:57:12.364 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:15.311 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:14:310 - 22:57:15:311, duration: 1000, le_adv_count: 1, total_le_adv_count: 65, total_event_count: 1
+06-28 22:57:15.475 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:15.684 I/.gms.persistent(17169): Explicit concurrent mark compact GC freed 21MB AllocSpace bytes, 27(1296KB) LOS objects, 50% free, 24MB/48MB, paused 920us,6.140ms total 351.937ms
+06-28 22:57:15.692 V/BluetoothSocket(17169): close() Local Socket: Already closed
+06-28 22:57:15.693 V/BluetoothSocket(17169): close() Local Socket: Already closed
+06-28 22:57:17.628 D/ImpulseConnection(16823): timeout didn't happen: com.google.android.apps.turbo
+06-28 22:57:17.640 D/TemperatureStateSource(16823): sequence=326 actualDelay=10001
+06-28 22:57:17.641 D/TemperatureStateSource(16823): Reading temperature: sequence=327
+06-28 22:57:17.647 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.4754 raw data: VIRTUAL-GNSS-BATT:28938 VIRTUAL-NEUTRAL-QI:26025.2 VIRTUAL-QI-DISP:33475.4 VIRTUAL-SKIN:33475.4 VIRTUAL-USB2-BATT:28482.8 battery:27400 disp_therm:31639 gnss_tcxo_therm:27476 neutral_therm:28010 qi_therm:30548 usb_pwr_therm2:29056 
+06-28 22:57:17.649 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=327 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.475353]
+06-28 22:57:17.649 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:17.649 D/TemperatureStateSource(16823): sequence=327 waitTime=10000
+06-28 22:57:17.649 D/BusinessScope(16823): Start running the #662 block
+06-28 22:57:17.653 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.4754 raw data: VIRTUAL-SKIN:33475.4 
+06-28 22:57:17.654 I/TemperatureStateSource(16823): temperature was set
+06-28 22:57:17.656 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:17.656 D/ImpulseStateSource(16823): Notify clients: 330
+06-28 22:57:17.656 D/BusinessScope(16823): Finish running the #662 block
+06-28 22:57:17.657 D/BusinessScope(16823): Start running the #663 block
+06-28 22:57:17.658 D/BusinessScope(16823): Finish running the #663 block
+06-28 22:57:17.674 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 22:57:18.556 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:19.320 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:57:19.320 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:57:19.320 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:57:19.320 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:57:19.736 I/NearbyPresence(17169): (REDACTED) [NP_EVENT] %s
+06-28 22:57:20.434 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:19:433 - 22:57:20:434, duration: 1000, le_adv_count: 1, total_le_adv_count: 66, total_event_count: 1
+06-28 22:57:20.897 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 22:57:20.900 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too fast
+06-28 22:57:20.902 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 22:57:20.904 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 22:57:20.905 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 22:57:20.916 D/ActivityManager(16260): sync unfroze 26034 io.homeassistant.companion.android for 3
+06-28 22:57:20.918 D/SensorReceiverBase(26034): Received intent: android.intent.action.TIME_TICK
+06-28 22:57:20.922 D/LocationSensorManager(26034): Received location update.
+06-28 22:57:20.925 D/ForegroundServiceLauncher(26034): Check if service HighAccuracyLocationService is running. Service running = false
+06-28 22:57:20.925 D/LocationSensorManager(26034): Last Location: 
+06-28 22:57:20.925 D/LocationSensorManager(26034): Coords:(-26.6717089, 153.0499932)
+06-28 22:57:20.925 D/LocationSensorManager(26034): Accuracy: 100.0
+06-28 22:57:20.925 D/LocationSensorManager(26034): Bearing: 0.0
+06-28 22:57:20.926 D/LocationSensorManager(26034): Begin evaluating if location update should be skipped
+06-28 22:57:20.926 D/LocationSensorManager(26034): Received location that is 37 milliseconds old, 1782651440889 compared to 1782651440926 with source fused
+06-28 22:57:20.926 D/LocationSensorManager(26034): Duplicate location received, not sending to HA
+06-28 22:57:20.936 D/BoundBrokerSvc( 1571): onRebind: Intent { act=com.google.android.gms.onboardingconsent.api.ConsentManagerApiService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+06-28 22:57:20.938 I/ConsentManagerApiServic( 1571): (REDACTED) ConsentManagerApiService onGetService success %s
+06-28 22:57:20.941 I/TFLite-in-PlayServices(17169): Created interpreter.
+06-28 22:57:20.944 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: tryReconnectProxy called but proxy is not connected, try reconnect and wait, profile=%s
+06-28 22:57:20.945 D/BluetoothAdapter(17169): A2DP connected
+06-28 22:57:20.945 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: onServiceConnected with profile %d.
+06-28 22:57:20.945 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: tryReconnectProxy reconnect profile %d successful. Latency=%dms
+06-28 22:57:20.946 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: tryReconnectProxy called but proxy is not connected, try reconnect and wait, profile=%s
+06-28 22:57:20.946 D/BluetoothAdapter(17169): HEADSET connected
+06-28 22:57:20.946 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: onServiceConnected with profile %d.
+06-28 22:57:20.947 I/NearbyShared(17169): (REDACTED) BTConnStateMgr: tryReconnectProxy reconnect profile %d successful. Latency=%dms
+06-28 22:57:20.950 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:57:20.950 I/TFLite-in-PlayServices(17169): Created interpreter.
+06-28 22:57:20.954 I/SemanticLocation(17169): (REDACTED) [Inferrer] %s%s
+06-28 22:57:21.230 D/SensorReceiverBase(26034): Nothing to update for server 6 (Home)
+06-28 22:57:21.230 I/SensorReceiverBase(26034): Sensor updates and sync completed
+06-28 22:57:21.657 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:21.925 D/BoundBrokerSvc(17169): onRebind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+06-28 22:57:24.771 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:24.884 D/IwlanDataService(17243): onCapabilitiesChanged: 102 [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=20645Kbps LinkDnBandwidth>=46613Kbps TransportInfo: <SSID: "pyrolan", BSSID: 4a:d9:e7:f8:c7:2b, MAC: 5e:50:ce:f7:1e:2c, IP: /192.168.1.210, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -60, Link speed: 300Mbps, Tx Link speed: 300Mbps, Max Supported Tx Link speed: 400Mbps, Rx Link speed: 300Mbps, Max Supported Rx Link speed: 400Mbps, Frequency: 5180MHz, Net ID: 103, Metered hint: false, score: 51, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"pyrolan"wpa3-saeMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -60 AdminUids: [10161] SSID: "pyrolan" UnderlyingNetworks: Null]
+06-28 22:57:24.884 D/IwlanDataService(17243): Network 102 connected using transport WIFI
+06-28 22:57:24.886 D/IwlanNetworkService(17243): onCapabilitiesChanged: 102
+06-28 22:57:24.892 I/WifiSignalInfo(18085): onCapabilitiesChanged: rssi:-60
+06-28 22:57:24.893 D/DeviceStateHelper(18085): Wifi freq: 5180
+06-28 22:57:24.893 I/BugleRcsEngine(17604): handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[c59b510c-a1f8]>Handler" thread_id=63 ]
+06-28 22:57:24.895 I/BugleRcsEngine(17604): Connected state: [1], networkType: [WIFI] [CONTEXT thread_id=58 ]
+06-28 22:57:24.895 I/BugleRcsEngine(17604): Cannot use CS.apk as it's battery optimized [CONTEXT thread_id=63 ]
+06-28 22:57:24.896 E/PhoneInterfaceManager(16971): getCarrierPrivilegeStatusForUid: Invalid subId
+06-28 22:57:24.899 I/MagicTether(17169): (REDACTED) [ActiveNetworkTracker] setActiveNetwork: %s
+06-28 22:57:24.899 I/MagicTether(17169): (REDACTED) [TetherService] onActiveNetworkChanged: network=%s isLost=%s
+06-28 22:57:24.900 I/MagicTether(17169): [WifiConnectionHandler] Ignoring getWifiConfigurationByNetworkId when checking connected state [CONTEXT service_id=276 ]
+06-28 22:57:24.900 I/MagicTether(17169): [WifiConnectionHandler] No networkId set, can't be connected. [CONTEXT service_id=276 ]
+06-28 22:57:24.900 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:57:24.901 I/NullBinder(17169): NullBinder for android.net.action.RECOMMEND_NETWORKS triggering remote TransactionTooLargeException due to Service without Chimera impl, calling uid: 1000, calling pid: 0
+06-28 22:57:24.901 W/libbinder.Binder(17169): Large reply transaction of 1056768 bytes, interface descriptor , code 1, flags 17
+06-28 22:57:24.903 I/MagicTether(17169): (REDACTED) [TetherService] TRANSPORT_CELLULAR [%s], TRANSPORT_ETHERNET [%s], TRANSPORT_WIFI [%s]
+06-28 22:57:24.904 I/MagicTether(17169): (REDACTED) [TetherService] setRoles hasActiveNetworkConnection=%s canActiveNetworkBeTethered=%s isConnectedToInstantTether=%s isWifiEnabled=%s isHosting=%s
+06-28 22:57:24.905 D/CHRE    (  957): @ 8889.669: Parsed nanoapp message from host: app ID 0x476f6f676c00100b endpoint 0x3 msgType 112 payload size 14
+06-28 22:57:24.906 I/CHRE    (  957): @ 8889.669: [NanoMinion] received MSG Type 0x70, Version 1, 10 bytes
+06-28 22:57:24.906 I/CHRE    (  957): @ 8889.670: [AR] context-signal: has_bt=0, bt=0, has_wifi=1, wifi=1
+06-28 22:57:24.911 I/MagicTether(17169): (REDACTED) [LaunchUtils] Instant Wifi for status account: name: %s | type: %s | isLaunched: %s
+06-28 22:57:24.911 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 22:57:24.911 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantWifiEnabled=%s
+06-28 22:57:24.912 I/MagicTether(17169): (REDACTED) [TetherService] startNearbyClientRole: start: %s isInstantHotspotEnabled: %s isInstantWifiEnabled: %s
+06-28 22:57:24.912 I/MagicTether(17169): [TetherService] Stopping Nearby client role [CONTEXT service_id=276 ]
+06-28 22:57:24.912 I/MagicTether(17169): [ClientTetherRole] Client role already stopped [CONTEXT service_id=276 ]
+06-28 22:57:24.914 I/MagicTether(17169): (REDACTED) [LaunchUtils] Instant Wifi for status account: name: %s | type: %s | isLaunched: %s
+06-28 22:57:24.914 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 22:57:24.914 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantWifiEnabled=%s
+06-28 22:57:24.914 I/MagicTether(17169): (REDACTED) [TetherService] startNearbyHostRole: start: %s isInstantHotspotEnabled: %s isInstantWifiEnabled: %s
+06-28 22:57:24.914 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 22:57:24.915 I/MagicTether(17169): [HostTetherRole] Nearby host role already started [CONTEXT service_id=276 ]
+06-28 22:57:25.104 W/PackageManager(16260): Not removing package com.google.android.trichromelibrary hosting lib com.google.android.trichromelibrary version 768011933 used by [VersionedPackage[com.android.chrome/768011933]] for user 0
+06-28 22:57:25.397 I/NearbySharing(17169): Network state changed: NetworkState(isRestricted=false, isOnline=true, isCongested=false, isMetered=false, isWifiConnected=true)
+06-28 22:57:27.637 D/ImpulseConnection(16823): timeout didn't happen: com.google.android.apps.turbo
+06-28 22:57:27.651 D/TemperatureStateSource(16823): sequence=327 actualDelay=10001
+06-28 22:57:27.651 D/TemperatureStateSource(16823): Reading temperature: sequence=328
+06-28 22:57:27.656 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.4117 raw data: VIRTUAL-GNSS-BATT:30062 VIRTUAL-NEUTRAL-QI:25980.8 VIRTUAL-QI-DISP:33411.7 VIRTUAL-SKIN:33411.7 VIRTUAL-USB2-BATT:28483.9 battery:27400 disp_therm:31572 gnss_tcxo_therm:29724 neutral_therm:27966 qi_therm:30503 usb_pwr_therm2:29079 
+06-28 22:57:27.656 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=328 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.411655]
+06-28 22:57:27.657 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:27.657 D/BusinessScope(16823): Start running the #664 block
+06-28 22:57:27.658 D/TemperatureStateSource(16823): sequence=328 waitTime=10000
+06-28 22:57:27.658 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:27.658 D/ImpulseStateSource(16823): Notify clients: 331
+06-28 22:57:27.658 D/BusinessScope(16823): Finish running the #664 block
+06-28 22:57:27.659 D/BusinessScope(16823): Start running the #665 block
+06-28 22:57:27.659 D/BusinessScope(16823): Finish running the #665 block
+06-28 22:57:27.886 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:28.360 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:27:359 - 22:57:28:360, duration: 1000, le_adv_count: 1, total_le_adv_count: 67, total_event_count: 1
+06-28 22:57:29.322 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:57:29.322 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
+06-28 22:57:29.322 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
+06-28 22:57:29.323 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:57:30.993 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:32.972 V/DisplayPowerController[0](16260): Brightness [0.05] reason changing to: 'automatic [ dim ]', previous reason: 'automatic'.
+06-28 22:57:32.972 I/DisplayPowerController[0](16260): BrightnessEvent: brt=0.05(49.0%), nits=42.186787, lux=128.31354, reason=automatic [ dim ], strat=AutomaticBrightnessStrategy, state=ON, stateReason=DEFAULT_POLICY, policy=DIM, flags=, initBrt=0.102345124, rcmdBrt=0.102345124, preBrt=0.0625572, preLux=21.577957, lastReadLux=191.45682, wasShortTermModelActive=false, autoBrightness=true (default), unclampedBrt=0.102345124, hbmMax=0.62, hbmMode=off, thrmMax=1.0, rbcStrength=50, powerFactor=1.0, physDisp=Built-in Screen(local:4619827677550801152), logicalId=0, slowChange=false, rampSpeed=0.7047244
+06-28 22:57:32.978 I/hwc-display(  584): path=sysfs, id=0, level=336, nits=0.000000, brightness=0.100785, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:32.984 I/hwc-display(  584): path=sysfs, id=0, level=328, nits=0.000000, brightness=0.098295, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:32.989 I/hwc-display(  584): path=sysfs, id=0, level=322, nits=0.000000, brightness=0.096630, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:32.997 I/hwc-display(  584): path=sysfs, id=0, level=315, nits=0.000000, brightness=0.094275, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.007 I/hwc-display(  584): path=sysfs, id=0, level=307, nits=0.000000, brightness=0.091995, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.016 I/hwc-display(  584): path=sysfs, id=0, level=300, nits=0.000000, brightness=0.089790, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.024 I/hwc-display(  584): path=sysfs, id=0, level=293, nits=0.000000, brightness=0.087655, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.033 I/hwc-display(  584): path=sysfs, id=0, level=286, nits=0.000000, brightness=0.085590, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.041 I/hwc-display(  584): path=sysfs, id=0, level=279, nits=0.000000, brightness=0.083591, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.049 I/hwc-display(  584): path=sysfs, id=0, level=273, nits=0.000000, brightness=0.081642, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.056 I/hwc-display(  584): path=sysfs, id=0, level=267, nits=0.000000, brightness=0.079716, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.058 D/AOC     ( 1245): A3:MSG: tmd3719_device.cc, 4525: USF: TMD3719: dbv:267 leakage:0.000000 refresh_rate:120 status:1 op_hz:120 [1]
+06-28 22:57:33.065 I/hwc-display(  584): path=sysfs, id=0, level=260, nits=0.000000, brightness=0.077813, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.074 I/hwc-display(  584): path=sysfs, id=0, level=254, nits=0.000000, brightness=0.075933, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.080 I/hwc-display(  584): path=sysfs, id=0, level=248, nits=0.000000, brightness=0.074075, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.088 I/hwc-display(  584): path=sysfs, id=0, level=242, nits=0.000000, brightness=0.072241, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.100 I/hwc-display(  584): path=sysfs, id=0, level=236, nits=0.000000, brightness=0.070430, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.107 I/hwc-display(  584): path=sysfs, id=0, level=230, nits=0.000000, brightness=0.068642, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.114 I/hwc-display(  584): path=sysfs, id=0, level=224, nits=0.000000, brightness=0.066877, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.123 I/hwc-display(  584): path=sysfs, id=0, level=219, nits=0.000000, brightness=0.065135, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.132 I/hwc-display(  584): path=sysfs, id=0, level=213, nits=0.000000, brightness=0.063416, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.140 I/hwc-display(  584): path=sysfs, id=0, level=207, nits=0.000000, brightness=0.061719, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.148 I/hwc-display(  584): path=sysfs, id=0, level=202, nits=0.000000, brightness=0.060046, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.158 I/hwc-display(  584): path=sysfs, id=0, level=196, nits=0.000000, brightness=0.058396, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.166 I/hwc-display(  584): path=sysfs, id=0, level=191, nits=0.000000, brightness=0.056769, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.173 I/hwc-display(  584): path=sysfs, id=0, level=186, nits=0.000000, brightness=0.055165, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.182 I/hwc-display(  584): path=sysfs, id=0, level=181, nits=0.000000, brightness=0.053583, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.185 D/AOC     ( 1245): A3:MSG: tmd3719_device.cc, 4525: USF: TMD3719: dbv:181 leakage:0.000000 refresh_rate:120 status:1 op_hz:120 [1]
+06-28 22:57:33.189 I/hwc-display(  584): path=sysfs, id=0, level=175, nits=0.000000, brightness=0.052025, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.196 I/hwc-display(  584): path=sysfs, id=0, level=170, nits=0.000000, brightness=0.050490, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.204 I/hwc-display(  584): path=sysfs, id=0, level=169, nits=0.000000, brightness=0.050000, DimmingOn=0, Hbm=0, LhbmOn=0, OpRate=0
+06-28 22:57:33.388 D/AOC     ( 1245): A3:MSG: tmd3719_device.cc, 562: USF: TMD3719: [ALS]sync_delay_adjustment: 1380750
+06-28 22:57:34.085 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:35.961 D/BoundBrokerSvc( 1571): onUnbind: Intent { act=com.google.android.gms.onboardingconsent.api.ConsentManagerApiService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+06-28 22:57:36.950 D/BoundBrokerSvc(17169): onUnbind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+06-28 22:57:37.195 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:37.660 D/TemperatureStateSource(16823): sequence=328 actualDelay=10002
+06-28 22:57:37.660 D/TemperatureStateSource(16823): Reading temperature: sequence=329
+06-28 22:57:37.665 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.3568 raw data: VIRTUAL-GNSS-BATT:29032.5 VIRTUAL-NEUTRAL-QI:25936.4 VIRTUAL-QI-DISP:33356.8 VIRTUAL-SKIN:33356.8 VIRTUAL-USB2-BATT:28578.9 battery:27500 disp_therm:31527 gnss_tcxo_therm:27565 neutral_therm:27966 qi_therm:30392 usb_pwr_therm2:29079 
+06-28 22:57:37.666 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=329 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.35675]
+06-28 22:57:37.667 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:37.667 D/TemperatureStateSource(16823): sequence=329 waitTime=10000
+06-28 22:57:37.667 D/BusinessScope(16823): Start running the #666 block
+06-28 22:57:37.669 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.3568 raw data: VIRTUAL-SKIN:33356.8 
+06-28 22:57:37.671 I/TemperatureStateSource(16823): temperature was set
+06-28 22:57:37.672 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:37.673 D/ImpulseStateSource(16823): Notify clients: 332
+06-28 22:57:37.673 D/BusinessScope(16823): Finish running the #666 block
+06-28 22:57:37.673 D/BusinessScope(16823): Start running the #667 block
+06-28 22:57:37.674 D/BusinessScope(16823): Finish running the #667 block
+06-28 22:57:37.694 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 22:57:39.326 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 22:57:39.326 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:57:39.328 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@75a9c7a size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 22:57:39.328 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@75a9c7a size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 22:57:39.329 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 22:57:39.333 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 22:57:40.301 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:40.894 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:40.955 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 22:57:40.961 D/InetDiagMessage(16260): Destroyed 1 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 22:57:40.962 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10274} in 16ms
+06-28 22:57:40.969 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 22:57:40.976 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 22:57:40.976 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={20274} in 14ms
+06-28 22:57:41.016 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0xfd59 Length 22 unhandled by ControllerActivityWatcher
+06-28 22:57:43.395 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:46.500 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:47.658 D/ImpulseConnection(16823): timeout didn't happen: com.google.android.apps.turbo
+06-28 22:57:47.668 D/TemperatureStateSource(16823): sequence=329 actualDelay=10002
+06-28 22:57:47.669 D/TemperatureStateSource(16823): Reading temperature: sequence=330
+06-28 22:57:47.674 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.3697 raw data: VIRTUAL-GNSS-BATT:28915.5 VIRTUAL-NEUTRAL-QI:25891.8 VIRTUAL-QI-DISP:33369.7 VIRTUAL-SKIN:33369.7 VIRTUAL-USB2-BATT:28481.7 battery:27400 disp_therm:31550 gnss_tcxo_therm:27431 neutral_therm:27921 qi_therm:30348 usb_pwr_therm2:29034 
+06-28 22:57:47.675 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=330 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.3697]
+06-28 22:57:47.675 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:47.676 D/TemperatureStateSource(16823): sequence=330 waitTime=10000
+06-28 22:57:47.676 D/BusinessScope(16823): Start running the #668 block
+06-28 22:57:47.676 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:47.676 D/ImpulseStateSource(16823): Notify clients: 333
+06-28 22:57:47.676 D/BusinessScope(16823): Finish running the #668 block
+06-28 22:57:47.677 D/BusinessScope(16823): Start running the #669 block
+06-28 22:57:47.677 D/BusinessScope(16823): Finish running the #669 block
+06-28 22:57:49.329 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 22:57:49.329 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:57:49.593 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:50.949 I/ForwardSyncCache(18298): reclaimMemory: Clearing caches
+06-28 22:57:50.952 W/Bugle   (18298): TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+06-28 22:57:50.976 D/ActivityManager(16260): freezing 26034 io.homeassistant.companion.android
+06-28 22:57:50.986 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 22:57:50.993 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 22:57:50.994 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10274} in 13ms
+06-28 22:57:51.590 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 22:57:51.598 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 22:57:51.599 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 22:57:51.600 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 22:57:52.581 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:51:580 - 22:57:52:581, duration: 1000, le_adv_count: 1, total_le_adv_count: 68, total_event_count: 1
+06-28 22:57:52.692 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:55.503 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:54:502 - 22:57:55:503, duration: 1000, le_adv_count: 1, total_le_adv_count: 69, total_event_count: 1
+06-28 22:57:55.798 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:57.552 I/bthal.activity(  950): bt_power: LeAdvStat: 22:57:56:552 - 22:57:57:552, duration: 1000, le_adv_count: 1, total_le_adv_count: 70, total_event_count: 1
+06-28 22:57:57.677 D/TemperatureStateSource(16823): sequence=330 actualDelay=10001
+06-28 22:57:57.678 D/TemperatureStateSource(16823): Reading temperature: sequence=331
+06-28 22:57:57.685 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.2337 raw data: VIRTUAL-GNSS-BATT:28954 VIRTUAL-NEUTRAL-QI:25869.4 VIRTUAL-QI-DISP:33233.6 VIRTUAL-SKIN:33233.6 VIRTUAL-USB2-BATT:28575.6 battery:27500 disp_therm:31394 gnss_tcxo_therm:27408 neutral_therm:27899 qi_therm:30325 usb_pwr_therm2:29012 
+06-28 22:57:57.685 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=331 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.23365]
+06-28 22:57:57.685 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:57.685 D/BusinessScope(16823): Start running the #670 block
+06-28 22:57:57.690 D/TemperatureStateSource(16823): sequence=331 waitTime=10000
+06-28 22:57:57.691 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.2337 raw data: VIRTUAL-SKIN:33233.6 
+06-28 22:57:57.691 I/TemperatureStateSource(16823): temperature was set
+06-28 22:57:57.694 D/BusinessScope(16823): Enqueuing the block
+06-28 22:57:57.694 D/ImpulseStateSource(16823): Notify clients: 334
+06-28 22:57:57.694 D/BusinessScope(16823): Finish running the #670 block
+06-28 22:57:57.696 D/BusinessScope(16823): Start running the #671 block
+06-28 22:57:57.701 D/BusinessScope(16823): Finish running the #671 block
+06-28 22:57:57.712 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 22:57:58.686 I/pixel-thermal( 1755): cellular-emergency:33.2337 raw data: VIRTUAL-SKIN:33233.6 cellular-emergency:33233.6 
+06-28 22:57:58.905 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:57:59.332 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:57:59.332 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 3 times.
+06-28 22:57:59.332 I/NearbyMediums(17169): Total 3 fast advertisements from 1 unique advertisers.
+06-28 22:57:59.332 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:00.941 D/ActivityManager(16260): freezing 18298 com.google.android.apps.messaging
+06-28 22:58:01.228 I/pixel-thermal( 1755): usb_pwr_therm2:29.012 raw data: usb_pwr_therm2:29012 
+06-28 22:58:01.228 I/pixel-thermal( 1755): quiet_therm:27.197 raw data: quiet_therm:27197 
+06-28 22:58:01.229 I/pixel-thermal( 1755): VIRTUAL-USB-THROTTLING:0 raw data: USB2-MINUS-QI:-1313 USB2-MINUS-USB:-111 VIRTUAL-USB-THROTTLING:0 qi_therm:30325 usb_pwr_therm:29123 usb_pwr_therm2:29012 
+06-28 22:58:01.230 I/pixel-thermal( 1755): VIRTUAL-USB-UI:0 raw data: USB2-MINUS-QI:-1313 USB2-MINUS-USB:-111 VIRTUAL-USB-UI:0 usb_pwr_therm2:29012 
+06-28 22:58:01.230 I/pixel-thermal( 1755): Power rails total power: 491.07 mW for 60006 ms
+06-28 22:58:01.230 I/pixel-thermal( 1755): Power rails [VSYS_PWR_DISPLAY: 143.62 mW] [S2S_VDD_G3D: 1.81 mW] [S10S_VDD2L: 16.03 mW] [S5S_VDDQ_MEM: 4.42 mW] [S10M_VDD_TPU: 2.20 mW] [L2S_VDD_AOC_RET: 7.21 mW] 
+06-28 22:58:01.230 I/pixel-thermal( 1755): Power rails [VSYS_PWR_MMWAVE: 0.04 mW] [S1M_VDD_MIF: 34.15 mW] [S5M_VDD_INT: 28.19 mW] [VSYS_PWR_RFFE: 5.19 mW] [S4M_VDD_CPUCL0: 21.06 mW] [S2M_VDD_CPUCL2: 5.00 mW] 
+06-28 22:58:01.230 I/pixel-thermal( 1755): Power rails [S3M_VDD_CPUCL1: 8.23 mW] [S4S_VDD2H_MEM: 22.69 mW] [S9S_VDD_AOC: 26.75 mW] [VSYS_PWR_MODEM: 164.48 mW] 
+06-28 22:58:01.230 I/pixel-thermal( 1755): CDEV log dc_icl state:0 tpu_cooling state:0 usbc-port state:0 wlc_fcc state:0 thermal-cpufreq-1 state:0 fcc state:0 thermal-gpufreq-0 state:0 thermal-cpufreq-2 state:0 thermal-cpufreq-0 state:0 
+06-28 22:58:02.004 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 0, knownAnswers: 0, sendDelayMs 114}
+06-28 22:58:02.013 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:03.550 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:02:549 - 22:58:03:550, duration: 1000, le_adv_count: 1, total_le_adv_count: 71, total_event_count: 1
+06-28 22:58:05.099 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:07.078 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 10, knownAnswers: 0, sendDelayMs 44}
+06-28 22:58:07.676 D/ImpulseConnection(16823): timeout didn't happen: com.google.android.apps.turbo
+06-28 22:58:07.692 D/TemperatureStateSource(16823): sequence=331 actualDelay=10001
+06-28 22:58:07.692 D/TemperatureStateSource(16823): Reading temperature: sequence=332
+06-28 22:58:07.696 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.2236 raw data: VIRTUAL-GNSS-BATT:28954 VIRTUAL-NEUTRAL-QI:25829.4 VIRTUAL-QI-DISP:33223.6 VIRTUAL-SKIN:33223.6 VIRTUAL-USB2-BATT:28574.5 battery:27500 disp_therm:31394 gnss_tcxo_therm:27408 neutral_therm:27877 qi_therm:30258 usb_pwr_therm2:28990 
+06-28 22:58:07.697 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=332 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.223602]
+06-28 22:58:07.697 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:07.697 D/BusinessScope(16823): Start running the #672 block
+06-28 22:58:07.698 D/TemperatureStateSource(16823): sequence=332 waitTime=10000
+06-28 22:58:07.699 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:07.699 D/ImpulseStateSource(16823): Notify clients: 335
+06-28 22:58:07.699 D/BusinessScope(16823): Finish running the #672 block
+06-28 22:58:07.700 D/BusinessScope(16823): Start running the #673 block
+06-28 22:58:07.700 D/BusinessScope(16823): Finish running the #673 block
+06-28 22:58:08.203 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:08.588 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:07:587 - 22:58:08:588, duration: 1000, le_adv_count: 1, total_le_adv_count: 72, total_event_count: 1
+06-28 22:58:09.335 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:09.335 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
+06-28 22:58:09.335 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
+06-28 22:58:09.336 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:11.290 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:14.394 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:17.374 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:16:374 - 22:58:17:374, duration: 1000, le_adv_count: 1, total_le_adv_count: 73, total_event_count: 1
+06-28 22:58:17.503 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:17.700 D/TemperatureStateSource(16823): sequence=332 actualDelay=10002
+06-28 22:58:17.701 D/TemperatureStateSource(16823): Reading temperature: sequence=333
+06-28 22:58:17.706 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.1975 raw data: VIRTUAL-GNSS-BATT:28915.5 VIRTUAL-NEUTRAL-QI:25758.4 VIRTUAL-QI-DISP:33197.5 VIRTUAL-SKIN:33197.5 VIRTUAL-USB2-BATT:28477.2 battery:27400 disp_therm:31371 gnss_tcxo_therm:27431 neutral_therm:27788 qi_therm:30214 usb_pwr_therm2:28945 
+06-28 22:58:17.707 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=333 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.197456]
+06-28 22:58:17.707 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:17.707 D/TemperatureStateSource(16823): sequence=333 waitTime=10000
+06-28 22:58:17.708 D/BusinessScope(16823): Start running the #674 block
+06-28 22:58:17.708 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:17.708 D/ImpulseStateSource(16823): Notify clients: 336
+06-28 22:58:17.708 D/BusinessScope(16823): Finish running the #674 block
+06-28 22:58:17.708 D/BusinessScope(16823): Start running the #675 block
+06-28 22:58:17.710 D/BusinessScope(16823): Finish running the #675 block
+06-28 22:58:19.339 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:19.339 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:58:19.339 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:58:19.340 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:20.595 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:23.707 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:25.414 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:24:413 - 22:58:25:414, duration: 1000, le_adv_count: 1, total_le_adv_count: 74, total_event_count: 1
+06-28 22:58:26.801 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:27.702 D/ImpulseConnection(16823): timeout happen: com.google.android.apps.turbo
+06-28 22:58:27.703 D/ImpulseConnection(16823): unbindService for releasing a CONNECTED connection com.google.android.apps.turbo
+06-28 22:58:27.708 D/TemperatureStateSource(16823): sequence=333 actualDelay=10000
+06-28 22:58:27.708 D/TemperatureStateSource(16823): Reading temperature: sequence=334
+06-28 22:58:27.718 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.1346 raw data: VIRTUAL-GNSS-BATT:28954 VIRTUAL-NEUTRAL-QI:25766.8 VIRTUAL-QI-DISP:33134.6 VIRTUAL-SKIN:33134.6 VIRTUAL-USB2-BATT:28572.2 battery:27500 disp_therm:31305 gnss_tcxo_therm:27408 neutral_therm:27832 qi_therm:30169 usb_pwr_therm2:28945 
+06-28 22:58:27.719 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=334 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.1346]
+06-28 22:58:27.719 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:27.719 D/TemperatureStateSource(16823): sequence=334 waitTime=10000
+06-28 22:58:27.720 D/BusinessScope(16823): Start running the #676 block
+06-28 22:58:27.720 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:27.720 D/ImpulseStateSource(16823): Notify clients: 337
+06-28 22:58:27.720 D/BusinessScope(16823): Finish running the #676 block
+06-28 22:58:27.721 D/BusinessScope(16823): Start running the #677 block
+06-28 22:58:27.721 D/BusinessScope(16823): Finish running the #677 block
+06-28 22:58:29.343 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:29.343 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:58:29.343 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:58:29.344 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:29.901 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:30.355 D/IpClient/wlan0(16788): interfaceLinkStateChanged: ifindex 47 up
+06-28 22:58:30.441 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:29:440 - 22:58:30:441, duration: 1000, le_adv_count: 1, total_le_adv_count: 75, total_event_count: 1
+06-28 22:58:32.549 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:31:549 - 22:58:32:549, duration: 1000, le_adv_count: 1, total_le_adv_count: 76, total_event_count: 1
+06-28 22:58:33.010 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:36.100 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:37.721 D/TemperatureStateSource(16823): sequence=334 actualDelay=10001
+06-28 22:58:37.721 D/TemperatureStateSource(16823): Reading temperature: sequence=335
+06-28 22:58:37.726 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.0456 raw data: VIRTUAL-GNSS-BATT:28954 VIRTUAL-NEUTRAL-QI:25704.8 VIRTUAL-QI-DISP:33045.6 VIRTUAL-SKIN:33045.6 VIRTUAL-USB2-BATT:28568.9 battery:27500 disp_therm:31216 gnss_tcxo_therm:27408 neutral_therm:27788 qi_therm:30080 usb_pwr_therm2:28878 
+06-28 22:58:37.728 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=335 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.045605]
+06-28 22:58:37.728 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:37.728 D/TemperatureStateSource(16823): sequence=335 waitTime=10000
+06-28 22:58:37.728 D/BusinessScope(16823): Start running the #678 block
+06-28 22:58:37.730 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.0456 raw data: VIRTUAL-SKIN:33045.6 
+06-28 22:58:37.731 I/TemperatureStateSource(16823): temperature was set
+06-28 22:58:37.732 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:37.733 D/ImpulseStateSource(16823): Notify clients: 338
+06-28 22:58:37.733 D/BusinessScope(16823): Finish running the #678 block
+06-28 22:58:37.733 D/BusinessScope(16823): Start running the #679 block
+06-28 22:58:37.733 D/ImpulseConnection(16823): bindService: com.google.android.apps.turbo
+06-28 22:58:37.737 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:58:37.742 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:58:37.752 D/ImpulseConnection(16823): onServiceConnected: ComponentInfo{com.google.android.apps.turbo/com.google.android.apps.turbo.adaptiveplatform.impulse.ImpulseClientService} service is null false
+06-28 22:58:37.753 D/BusinessScope(16823): Finish running the #679 block
+06-28 22:58:37.767 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 22:58:38.487 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:37:486 - 22:58:38:487, duration: 1000, le_adv_count: 1, total_le_adv_count: 77, total_event_count: 1
+06-28 22:58:39.209 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:39.347 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:39.347 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 3 times.
+06-28 22:58:39.347 I/NearbyMediums(17169): Total 3 fast advertisements from 1 unique advertisers.
+06-28 22:58:39.347 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:41.524 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:40:523 - 22:58:41:524, duration: 1000, le_adv_count: 1, total_le_adv_count: 78, total_event_count: 1
+06-28 22:58:42.317 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:43.174 I/NearbyDiscovery(17169): FastPair: isDestroyable: Scanner is alive. [CONTEXT service_id=265 ]
+06-28 22:58:43.174 I/NearbyDiscovery(17169): DiscoveryService: Skip stopSelf(), fast pair controller is not destroyable. [CONTEXT service_id=265 ]
+06-28 22:58:43.525 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:42:524 - 22:58:43:524, duration: 1000, le_adv_count: 1, total_le_adv_count: 79, total_event_count: 1
+06-28 22:58:45.429 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:47.730 D/TemperatureStateSource(16823): sequence=335 actualDelay=10001
+06-28 22:58:47.731 D/TemperatureStateSource(16823): Reading temperature: sequence=336
+06-28 22:58:47.737 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.0643 raw data: VIRTUAL-GNSS-BATT:28869 VIRTUAL-NEUTRAL-QI:25691 VIRTUAL-QI-DISP:33064.3 VIRTUAL-SKIN:33064.3 VIRTUAL-USB2-BATT:28472.8 battery:27400 disp_therm:31238 gnss_tcxo_therm:27338 neutral_therm:27765 qi_therm:30080 usb_pwr_therm2:28856 
+06-28 22:58:47.738 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=336 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.0643]
+06-28 22:58:47.738 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:47.738 D/TemperatureStateSource(16823): sequence=336 waitTime=10000
+06-28 22:58:47.739 D/BusinessScope(16823): Start running the #680 block
+06-28 22:58:47.739 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:47.739 D/ImpulseStateSource(16823): Notify clients: 339
+06-28 22:58:47.739 D/BusinessScope(16823): Finish running the #680 block
+06-28 22:58:47.741 D/BusinessScope(16823): Start running the #681 block
+06-28 22:58:47.741 D/BusinessScope(16823): Finish running the #681 block
+06-28 22:58:48.532 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:49.350 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:49.350 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 3 times.
+06-28 22:58:49.350 I/NearbyMediums(17169): Total 3 fast advertisements from 1 unique advertisers.
+06-28 22:58:49.351 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:58:49.532 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:48:531 - 22:58:49:532, duration: 1000, le_adv_count: 1, total_le_adv_count: 80, total_event_count: 1
+06-28 22:58:51.625 I/bthal.activity(  950): bt_power: LeAdvStat: 22:58:50:624 - 22:58:51:625, duration: 1000, le_adv_count: 1, total_le_adv_count: 81, total_event_count: 1
+06-28 22:58:51.636 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:54.724 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:57.740 D/TemperatureStateSource(16823): sequence=336 actualDelay=10001
+06-28 22:58:57.741 D/TemperatureStateSource(16823): Reading temperature: sequence=337
+06-28 22:58:57.746 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.0127 raw data: VIRTUAL-GNSS-BATT:28529.5 VIRTUAL-NEUTRAL-QI:25615.8 VIRTUAL-QI-DISP:33012.7 VIRTUAL-SKIN:33012.7 VIRTUAL-USB2-BATT:28472.8 battery:27400 disp_therm:31193 gnss_tcxo_therm:26659 neutral_therm:27699 qi_therm:29991 usb_pwr_therm2:28856 
+06-28 22:58:57.747 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=337 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.012703]
+06-28 22:58:57.747 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:57.747 D/TemperatureStateSource(16823): sequence=337 waitTime=10000
+06-28 22:58:57.748 D/BusinessScope(16823): Start running the #682 block
+06-28 22:58:57.748 D/BusinessScope(16823): Enqueuing the block
+06-28 22:58:57.748 D/ImpulseStateSource(16823): Notify clients: 340
+06-28 22:58:57.748 D/BusinessScope(16823): Finish running the #682 block
+06-28 22:58:57.750 D/BusinessScope(16823): Start running the #683 block
+06-28 22:58:57.750 D/BusinessScope(16823): Finish running the #683 block
+06-28 22:58:57.812 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:58:57.932 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 120 ms
+06-28 22:58:59.356 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:58:59.356 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:58:59.356 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:58:59.356 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:00.977 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:01.295 I/pixel-thermal( 1755): usb_pwr_therm2:28.856 raw data: usb_pwr_therm2:28856 
+06-28 22:59:01.296 I/pixel-thermal( 1755): quiet_therm:27.08 raw data: quiet_therm:27080 
+06-28 22:59:01.297 I/pixel-thermal( 1755): VIRTUAL-USB-THROTTLING:0 raw data: USB2-MINUS-QI:-1135 USB2-MINUS-USB:111 VIRTUAL-USB-THROTTLING:0 qi_therm:29991 usb_pwr_therm:28745 usb_pwr_therm2:28856 
+06-28 22:59:01.297 I/pixel-thermal( 1755): VIRTUAL-USB-UI:0 raw data: USB2-MINUS-QI:-1135 USB2-MINUS-USB:111 VIRTUAL-USB-UI:0 usb_pwr_therm2:28856 
+06-28 22:59:01.298 I/pixel-thermal( 1755): Power rails total power: 477.86 mW for 60068 ms
+06-28 22:59:01.298 I/pixel-thermal( 1755): Power rails [VSYS_PWR_DISPLAY: 142.11 mW] [S2S_VDD_G3D: 1.76 mW] [S10S_VDD2L: 16.02 mW] [S5S_VDDQ_MEM: 4.19 mW] [S10M_VDD_TPU: 2.20 mW] [L2S_VDD_AOC_RET: 7.12 mW] 
+06-28 22:59:01.298 I/pixel-thermal( 1755): Power rails [VSYS_PWR_MMWAVE: 0.07 mW] [S1M_VDD_MIF: 31.82 mW] [S5M_VDD_INT: 22.81 mW] [VSYS_PWR_RFFE: 5.49 mW] [S4M_VDD_CPUCL0: 18.24 mW] [S2M_VDD_CPUCL2: 4.95 mW] 
+06-28 22:59:01.298 I/pixel-thermal( 1755): Power rails [S3M_VDD_CPUCL1: 6.81 mW] [S4S_VDD2H_MEM: 21.15 mW] [S9S_VDD_AOC: 26.68 mW] [VSYS_PWR_MODEM: 166.45 mW] 
+06-28 22:59:01.298 I/pixel-thermal( 1755): CDEV log dc_icl state:0 tpu_cooling state:0 usbc-port state:0 wlc_fcc state:0 thermal-cpufreq-1 state:0 fcc state:0 thermal-gpufreq-0 state:0 thermal-cpufreq-2 state:0 thermal-cpufreq-0 state:0 
+06-28 22:59:01.633 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 0, knownAnswers: 0, sendDelayMs 46}
+06-28 22:59:02.568 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:01:567 - 22:59:02:568, duration: 1000, le_adv_count: 1, total_le_adv_count: 82, total_event_count: 1
+06-28 22:59:04.088 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:06.656 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 1, additionalAnswers: 7, knownAnswers: 0, sendDelayMs 51}
+06-28 22:59:06.746 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 1, additionalAnswers: 7, knownAnswers: 0, sendDelayMs 66}
+06-28 22:59:07.200 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:07.589 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:06:588 - 22:59:07:589, duration: 1000, le_adv_count: 1, total_le_adv_count: 83, total_event_count: 1
+06-28 22:59:07.749 D/TemperatureStateSource(16823): sequence=337 actualDelay=10001
+06-28 22:59:07.749 D/TemperatureStateSource(16823): Reading temperature: sequence=338
+06-28 22:59:07.753 D/ImpulseConnection(16823): timeout happen: com.google.android.apps.turbo
+06-28 22:59:07.754 D/ImpulseConnection(16823): unbindService for releasing a CONNECTED connection com.google.android.apps.turbo
+06-28 22:59:07.755 I/pixel-thermal( 1755): VIRTUAL-SKIN:33.0577 raw data: VIRTUAL-GNSS-BATT:28787 VIRTUAL-NEUTRAL-QI:25647 VIRTUAL-QI-DISP:33057.7 VIRTUAL-SKIN:33057.7 VIRTUAL-USB2-BATT:28470.6 battery:27400 disp_therm:31238 gnss_tcxo_therm:27174 neutral_therm:27721 qi_therm:30036 usb_pwr_therm2:28812 
+06-28 22:59:07.756 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=338 deviceTemperatureType=3 temperatureSource=0 temperatures=[33.057705]
+06-28 22:59:07.756 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:07.757 D/TemperatureStateSource(16823): sequence=338 waitTime=10000
+06-28 22:59:07.757 D/BusinessScope(16823): Start running the #684 block
+06-28 22:59:07.757 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:07.757 D/ImpulseStateSource(16823): Notify clients: 341
+06-28 22:59:07.757 D/BusinessScope(16823): Finish running the #684 block
+06-28 22:59:07.757 D/BusinessScope(16823): Start running the #685 block
+06-28 22:59:07.758 D/BusinessScope(16823): Finish running the #685 block
+06-28 22:59:09.359 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:59:09.359 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
+06-28 22:59:09.359 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
+06-28 22:59:09.359 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:10.277 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:12.137 I/WPKTRT  ( 1152): process_address_event: fdd1:10c1:d9d9:5e6a:5c50:ceff:fef7:1e2c added to wlan0
+06-28 22:59:12.137 I/WPKTRT  ( 1152): process_address_event: fdd1:10c1:d9d9:5e6a:d56:2aa:e2b:c1f added to wlan0
+06-28 22:59:12.148 D/IpClient/wlan0(16788): addressUpdated: fdd1:10c1:d9d9:5e6a:5c50:ceff:fef7:1e2c/64 on ifindex 47 flags 0x00000100 scope 0
+06-28 22:59:12.148 D/IpClient/wlan0(16788): addressUpdated: fdd1:10c1:d9d9:5e6a:d56:2aa:e2b:c1f/64 on ifindex 47 flags 0x00000001 scope 0
+06-28 22:59:12.149 W/AlarmManager(16788): Unrecognized alarm listener com.android.networkstack.android.net.ip.IpClientLinkObserver$Dhcp6PdPreferredPrefixAlarmListener@187da97
+06-28 22:59:12.153 D/ApfFilter(16788): (wlan0): Ignoring RA RA fe80::9d8b:58ab:795c:8387 -> ff02::1 0s fdd1:10c1:d9d9:5e6a::/64 1800s/1800s RIO 1800s fd23:980d:149f:1::/64  which matches RA fe80::9d8b:58ab:795c:8387 -> ff02::1 0s fdd1:10c1:d9d9:5e6a::/64 1800s/1800s RIO 1800s fd23:980d:149f:1::/64 
+06-28 22:59:13.382 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:13.616 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:12:615 - 22:59:13:616, duration: 1000, le_adv_count: 1, total_le_adv_count: 84, total_event_count: 1
+06-28 22:59:15.629 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:14:629 - 22:59:15:629, duration: 1000, le_adv_count: 1, total_le_adv_count: 85, total_event_count: 1
+06-28 22:59:15.944 D/USF     (  984): AP/AOC clock synced: AOC: 9000709569824 ns (36866906398 tk), AP: 9005883925838 ns, diff = -5174356014 ns
+06-28 22:59:16.491 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:17.758 D/TemperatureStateSource(16823): sequence=338 actualDelay=10001
+06-28 22:59:17.759 D/TemperatureStateSource(16823): Reading temperature: sequence=339
+06-28 22:59:17.763 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9654 raw data: VIRTUAL-GNSS-BATT:28857 VIRTUAL-NEUTRAL-QI:25589.4 VIRTUAL-QI-DISP:32965.4 VIRTUAL-SKIN:32965.4 VIRTUAL-USB2-BATT:28468.3 battery:27400 disp_therm:31149 gnss_tcxo_therm:27314 neutral_therm:27699 qi_therm:29925 usb_pwr_therm2:28767 
+06-28 22:59:17.764 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=339 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.9654]
+06-28 22:59:17.764 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:17.764 D/BusinessScope(16823): Start running the #686 block
+06-28 22:59:17.766 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:17.766 D/ImpulseStateSource(16823): Notify clients: 342
+06-28 22:59:17.766 D/BusinessScope(16823): Finish running the #686 block
+06-28 22:59:17.766 D/BusinessScope(16823): Start running the #687 block
+06-28 22:59:17.766 D/BusinessScope(16823): Finish running the #687 block
+06-28 22:59:17.768 D/TemperatureStateSource(16823): sequence=339 waitTime=10000
+06-28 22:59:17.813 D/ActivityManager(16260): freezing 22726 com.google.android.apps.turbo
+06-28 22:59:17.823 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 22:59:17.833 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 22:59:17.833 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10141} in 16ms
+06-28 22:59:18.664 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:17:663 - 22:59:18:663, duration: 1000, le_adv_count: 1, total_le_adv_count: 86, total_event_count: 1
+06-28 22:59:19.362 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:59:19.362 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 3 times.
+06-28 22:59:19.362 I/NearbyMediums(17169): Total 3 fast advertisements from 1 unique advertisers.
+06-28 22:59:19.362 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:19.602 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:22.719 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:25.826 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:26.696 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:25:695 - 22:59:26:696, duration: 1000, le_adv_count: 1, total_le_adv_count: 87, total_event_count: 1
+06-28 22:59:27.727 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:27.769 D/TemperatureStateSource(16823): sequence=339 actualDelay=10002
+06-28 22:59:27.770 D/TemperatureStateSource(16823): Reading temperature: sequence=340
+06-28 22:59:27.775 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9753 raw data: VIRTUAL-GNSS-BATT:28857 VIRTUAL-NEUTRAL-QI:25629 VIRTUAL-QI-DISP:32975.3 VIRTUAL-SKIN:32975.3 VIRTUAL-USB2-BATT:28468.3 battery:27400 disp_therm:31149 gnss_tcxo_therm:27314 neutral_therm:27721 qi_therm:29991 usb_pwr_therm2:28767 
+06-28 22:59:27.776 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=340 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.975304]
+06-28 22:59:27.776 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:27.776 D/TemperatureStateSource(16823): sequence=340 waitTime=10000
+06-28 22:59:27.776 D/BusinessScope(16823): Start running the #688 block
+06-28 22:59:27.777 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:27.777 D/ImpulseStateSource(16823): Notify clients: 343
+06-28 22:59:27.777 D/BusinessScope(16823): Finish running the #688 block
+06-28 22:59:27.777 D/BusinessScope(16823): Start running the #689 block
+06-28 22:59:27.778 D/BusinessScope(16823): Finish running the #689 block
+06-28 22:59:27.802 D/KernelCpuUidUserSysTimeReader(16260): Removing uids 99005-99005
+06-28 22:59:27.803 D/KernelCpuUidUserSysTimeReader(16260): Removing uids 10400-10400
+06-28 22:59:28.741 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:27:740 - 22:59:28:741, duration: 1000, le_adv_count: 1, total_le_adv_count: 88, total_event_count: 1
+06-28 22:59:28.927 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:29.258 W/BtScan.ScanManager( 3891): handleRegularScanTimeout(ScanClient(com.google.uid.shared:10170, id=2, mode[AMBIENT_DISCOVERY, used=AMBIENT_DISCOVERY])): Moving filtered scan to downgraded scan
+06-28 22:59:29.365 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:59:29.365 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
+06-28 22:59:29.365 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
+06-28 22:59:29.365 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:32.013 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:32.131 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 118 ms
+06-28 22:59:33.882 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:32:882 - 22:59:33:882, duration: 1000, le_adv_count: 1, total_le_adv_count: 89, total_event_count: 1
+06-28 22:59:35.172 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:35.332 W/BtScan.ScanManager( 3891): handleRegularScanTimeout(ScanClient(com.google.uid.shared:10170, id=1, mode[BALANCED, used=BALANCED])): Moving filtered scan to downgraded scan
+06-28 22:59:35.338 I/bt_shim_scanner( 3891): system/main/shim/le_scanning_manager.cc:150 Scan: in shim layer stopped
+06-28 22:59:35.338 I/bluetooth( 3891): system/gd/hci/le_address_manager.cc:277 unregister_client: Client unregistered
+06-28 22:59:35.339 I/bt_shim_scanner( 3891): system/main/shim/le_scanning_manager.cc:319 SetScanParameters: in shim layer, scannerId1m=1, scannerIdCoded=0
+06-28 22:59:35.339 I/bt_shim_scanner( 3891): system/main/shim/le_scanning_manager.cc:150 Scan: in shim layer started
+06-28 22:59:35.339 I/bthal.activity(  950): LogActivities: Disable LE Scanning, 0x2042
+06-28 22:59:35.352 I/bluetooth( 3891): system/gd/hci/le_scanning_manager_impl.cc:622 stop_scan: Scanning already stopped, return!
+06-28 22:59:35.352 I/bluetooth( 3891): system/gd/hci/le_address_manager.cc:262 register_client: Client registered
+06-28 22:59:35.353 I/bthal.debug_central(  950): Command Complete Event of LE_SET_EXTENDED_SCAN_ENABLE, opcode:2042
+06-28 22:59:35.353 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0x2042 Length 6 unhandled by LeSetExtentedScanEnableEvent
+06-28 22:59:35.355 I/bthal.activity(  950): LogActivities: LOW_POWER ScanMode
+06-28 22:59:35.357 I/bthal.activity(  950): LogActivities: Enable LE Scanning, 0x2042
+06-28 22:59:35.359 I/bthal.debug_central(  950): Command Complete Event of LE_SET_EXTENDED_SCAN_ENABLE, opcode:2042
+06-28 22:59:35.359 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0x2042 Length 6 unhandled by LeSetExtentedScanEnableEvent
+06-28 22:59:37.778 D/TemperatureStateSource(16823): sequence=340 actualDelay=10001
+06-28 22:59:37.778 D/TemperatureStateSource(16823): Reading temperature: sequence=341
+06-28 22:59:37.783 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9841 raw data: VIRTUAL-GNSS-BATT:28960.5 VIRTUAL-NEUTRAL-QI:25562.4 VIRTUAL-QI-DISP:32984.1 VIRTUAL-SKIN:32984.1 VIRTUAL-USB2-BATT:28468.3 battery:27400 disp_therm:31171 gnss_tcxo_therm:27521 neutral_therm:27654 qi_therm:29925 usb_pwr_therm2:28767 
+06-28 22:59:37.783 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=341 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.984104]
+06-28 22:59:37.784 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:37.784 D/TemperatureStateSource(16823): sequence=341 waitTime=10000
+06-28 22:59:37.784 D/BusinessScope(16823): Start running the #690 block
+06-28 22:59:37.784 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:37.784 D/ImpulseStateSource(16823): Notify clients: 344
+06-28 22:59:37.784 D/BusinessScope(16823): Finish running the #690 block
+06-28 22:59:37.787 D/BusinessScope(16823): Start running the #691 block
+06-28 22:59:37.789 D/BusinessScope(16823): Finish running the #691 block
+06-28 22:59:38.274 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:39.369 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:59:39.369 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:59:39.369 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:59:39.369 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:41.375 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:44.477 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:47.585 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:47.785 D/TemperatureStateSource(16823): sequence=341 actualDelay=10002
+06-28 22:59:47.786 D/TemperatureStateSource(16823): Reading temperature: sequence=342
+06-28 22:59:47.791 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9305 raw data: VIRTUAL-GNSS-BATT:28772 VIRTUAL-NEUTRAL-QI:25571.2 VIRTUAL-QI-DISP:32930.5 VIRTUAL-SKIN:32930.5 VIRTUAL-USB2-BATT:28372.2 battery:27300 disp_therm:31104 gnss_tcxo_therm:27244 neutral_therm:27654 qi_therm:29947 usb_pwr_therm2:28745 
+06-28 22:59:47.792 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=342 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.930454]
+06-28 22:59:47.792 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:47.792 D/BusinessScope(16823): Start running the #692 block
+06-28 22:59:47.793 D/TemperatureStateSource(16823): sequence=342 waitTime=10000
+06-28 22:59:47.795 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9305 raw data: VIRTUAL-SKIN:32930.5 
+06-28 22:59:47.796 I/TemperatureStateSource(16823): temperature was set
+06-28 22:59:47.797 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:47.798 D/ImpulseStateSource(16823): Notify clients: 345
+06-28 22:59:47.798 D/BusinessScope(16823): Finish running the #692 block
+06-28 22:59:47.799 D/BusinessScope(16823): Start running the #693 block
+06-28 22:59:47.800 D/ImpulseConnection(16823): bindService: com.google.android.apps.turbo
+06-28 22:59:47.803 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:59:47.805 D/ActivityManager(16260): sync unfroze 22726 com.google.android.apps.turbo for 6
+06-28 22:59:47.807 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 22:59:47.813 D/ImpulseConnection(16823): onServiceConnected: ComponentInfo{com.google.android.apps.turbo/com.google.android.apps.turbo.adaptiveplatform.impulse.ImpulseClientService} service is null false
+06-28 22:59:47.815 D/BusinessScope(16823): Finish running the #693 block
+06-28 22:59:47.818 W/ProcessStats(16260): Tracking association SourceState{bd88784 com.google.android.pixelsystemservice/10377 ImpFg #13104} whose proc state 5 is better than process ProcessState{c240bec com.google.android.apps.turbo/10141 pkg=com.google.android.apps.turbo} proc state 14 (0 skipped)
+06-28 22:59:47.826 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 22:59:49.374 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 22:59:49.374 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:49.376 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@9d4f00 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 22:59:49.376 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@9d4f00 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 22:59:49.377 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 22:59:49.377 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 22:59:50.686 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:50.802 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 115 ms
+06-28 22:59:53.841 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:56.773 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 22:59:56.774 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 22:59:56.774 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 22:59:56.774 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 22:59:56.941 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 22:59:57.764 I/bthal.activity(  950): bt_power: LeAdvStat: 22:59:56:763 - 22:59:57:764, duration: 1000, le_adv_count: 1, total_le_adv_count: 90, total_event_count: 1
+06-28 22:59:57.795 D/TemperatureStateSource(16823): sequence=342 actualDelay=10002
+06-28 22:59:57.796 D/TemperatureStateSource(16823): Reading temperature: sequence=343
+06-28 22:59:57.800 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.9171 raw data: VIRTUAL-GNSS-BATT:28725 VIRTUAL-NEUTRAL-QI:25535.6 VIRTUAL-QI-DISP:32917.1 VIRTUAL-SKIN:32917.1 VIRTUAL-USB2-BATT:28368.9 battery:27300 disp_therm:31104 gnss_tcxo_therm:27150 neutral_therm:27654 qi_therm:29858 usb_pwr_therm2:28678 
+06-28 22:59:57.801 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=343 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.917103]
+06-28 22:59:57.801 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:57.801 D/TemperatureStateSource(16823): sequence=343 waitTime=10000
+06-28 22:59:57.801 D/BusinessScope(16823): Start running the #694 block
+06-28 22:59:57.802 D/BusinessScope(16823): Enqueuing the block
+06-28 22:59:57.802 D/ImpulseStateSource(16823): Notify clients: 346
+06-28 22:59:57.802 D/BusinessScope(16823): Finish running the #694 block
+06-28 22:59:57.804 D/BusinessScope(16823): Start running the #695 block
+06-28 22:59:57.804 D/BusinessScope(16823): Finish running the #695 block
+06-28 22:59:59.376 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 22:59:59.376 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 22:59:59.376 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 22:59:59.376 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 22:59:59.404 I/CHRE    (  957): @ 9044.164: [ImuCal] [GYRO_RPS] (s0, c0) Offset | Temp [C] | Quality: -.002479, -.000676, 0.000763 | 25.011381 | 4
+06-28 22:59:59.404 I/CHRE    (  957): @ 9044.164: [ImuCal] [GYRO_RPS] (s0) Temp Sensitivity: -.000027, -.000047, -.000059
+06-28 22:59:59.404 I/CHRE    (  957): @ 9044.164: [ImuCal] [GYRO_RPS] (s0) Temp Intercept: -.001786, 0.000406, 0.002213
+06-28 23:00:00.005 I/AiAiEcho(17595): (REDACTED) Predicting[%d]: %s
+06-28 23:00:00.015 I/AiAiEcho(17595): (REDACTED) EchoTargets: %s
+06-28 23:00:00.015 I/AiAiEcho(17595): Filtered by AiAi flag check: %s
+06-28 23:00:00.016 D/ActivityManager(16260): sync unfroze 17028 com.android.settings for 3
+06-28 23:00:00.017 I/AiAiEcho(17595): #remoteViewsTwiddler: feature disabled.
+06-28 23:00:00.018 I/AiAiEcho(17595): (REDACTED) Predicting[%d]: %s
+06-28 23:00:00.019 D/ActivityManager(16260): sync unfroze 17702 com.android.keychain for 10
+06-28 23:00:00.020 I/AiAiEcho(17595): (REDACTED) EchoTargets: %s
+06-28 23:00:00.020 I/AiAiEcho(17595): Filtered by AiAi flag check: %s
+06-28 23:00:00.021 D/ActivityManager(16260): sync unfroze 21200 com.android.dynsystem:dynsystem for 10
+06-28 23:00:00.021 D/ActivityManager(16260): sync unfroze 21180 com.android.dynsystem for 10
+06-28 23:00:00.021 I/AiAiEcho(17595): (REDACTED) #tapActionTwiddler: keeps UiSurface.ALL TapAction for: %s in the surface: %s for the cardId: %s
+06-28 23:00:00.021 D/ActivityManager(16260): sync unfroze 17550 com.google.android.repairmode for 10
+06-28 23:00:00.021 I/AiAiEcho(17595): (REDACTED) #weatherSubItemsTwiddler: Weather removes SubtitleSupplementalItem in surface: %s
+06-28 23:00:00.021 I/AiAiEcho(17595): #remoteViewsTwiddler: feature disabled.
+06-28 23:00:00.022 D/ActivityManager(16260): sync unfroze 18699 com.android.localtransport for 10
+06-28 23:00:00.022 I/AiAiEcho(17595): (REDACTED) Predicting[%d]: %s
+06-28 23:00:00.023 I/AiAiEcho(17595): (REDACTED) EchoTargets: %s
+06-28 23:00:00.023 I/AiAiEcho(17595): Filtered by AiAi flag check: %s
+06-28 23:00:00.024 I/AiAiEcho(17595): (REDACTED) #tapActionTwiddler: keeps UiSurface.ALL TapAction for: %s in the surface: %s for the cardId: %s
+06-28 23:00:00.024 I/AiAiEcho(17595): (REDACTED) #weatherSubItemsTwiddler: Weather removes SubtitleSupplementalItem in surface: %s
+06-28 23:00:00.024 I/AiAiEcho(17595): #remoteViewsTwiddler: feature disabled.
+06-28 23:00:00.025 I/AiAiEcho(17595): (REDACTED) #postPredictionTargets: Sending updates to UISurface %s with targets# %s (types=[%s])
+06-28 23:00:00.025 I/AmbientCueRepository(16657): Receiving SmartSpace targets # 0
+06-28 23:00:00.031 D/CHRE    (  957): @ 9044.791: Parsed nanoapp message from host: app ID 0x476f6f676c00100d endpoint 0x7 msgType 1 payload size 8
+06-28 23:00:00.031 I/CHRE    (  957): @ 9044.792: [NanoMinion] received MSG Type 0x1, Version 1, 4 bytes
+06-28 23:00:00.031 D/CHRE.HAL(  957): Received a nanoapp message from 0x476f6f676c00100d endpoint 0x7: Type 0x401 size 29 
+06-28 23:00:00.032 D/PeriodicJobReceiver(17028): refresh periodic job from action=com.android.settings.battery.action.PERIODIC_JOB_UPDATE
+06-28 23:00:00.033 I/CHRE    (  957): @ 9044.794: [NanoMinion] sent MSG Type 0x2, Version 0, 21 bytes, MessageId 9
+06-28 23:00:00.034 I/CHRE    (  957): @ 9044.794: [cc] ping enabled=0, since_start_millis=9035666, session_seq=9, session_dur_millis=1519183, accel_in_session=0
+06-28 23:00:00.034 I/AiAiEcho(17595): (REDACTED) #postPredictionTargets: Sending updates to UISurface %s with targets# %s (types=[%s])
+06-28 23:00:00.035 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:00.037 I/WeatherSmartspaceView(16657): setFormattedContentDescription: text=15°C, iconDescription=Clear with periodic clouds, contentDescription=Clear with periodic clouds, 15°C
+06-28 23:00:00.037 I/WeatherSmartspaceView(16657): setFormattedContentDescription: text=15°C, iconDescription=Clear with periodic clouds, contentDescription=Clear with periodic clouds, 15°C
+06-28 23:00:00.037 I/WeatherData(16657): Weather data parsed PARTLY_CLOUDY ("Clear with periodic clouds") 15°C from Bundle[{description=Clear with periodic clouds, feedback_intent=null, explanation_intent=Supplier{VAL_PARCELABLE@180+1744}, is_gaia_linked_data=true, use_celsius=true, state=5, temperature=15}]
+06-28 23:00:00.037 D/BatteryUsageDataLoader(17028): loadUsageDataSafely() in the AsyncTask
+06-28 23:00:00.039 D/PeriodicJobManager(17028): schedule next alarm job at Jun 29, 2026, 00:00:00
+06-28 23:00:00.045 I/AiAiEcho(17595): (REDACTED) #postPredictionTargets: Sending updates to UISurface %s with targets# %s (types=[%s])
+06-28 23:00:00.048 D/NexusLauncherModelDelegate(16992): notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=SmartspaceTarget{mSmartspaceTargetId='WEATHER-569377245', mHeaderAction=SmartspaceAction{mId='WEATHER', mIcon=Icon(typ=BITMAP size=192x192), mTitle=15°C, mSubtitle=15°C, mContentDescription=Clear with periodic clouds, mPendingIntent=null, mIntent=Intent { act=android.intent.action.VIEW flg=0x18000000 cmp=com.google.android.googlequicksearchbox/com.google.android.apps.search.assistant.verticals.ambient.smartspace.trampolineactivity.ExportedSmartspaceTrampolineActivity (has extras) }, mUserHandle=UserHandle{0}, mExtras=Bundle[mParcelledData.dataSize=2196]}, mBaseAction=SmartspaceAction{mId='', mIcon=null, mTitle=, mSubtitle=, mContentDescription=, mPendingIntent=null, mIntent=null, mUserHandle=UserHandle{0}, mExtras=Bundle[{description=Clear with periodic clouds, feedback_intent=null, explanation_intent=Supplier{VAL_PARCELABLE@180+1744}, is_gaia_linked_data=true, use_celsius=true, state=5, temperature=15, settings_highlight_key=smartspace_pref_weather_key}]}, mCreationTimeMillis=1782651600000, mExpiryTimeMillis=1782655200000, mScore=0.0, mActionChips=[], mIconGrid=[], mFeatureType=1, mSensitive=false, mShouldShowExpanded=false, mSourceNotificationKey='', mComponentName=ComponentInfo{package_name/class_name}, mUserHandle=UserHandle{0}, mAssociatedSmartspaceTargetId='null', mSliceUri=null, mWidget=null, mTemplateData=BaseTemplateData{mTemplateType=1, mPrimaryItem=null, mSubtitleItem=SubItemInfo{mText=Text{mText=15°C, mTruncateAtType=END, mMaxLines=1}, mIcon=SmartspaceIcon{mIcon=Icon(typ=BITMAP size=192x192), mContentDescription=Clear with periodic clouds, mShouldTint=false}, mTapAction=SmartspaceTapAction{mId=mIntent=Intent { act=android.intent.action.VIEW flg=0x18000000 cmp=com.google.android.googlequicksearchbox/com.google.android.apps.search.assistant.verticals.ambient.smartspace.trampolineactivity.ExportedSmartspaceTrampolineActivity (has extras) }, mPendingIntent=null, mUserHandle=null, mExtras=null, mShouldShowOnLockscreen=false}, mLoggingInfo=SubItemLoggingInfo{mInstanceId=2047, mFeatureType=1, mPackageName=}}, mSubtitleSupplementalItem=null, mSupplementalLineItem=null, mSupplementalAlarmItem=null, mLayoutWeight=1}, mRemoteViews=null}, mSmartspaceActionId='', mEventType=8}
+06-28 23:00:00.051 D/SsBaseTemplateCard(16657): No date view can be set up
+06-28 23:00:00.051 I/AiAiEcho(17595): (REDACTED) %s No tracked ambient data found for ID: %s; for event type: %d, skipping event processing.
+06-28 23:00:00.051 I/SsBaseTemplateCard(16657): setFormattedContentDescription: text=Light rain, iconDescription=Light rain, contentDescription=Light rain, Light rain
+06-28 23:00:00.051 D/SsBaseTemplateCard(16657): Passed-in item info is null
+06-28 23:00:00.051 D/SsBaseTemplateCard(16657): Passed-in item info is null
+06-28 23:00:00.056 D/ActivityManager(16260): sync unfroze 25944 com.google.android.settings.intelligence for 7
+06-28 23:00:00.090 I/pixelstats: MmMetrics( 2855): kernel: old PSI sysfs node.
+06-28 23:00:00.092 D/PowerUsageFeatureProviderGoogleImpl(17028): mBatteryUsageStatsMaxAgeMsForUi: Optional[0]
+06-28 23:00:00.093 D/PowerUsageFeatureProviderGoogleImpl(17028): mBatteryUsageStatsMaxAgeMsForSnapshot: Optional[0]
+06-28 23:00:00.165 D/TelephonyManager(16260): requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=9050102 mSleepTimeMs=2821385 mIdleTimeMs=83781 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=694468}]}
+06-28 23:00:00.175 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:00.270 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0xfd59 Length 22 unhandled by ControllerActivityWatcher
+06-28 23:00:00.290 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{0 : totalTimeMs 2392852 totalEntryCount 37249 lastEntryMs 10021537}
+06-28 23:00:00.290 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{1 : totalTimeMs 3645697 totalEntryCount 37391 lastEntryMs 10021566}
+06-28 23:00:00.290 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{2 : totalTimeMs 571672 totalEntryCount 397113 lastEntryMs 10021569}
+06-28 23:00:00.290 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{3 : totalTimeMs 1420449 totalEntryCount 435501 lastEntryMs 10021536}
+06-28 23:00:00.290 I/bthal.activitywatcher(  950): send_hci_activities_vsc: Sent VSC <[4]{89, 253, 1, 1}>
+06-28 23:00:00.291 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:00.292 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd2 [cntr = 2524]
+06-28 23:00:00.293 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd2, rc: 0
+06-28 23:00:00.294 I/bthal.activitywatcher(  950): filter_hci_activities_vse: Filtered <[103]{14, 101, 1, 89, 253, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 100, 245, 53, 0, 0, 0, 0, 0, 102, 245, 53, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 102, 245, 53, 0, 0, 0, 0, 0, 100, 245, 53, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 120, 245, 53, 0, 0, 0, 0, 0, 120, 245, 53, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 121, 245, 53, 0, 0, 0, 0, 0, 121, 245, 53, 0, 0, 0, 0, 0}>
+06-28 23:00:00.295 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0xfd59 Length 103 handled by ControllerActivityWatcher
+06-28 23:00:00.296 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd3 [cntr = 2525]
+06-28 23:00:00.296 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd3, rc: 0
+06-28 23:00:00.297 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd4 [cntr = 2526]
+06-28 23:00:00.297 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd4, rc: 0
+06-28 23:00:00.304 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd5 [cntr = 2527]
+06-28 23:00:00.304 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd5, rc: 0
+06-28 23:00:00.305 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd6 [cntr = 2528]
+06-28 23:00:00.305 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd6, rc: 0
+06-28 23:00:00.311 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd7 [cntr = 2529]
+06-28 23:00:00.311 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd7, rc: 0
+06-28 23:00:00.311 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd8 [cntr = 2530]
+06-28 23:00:00.311 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd8, rc: 0
+06-28 23:00:00.313 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xd9 [cntr = 2531]
+06-28 23:00:00.314 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xd9, rc: 0
+06-28 23:00:00.317 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xda [cntr = 2532]
+06-28 23:00:00.317 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xda, rc: 0
+06-28 23:00:00.318 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xdb [cntr = 2533]
+06-28 23:00:00.318 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xdb, rc: 0
+06-28 23:00:00.323 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xdc [cntr = 2534]
+06-28 23:00:00.323 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xdc, rc: 0
+06-28 23:00:00.325 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xdd [cntr = 2535]
+06-28 23:00:00.325 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xdd, rc: 0
+06-28 23:00:00.327 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xde [cntr = 2536]
+06-28 23:00:00.327 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xde, rc: 0
+06-28 23:00:00.329 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xdf [cntr = 2537]
+06-28 23:00:00.329 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xdf, rc: 0
+06-28 23:00:00.330 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe0 [cntr = 2538]
+06-28 23:00:00.330 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe0, rc: 0
+06-28 23:00:00.332 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe1 [cntr = 2539]
+06-28 23:00:00.332 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe1, rc: 0
+06-28 23:00:00.335 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe2 [cntr = 2540]
+06-28 23:00:00.335 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe2, rc: 0
+06-28 23:00:00.504 D/TelephonyManager(16260): requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=9050442 mSleepTimeMs=2821510 mIdleTimeMs=83943 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=694521}]}
+06-28 23:00:00.531 D/TelephonyManager(16260): requestModemActivityInfo: Sending result to app: ModemActivityInfo{ mTimestamp=9050469 mSleepTimeMs=2821510 mIdleTimeMs=83970 mActivityStatsTechSpecificInfo=[{mRat=UNKNOWN,mFrequencyRange=UNKNOWN,mTxTimeMs[]=[0, 0, 0, 0, 0],mRxTimeMs=694521}]}
+06-28 23:00:00.544 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:00.612 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0xfd59 Length 22 unhandled by ControllerActivityWatcher
+06-28 23:00:00.684 D/DataProcessor(17028): getBatteryUsageStats() from BatteryStatsManager in 587/ms, maxStatsAgeMs=0
+06-28 23:00:00.693 W/PowerProfile(17028): ambient.on is deprecated! Use ambient.on.display0 instead.
+06-28 23:00:00.694 W/PowerProfile(17028): screen.on is deprecated! Use screen.on.display0 instead.
+06-28 23:00:00.694 W/PowerProfile(17028): screen.full is deprecated! Use screen.full.display0 instead.
+06-28 23:00:00.694 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x0, drain:SLEEP,RAT:DEFAULT
+06-28 23:00:00.694 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x10000000, drain:IDLE,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x20000000, drain:RX,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x30000000, drain:TX,level:0,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x31000000, drain:TX,level:1,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x32000000, drain:TX,level:2,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x33000000, drain:TX,level:3,RAT:DEFAULT
+06-28 23:00:00.695 W/ModemPowerProfile(17028): getAverageBatteryDrainMaH called with unexpected key: 0x34000000, drain:TX,level:4,RAT:DEFAULT
+06-28 23:00:00.697 D/DataProcessor(17028): get 116 uidBatteryConsumers from BatteryUsageStats in 0/ms
+06-28 23:00:01.038 W/BatteryEntry(17028): unknown attribute:AUDIO
+06-28 23:00:01.042 W/BatteryEntry(17028): unknown attribute:VIDEO
+06-28 23:00:01.043 W/BatteryEntry(17028): unknown attribute:SYSTEM_SERVICES
+06-28 23:00:01.044 W/BatteryEntry(17028): unknown attribute:SENSORS
+06-28 23:00:01.048 W/BatteryEntry(17028): unknown attribute:WAKELOCK
+06-28 23:00:01.048 W/BatteryEntry(17028): unknown attribute:MEMORY
+06-28 23:00:01.051 W/BatteryEntry(17028): unknown attribute:IDLE
+06-28 23:00:01.051 W/BatteryEntry(17028): unknown attribute:REATTRIBUTED_TO_OTHER_CONSUMERS
+06-28 23:00:01.052 W/BatteryEntry(17028): unknown attribute:BASE
+06-28 23:00:01.052 D/DataProcessor(17028): getCoalescedUsageList(): uidEntries = 90, userEntries = 0, componentEntries = 90
+06-28 23:00:01.053 D/BatteryUsageDataLoader(17028): getBatteryUsageStats() in 1012/ms
+06-28 23:00:01.061 W/DatabaseUtils(17028): no consumed power but has running time for null time=21789094|0|0
+06-28 23:00:01.062 W/DatabaseUtils(17028): no consumed power but has running time for com.google.android.apps.turbo time=172966|0|9
+06-28 23:00:01.062 W/DatabaseUtils(17028): no consumed power but has running time for com.google.android.apps.work.clouddpc time=0|0|103
+06-28 23:00:01.062 W/DatabaseUtils(17028): no consumed power but has running time for io.homeassistant.companion.android time=0|0|10
+06-28 23:00:01.128 D/DatabaseUtils(17028): insert() battery states data into database with isFullChargeStart:false
+06-28 23:00:01.133 D/DatabaseUtils(17028): sendBatteryEntryData() size=24 in 80/ms
+06-28 23:00:01.154 D/BatteryUsageContentProvider(17028): getQueryUserId from uri: content://com.android.settings.battery.usage.provider/appUsageLatestTimestamp?userid=0
+06-28 23:00:01.154 D/BatteryUsageContentProvider(17028): getAppUsageLatestTimestamp() for user 0 in 0/ms
+06-28 23:00:01.156 D/DatabaseUtils(17028): getAppUsageStartTimestampOfUser() userId=0 latestTimestamp=Jun 28, 2026, 22:00:01 in 3/ms
+06-28 23:00:01.161 D/DataProcessor(17028): getAppUsageEventsForUser(): 0 from 1782648001766 to 1782651601153 in 4/ms
+06-28 23:00:01.161 D/DataProcessor(17028): getAppUsageEvents() for all unlocked users in 8/ms
+06-28 23:00:01.181 D/DataProcessor(17028): Read 65 relevant events (65 total) from UsageStatsManager for user 0
+06-28 23:00:01.181 W/DataProcessor(17028): Read 65 relevant events (65 total) from UsageStatsManager for all users
+06-28 23:00:01.185 D/DataProcessor(17028): getCurrentAppOnTopEvents() from ActivityManager in 4/ms
+06-28 23:00:01.185 D/DataProcessor(17028): Read 1 current on top events from ActivityManager running app processes
+06-28 23:00:01.185 D/BatteryUsageDataLoader(17028): loadAppUsageData() size=66 in 32/ms
+06-28 23:00:01.257 D/DatabaseUtils(17028): insert() app usage events data into database
+06-28 23:00:01.257 D/DatabaseUtils(17028): sendAppUsageEventData() size=66 in 72/ms
+06-28 23:00:01.259 D/BatteryUsageContentProvider(17028): getLastFullChargeTimestamp() in 1/ms
+06-28 23:00:01.260 D/DatabaseUtils(17028): getLastFullChargeTime() lastFullChargeTime=Jun 28, 2026, 20:29:35 in 2/ms
+06-28 23:00:01.260 D/DatabaseUtils(17028): getBatteryEvents for timestamp: 1782642575170
+06-28 23:00:01.263 D/BatteryUsageContentProvider(17028): getQueryBatteryEventTypes from uri: content://com.android.settings.battery.usage.provider/BatteryEvent?timestamp=1782642575170&batteryEventType=3%2C4
+06-28 23:00:01.264 D/BatteryUsageContentProvider(17028): getQueryTimestamp from uri: content://com.android.settings.battery.usage.provider/BatteryEvent?timestamp=1782642575170&batteryEventType=3%2C4
+06-28 23:00:01.264 W/BatteryUsageContentProvider(17028): getBatteryEvents() in 0/ms
+06-28 23:00:01.265 D/DatabaseUtils(17028): getBatteryEvents size=3 in 5/ms
+06-28 23:00:01.266 D/DataProcessManager(17028): getPeriodBatteryLevelData() startTimestamp=Jun 28, 2026, 22:00:00
+06-28 23:00:01.266 D/DataProcessManager(17028): execute getBatteryLevelData in 8/ms, batteryLevelRecordEvents.size=3
+06-28 23:00:01.266 D/BatteryUsageDataLoader(17028): preprocessBatteryUsageSlots() no new battery usage data.
+06-28 23:00:01.267 D/BatteryUsageDataLoader(17028): loadUsageDataSafely() in 1228/ms
+06-28 23:00:01.362 I/pixel-thermal( 1755): usb_pwr_therm2:28.678 raw data: usb_pwr_therm2:28678 
+06-28 23:00:01.362 I/pixel-thermal( 1755): quiet_therm:27.01 raw data: quiet_therm:27010 
+06-28 23:00:01.363 I/pixel-thermal( 1755): VIRTUAL-USB-THROTTLING:0 raw data: USB2-MINUS-QI:-1180 USB2-MINUS-USB:-67 VIRTUAL-USB-THROTTLING:0 qi_therm:29858 usb_pwr_therm:28745 usb_pwr_therm2:28678 
+06-28 23:00:01.363 I/pixel-thermal( 1755): VIRTUAL-USB-UI:0 raw data: USB2-MINUS-QI:-1180 USB2-MINUS-USB:-67 VIRTUAL-USB-UI:0 usb_pwr_therm2:28678 
+06-28 23:00:01.363 I/pixel-thermal( 1755): Power rails total power: 479.62 mW for 60067 ms
+06-28 23:00:01.363 I/pixel-thermal( 1755): Power rails [VSYS_PWR_DISPLAY: 142.22 mW] [S2S_VDD_G3D: 1.76 mW] [S10S_VDD2L: 16.02 mW] [S5S_VDDQ_MEM: 4.22 mW] [S10M_VDD_TPU: 2.20 mW] [L2S_VDD_AOC_RET: 7.07 mW] 
+06-28 23:00:01.363 I/pixel-thermal( 1755): Power rails [VSYS_PWR_MMWAVE: 0.06 mW] [S1M_VDD_MIF: 32.84 mW] [S5M_VDD_INT: 22.81 mW] [VSYS_PWR_RFFE: 5.08 mW] [S4M_VDD_CPUCL0: 19.75 mW] [S2M_VDD_CPUCL2: 4.83 mW] 
+06-28 23:00:01.363 I/pixel-thermal( 1755): Power rails [S3M_VDD_CPUCL1: 7.45 mW] [S4S_VDD2H_MEM: 21.79 mW] [S9S_VDD_AOC: 26.69 mW] [VSYS_PWR_MODEM: 164.84 mW] 
+06-28 23:00:01.363 I/pixel-thermal( 1755): CDEV log dc_icl state:0 tpu_cooling state:0 usbc-port state:0 wlc_fcc state:0 thermal-cpufreq-1 state:0 fcc state:0 thermal-gpufreq-0 state:0 thermal-cpufreq-2 state:0 thermal-cpufreq-0 state:0 
+06-28 23:00:02.173 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 0, knownAnswers: 0, sendDelayMs 65}
+06-28 23:00:03.114 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:06.226 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:07.246 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 10, knownAnswers: 0, sendDelayMs 64}
+06-28 23:00:07.802 D/TemperatureStateSource(16823): sequence=343 actualDelay=10001
+06-28 23:00:07.803 D/TemperatureStateSource(16823): Reading temperature: sequence=344
+06-28 23:00:07.809 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8764 raw data: VIRTUAL-GNSS-BATT:28748.5 VIRTUAL-NEUTRAL-QI:25486.6 VIRTUAL-QI-DISP:32876.4 VIRTUAL-SKIN:32876.4 VIRTUAL-USB2-BATT:28368.9 battery:27300 disp_therm:31060 gnss_tcxo_therm:27197 neutral_therm:27587 qi_therm:29836 usb_pwr_therm2:28678 
+06-28 23:00:07.810 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=344 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.8764]
+06-28 23:00:07.810 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:07.811 D/BusinessScope(16823): Start running the #696 block
+06-28 23:00:07.811 D/TemperatureStateSource(16823): sequence=344 waitTime=10000
+06-28 23:00:07.812 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:07.812 D/ImpulseStateSource(16823): Notify clients: 347
+06-28 23:00:07.812 D/BusinessScope(16823): Finish running the #696 block
+06-28 23:00:07.812 D/BusinessScope(16823): Start running the #697 block
+06-28 23:00:07.812 D/BusinessScope(16823): Finish running the #697 block
+06-28 23:00:08.143 D/IpClient/wlan0(16788): interfaceLinkStateChanged: ifindex 47 up
+06-28 23:00:09.328 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:09.378 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:00:09.378 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:00:09.381 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@cdeba65 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 23:00:09.381 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@cdeba65 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 23:00:09.382 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 23:00:09.383 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 23:00:12.412 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:12.533 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 120 ms
+06-28 23:00:14.869 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 23:00:14.870 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 23:00:14.870 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 23:00:14.873 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 23:00:15.576 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:15.861 I/bthal.activity(  950): bt_power: LeAdvStat: 23:00:14:860 - 23:00:15:861, duration: 1000, le_adv_count: 1, total_le_adv_count: 91, total_event_count: 1
+06-28 23:00:16.153 D/ActivityManager(16260): freezing 25944 com.google.android.settings.intelligence
+06-28 23:00:16.162 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:00:16.171 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:00:16.171 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10112} in 14ms
+06-28 23:00:17.813 D/TemperatureStateSource(16823): sequence=344 actualDelay=10001
+06-28 23:00:17.814 D/TemperatureStateSource(16823): Reading temperature: sequence=345
+06-28 23:00:17.816 D/ImpulseConnection(16823): timeout happen: com.google.android.apps.turbo
+06-28 23:00:17.816 D/ImpulseConnection(16823): unbindService for releasing a CONNECTED connection com.google.android.apps.turbo
+06-28 23:00:17.828 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8448 raw data: VIRTUAL-GNSS-BATT:28737 VIRTUAL-NEUTRAL-QI:25504.2 VIRTUAL-QI-DISP:32844.8 VIRTUAL-SKIN:32844.8 VIRTUAL-USB2-BATT:28367.8 battery:27300 disp_therm:31015 gnss_tcxo_therm:27174 neutral_therm:27587 qi_therm:29880 usb_pwr_therm2:28656 
+06-28 23:00:17.829 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=345 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.844753]
+06-28 23:00:17.829 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:17.829 D/TemperatureStateSource(16823): sequence=345 waitTime=10000
+06-28 23:00:17.829 D/BusinessScope(16823): Start running the #698 block
+06-28 23:00:17.830 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:17.830 D/ImpulseStateSource(16823): Notify clients: 348
+06-28 23:00:17.830 D/BusinessScope(16823): Finish running the #698 block
+06-28 23:00:17.830 D/BusinessScope(16823): Start running the #699 block
+06-28 23:00:17.830 D/BusinessScope(16823): Finish running the #699 block
+06-28 23:00:18.677 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:19.382 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:00:19.382 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:00:19.382 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:00:19.382 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:00:20.043 D/ActivityManager(16260): freezing 17028 com.android.settings
+06-28 23:00:20.047 D/ActivityManager(16260): freezing 17702 com.android.keychain
+06-28 23:00:20.053 D/ActivityManager(16260): freezing 21200 com.android.dynsystem:dynsystem
+06-28 23:00:20.056 D/ActivityManager(16260): freezing 21180 com.android.dynsystem
+06-28 23:00:20.059 D/ActivityManager(16260): freezing 17550 com.google.android.repairmode
+06-28 23:00:20.062 D/ActivityManager(16260): freezing 18699 com.android.localtransport
+06-28 23:00:20.900 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 23:00:20.901 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too fast
+06-28 23:00:20.902 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 23:00:20.903 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 23:00:20.904 I/FusedLocation(17169): (REDACTED) location delivery to %s blocked - too close
+06-28 23:00:20.923 D/ActivityManager(16260): sync unfroze 26034 io.homeassistant.companion.android for 3
+06-28 23:00:20.924 D/SensorReceiverBase(26034): Received intent: android.intent.action.TIME_TICK
+06-28 23:00:20.936 D/LocationSensorManager(26034): Received location update.
+06-28 23:00:20.942 D/ForegroundServiceLauncher(26034): Check if service HighAccuracyLocationService is running. Service running = false
+06-28 23:00:20.943 D/LocationSensorManager(26034): Last Location: 
+06-28 23:00:20.943 D/LocationSensorManager(26034): Coords:(-26.6717089, 153.0499932)
+06-28 23:00:20.943 D/LocationSensorManager(26034): Accuracy: 100.0
+06-28 23:00:20.943 D/LocationSensorManager(26034): Bearing: 0.0
+06-28 23:00:20.949 D/LocationSensorManager(26034): Begin evaluating if location update should be skipped
+06-28 23:00:20.949 D/LocationSensorManager(26034): Received location that is 53 milliseconds old, 1782651620896 compared to 1782651620949 with source fused
+06-28 23:00:20.949 D/LocationSensorManager(26034): Duplicate location received, not sending to HA
+06-28 23:00:20.950 D/BoundBrokerSvc( 1571): onRebind: Intent { act=com.google.android.gms.onboardingconsent.api.ConsentManagerApiService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+06-28 23:00:20.956 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:00:20.960 I/ConsentManagerApiServic( 1571): (REDACTED) ConsentManagerApiService onGetService success %s
+06-28 23:00:20.963 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:00:20.986 I/TFLite-in-PlayServices(17169): Created interpreter.
+06-28 23:00:20.996 I/TFLite-in-PlayServices(17169): Created interpreter.
+06-28 23:00:21.001 I/SemanticLocation(17169): (REDACTED) [Inferrer] %s%s
+06-28 23:00:21.558 D/SensorReceiverBase(26034): Nothing to update for server 6 (Home)
+06-28 23:00:21.559 I/SensorReceiverBase(26034): Sensor updates and sync completed
+06-28 23:00:21.784 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:21.929 D/BoundBrokerSvc(17169): onRebind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+06-28 23:00:24.895 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:27.831 D/ActivityManager(16260): freezing 22726 com.google.android.apps.turbo
+06-28 23:00:27.831 D/TemperatureStateSource(16823): sequence=345 actualDelay=10001
+06-28 23:00:27.831 D/TemperatureStateSource(16823): Reading temperature: sequence=346
+06-28 23:00:27.837 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8676 raw data: VIRTUAL-GNSS-BATT:29578 VIRTUAL-NEUTRAL-QI:25513 VIRTUAL-QI-DISP:32867.6 VIRTUAL-SKIN:32867.6 VIRTUAL-USB2-BATT:28365.6 battery:27300 disp_therm:31038 gnss_tcxo_therm:28856 neutral_therm:27587 qi_therm:29902 usb_pwr_therm2:28611 
+06-28 23:00:27.838 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=346 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.867603]
+06-28 23:00:27.838 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:27.839 D/BusinessScope(16823): Start running the #700 block
+06-28 23:00:27.839 D/TemperatureStateSource(16823): sequence=346 waitTime=10000
+06-28 23:00:27.840 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:27.840 D/ImpulseStateSource(16823): Notify clients: 349
+06-28 23:00:27.840 D/BusinessScope(16823): Finish running the #700 block
+06-28 23:00:27.840 D/BusinessScope(16823): Start running the #701 block
+06-28 23:00:27.840 D/BusinessScope(16823): Finish running the #701 block
+06-28 23:00:27.846 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:00:27.854 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:00:27.854 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10141} in 16ms
+06-28 23:00:28.005 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:29.384 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:00:29.384 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:00:29.387 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@c60aeb9 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 23:00:29.387 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@c60aeb9 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 23:00:29.394 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 23:00:29.400 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 23:00:31.108 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:34.211 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:35.989 D/BoundBrokerSvc( 1571): onUnbind: Intent { act=com.google.android.gms.onboardingconsent.api.ConsentManagerApiService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+06-28 23:00:36.970 D/BoundBrokerSvc(17169): onUnbind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+06-28 23:00:37.321 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:37.841 D/TemperatureStateSource(16823): sequence=346 actualDelay=10001
+06-28 23:00:37.841 D/TemperatureStateSource(16823): Reading temperature: sequence=347
+06-28 23:00:37.846 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8764 raw data: VIRTUAL-GNSS-BATT:28675 VIRTUAL-NEUTRAL-QI:25460.2 VIRTUAL-QI-DISP:32876.4 VIRTUAL-SKIN:32876.4 VIRTUAL-USB2-BATT:28268.3 battery:27200 disp_therm:31060 gnss_tcxo_therm:27150 neutral_therm:27543 qi_therm:29836 usb_pwr_therm2:28567 
+06-28 23:00:37.847 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=347 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.8764]
+06-28 23:00:37.847 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:37.847 D/TemperatureStateSource(16823): sequence=347 waitTime=10000
+06-28 23:00:37.847 D/BusinessScope(16823): Start running the #702 block
+06-28 23:00:37.848 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:37.848 D/ImpulseStateSource(16823): Notify clients: 350
+06-28 23:00:37.848 D/BusinessScope(16823): Finish running the #702 block
+06-28 23:00:37.848 D/BusinessScope(16823): Start running the #703 block
+06-28 23:00:37.849 D/BusinessScope(16823): Finish running the #703 block
+06-28 23:00:39.387 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:00:39.388 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:00:40.432 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:40.980 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:00:40.989 D/InetDiagMessage(16260): Destroyed 1 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:00:40.989 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10274} in 20ms
+06-28 23:00:40.998 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:00:41.007 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:00:41.007 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={20274} in 19ms
+06-28 23:00:43.534 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:46.641 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:47.849 D/TemperatureStateSource(16823): sequence=347 actualDelay=10001
+06-28 23:00:47.849 D/TemperatureStateSource(16823): Reading temperature: sequence=348
+06-28 23:00:47.855 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8697 raw data: VIRTUAL-GNSS-BATT:28807 VIRTUAL-NEUTRAL-QI:25455.4 VIRTUAL-QI-DISP:32869.6 VIRTUAL-SKIN:32869.6 VIRTUAL-USB2-BATT:28364.4 battery:27300 disp_therm:31060 gnss_tcxo_therm:27314 neutral_therm:27565 qi_therm:29791 usb_pwr_therm2:28589 
+06-28 23:00:47.856 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=348 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.86965]
+06-28 23:00:47.856 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:47.856 D/BusinessScope(16823): Start running the #704 block
+06-28 23:00:47.858 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:47.858 D/ImpulseStateSource(16823): Notify clients: 351
+06-28 23:00:47.858 D/BusinessScope(16823): Finish running the #704 block
+06-28 23:00:47.858 D/BusinessScope(16823): Start running the #705 block
+06-28 23:00:47.859 D/BusinessScope(16823): Finish running the #705 block
+06-28 23:00:47.860 D/TemperatureStateSource(16823): sequence=348 waitTime=10000
+06-28 23:00:49.390 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:00:49.390 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:00:49.733 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:51.004 D/ActivityManager(16260): freezing 26034 io.homeassistant.companion.android
+06-28 23:00:51.017 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:00:51.032 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:00:51.032 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10274} in 22ms
+06-28 23:00:52.841 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:55.945 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:57.861 D/TemperatureStateSource(16823): sequence=348 actualDelay=10001
+06-28 23:00:57.862 D/TemperatureStateSource(16823): Reading temperature: sequence=349
+06-28 23:00:57.868 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8195 raw data: VIRTUAL-GNSS-BATT:28769 VIRTUAL-NEUTRAL-QI:25447 VIRTUAL-QI-DISP:32819.5 VIRTUAL-SKIN:32819.5 VIRTUAL-USB2-BATT:28266.1 battery:27200 disp_therm:30993 gnss_tcxo_therm:27338 neutral_therm:27521 qi_therm:29836 usb_pwr_therm2:28522 
+06-28 23:00:57.869 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=349 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.819454]
+06-28 23:00:57.869 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:57.869 D/BusinessScope(16823): Start running the #706 block
+06-28 23:00:57.871 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.8195 raw data: VIRTUAL-SKIN:32819.5 
+06-28 23:00:57.872 I/TemperatureStateSource(16823): temperature was set
+06-28 23:00:57.872 D/TemperatureStateSource(16823): sequence=349 waitTime=10000
+06-28 23:00:57.873 D/BusinessScope(16823): Enqueuing the block
+06-28 23:00:57.873 D/ImpulseStateSource(16823): Notify clients: 352
+06-28 23:00:57.873 D/BusinessScope(16823): Finish running the #706 block
+06-28 23:00:57.873 D/BusinessScope(16823): Start running the #707 block
+06-28 23:00:57.875 D/ImpulseConnection(16823): bindService: com.google.android.apps.turbo
+06-28 23:00:57.878 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:00:57.888 D/ActivityManager(16260): sync unfroze 22726 com.google.android.apps.turbo for 6
+06-28 23:00:57.889 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:00:57.892 D/ImpulseConnection(16823): onServiceConnected: ComponentInfo{com.google.android.apps.turbo/com.google.android.apps.turbo.adaptiveplatform.impulse.ImpulseClientService} service is null false
+06-28 23:00:57.892 W/ProcessStats(16260): Tracking association SourceState{bd88784 com.google.android.pixelsystemservice/10377 ImpFg #13132} whose proc state 5 is better than process ProcessState{c240bec com.google.android.apps.turbo/10141 pkg=com.google.android.apps.turbo} proc state 14 (0 skipped)
+06-28 23:00:57.893 D/BusinessScope(16823): Finish running the #707 block
+06-28 23:00:57.906 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 23:00:59.038 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:00:59.392 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:00:59.392 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:01.428 I/pixel-thermal( 1755): usb_pwr_therm2:28.522 raw data: usb_pwr_therm2:28522 
+06-28 23:01:01.428 I/pixel-thermal( 1755): quiet_therm:26.94 raw data: quiet_therm:26940 
+06-28 23:01:01.429 I/pixel-thermal( 1755): VIRTUAL-USB-THROTTLING:0 raw data: USB2-MINUS-QI:-1314 USB2-MINUS-USB:-178 VIRTUAL-USB-THROTTLING:0 qi_therm:29836 usb_pwr_therm:28700 usb_pwr_therm2:28522 
+06-28 23:01:01.430 I/pixel-thermal( 1755): VIRTUAL-USB-UI:0 raw data: USB2-MINUS-QI:-1314 USB2-MINUS-USB:-178 VIRTUAL-USB-UI:0 usb_pwr_therm2:28522 
+06-28 23:01:01.430 I/pixel-thermal( 1755): Power rails total power: 476.18 mW for 60066 ms
+06-28 23:01:01.430 I/pixel-thermal( 1755): Power rails [VSYS_PWR_DISPLAY: 141.54 mW] [S2S_VDD_G3D: 1.76 mW] [S10S_VDD2L: 16.01 mW] [S5S_VDDQ_MEM: 4.21 mW] [S10M_VDD_TPU: 2.20 mW] [L2S_VDD_AOC_RET: 7.05 mW] 
+06-28 23:01:01.430 I/pixel-thermal( 1755): Power rails [VSYS_PWR_MMWAVE: 0.06 mW] [S1M_VDD_MIF: 32.52 mW] [S5M_VDD_INT: 22.70 mW] [VSYS_PWR_RFFE: 5.11 mW] [S4M_VDD_CPUCL0: 19.42 mW] [S2M_VDD_CPUCL2: 5.05 mW] 
+06-28 23:01:01.430 I/pixel-thermal( 1755): Power rails [S3M_VDD_CPUCL1: 7.11 mW] [S4S_VDD2H_MEM: 21.51 mW] [S9S_VDD_AOC: 26.65 mW] [VSYS_PWR_MODEM: 163.28 mW] 
+06-28 23:01:01.430 I/pixel-thermal( 1755): CDEV log dc_icl state:0 tpu_cooling state:0 usbc-port state:0 wlc_fcc state:0 thermal-cpufreq-1 state:0 fcc state:0 thermal-gpufreq-0 state:0 thermal-cpufreq-2 state:0 thermal-cpufreq-0 state:0 
+06-28 23:01:01.836 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 0, knownAnswers: 0, sendDelayMs 119}
+06-28 23:01:02.131 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:02.939 D/AudioAnalytics( 1174): expiring previous audio state after 3600 seconds.
+06-28 23:01:03.377 I/ResourceTimer(16260): GetResourceValue count=32202 pvalues=18000,44000,57000,140000
+06-28 23:01:03.377 I/ResourceTimer(16260): RetrieveAttributes count=38559 pvalues=1000,3000,6000,24000
+06-28 23:01:05.200 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:05.203 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{0 : totalTimeMs 2392852 totalEntryCount 37249 lastEntryMs 12252392}
+06-28 23:01:05.203 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{1 : totalTimeMs 3645697 totalEntryCount 37392 lastEntryMs 12252394}
+06-28 23:01:05.203 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{2 : totalTimeMs 571672 totalEntryCount 397114 lastEntryMs 12252412}
+06-28 23:01:05.203 I/bthal.activitywatcher(  950): getStateResidency: ActivityStat{3 : totalTimeMs 1420449 totalEntryCount 435502 lastEntryMs 12252413}
+06-28 23:01:05.215 I/bthal.activitywatcher(  950): send_hci_activities_vsc: Sent VSC <[4]{89, 253, 1, 1}>
+06-28 23:01:05.215 W/android.hardware.power.stats-service.pixel(  978): getStateResidency latency for Bluetooth exceeded time allowed: 12275us
+06-28 23:01:05.216 I/bthal.activitywatcher(  950): filter_hci_activities_vse: Filtered <[103]{14, 101, 1, 89, 253, 0, 1, 14, 10, 0, 0, 220, 170, 0, 0, 23, 243, 54, 0, 0, 0, 0, 0, 26, 243, 54, 0, 0, 0, 0, 0, 15, 10, 0, 0, 110, 87, 0, 0, 26, 243, 54, 0, 0, 0, 0, 0, 23, 243, 54, 0, 0, 0, 0, 0, 203, 25, 0, 0, 66, 7, 0, 0, 22, 243, 54, 0, 0, 0, 0, 0, 22, 243, 54, 0, 0, 0, 0, 0, 138, 21, 0, 0, 157, 27, 0, 0, 21, 243, 54, 0, 0, 0, 0, 0, 22, 243, 54, 0, 0, 0, 0, 0}>
+06-28 23:01:05.216 I/bthal.flowcontrol(  950): HciEventPreProcess: HCI Event 0xe Opcode 0xfd59 Length 103 handled by ControllerActivityWatcher
+06-28 23:01:05.216 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe3 [cntr = 2541]
+06-28 23:01:05.216 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe3, rc: 0
+06-28 23:01:05.218 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe4 [cntr = 2542]
+06-28 23:01:05.218 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe4, rc: 0
+06-28 23:01:05.218 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe5 [cntr = 2543]
+06-28 23:01:05.218 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe5, rc: 0
+06-28 23:01:05.220 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe6 [cntr = 2544]
+06-28 23:01:05.220 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe6, rc: 0
+06-28 23:01:05.221 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe7 [cntr = 2545]
+06-28 23:01:05.221 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe7, rc: 0
+06-28 23:01:05.222 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe8 [cntr = 2546]
+06-28 23:01:05.222 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe8, rc: 0
+06-28 23:01:05.223 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xe9 [cntr = 2547]
+06-28 23:01:05.223 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xe9, rc: 0
+06-28 23:01:05.224 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xea [cntr = 2548]
+06-28 23:01:05.224 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xea, rc: 0
+06-28 23:01:05.226 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xeb [cntr = 2549]
+06-28 23:01:05.226 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xeb, rc: 0
+06-28 23:01:05.226 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xec [cntr = 2550]
+06-28 23:01:05.226 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xec, rc: 0
+06-28 23:01:05.228 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xed [cntr = 2551]
+06-28 23:01:05.229 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xed, rc: 0
+06-28 23:01:05.229 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xee [cntr = 2552]
+06-28 23:01:05.229 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xee, rc: 0
+06-28 23:01:05.229 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xef [cntr = 2553]
+06-28 23:01:05.231 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xef, rc: 0
+06-28 23:01:05.231 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xf0 [cntr = 2554]
+06-28 23:01:05.231 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xf0, rc: 0
+06-28 23:01:05.232 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xf1 [cntr = 2555]
+06-28 23:01:05.232 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xf1, rc: 0
+06-28 23:01:05.232 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xf2 [cntr = 2556]
+06-28 23:01:05.232 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xf2, rc: 0
+06-28 23:01:05.233 D/AOC     ( 1245): A3:MSG: controller.cc, 273: CNTRL: cmd ID: 0x000a, tag: 0xf3 [cntr = 2557]
+06-28 23:01:05.234 D/AOC     ( 1245): A3:MSG: controller.cc, 811: CNTRL: ipc: control, cmd ID: 0x000a, tag: 0xf3, rc: 0
+06-28 23:01:05.268 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:05.338 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 23:01:05.338 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 23:01:05.339 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 23:01:05.340 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 23:01:06.333 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:05:332 - 23:01:06:333, duration: 1000, le_adv_count: 1, total_le_adv_count: 92, total_event_count: 1
+06-28 23:01:06.768 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 1, additionalAnswers: 7, knownAnswers: 0, sendDelayMs 25}
+06-28 23:01:06.825 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 1, additionalAnswers: 7, knownAnswers: 0, sendDelayMs 33}
+06-28 23:01:07.873 D/TemperatureStateSource(16823): sequence=349 actualDelay=10001
+06-28 23:01:07.874 D/TemperatureStateSource(16823): Reading temperature: sequence=350
+06-28 23:01:07.880 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7874 raw data: VIRTUAL-GNSS-BATT:28640 VIRTUAL-NEUTRAL-QI:25424.6 VIRTUAL-QI-DISP:32787.4 VIRTUAL-SKIN:32787.4 VIRTUAL-USB2-BATT:28266.1 battery:27200 disp_therm:30971 gnss_tcxo_therm:27080 neutral_therm:27543 qi_therm:29747 usb_pwr_therm2:28522 
+06-28 23:01:07.882 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=350 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.787403]
+06-28 23:01:07.882 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:07.882 D/TemperatureStateSource(16823): sequence=350 waitTime=10000
+06-28 23:01:07.882 D/BusinessScope(16823): Start running the #708 block
+06-28 23:01:07.883 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:07.883 D/ImpulseStateSource(16823): Notify clients: 353
+06-28 23:01:07.883 D/BusinessScope(16823): Finish running the #708 block
+06-28 23:01:07.883 D/BusinessScope(16823): Start running the #709 block
+06-28 23:01:07.883 D/BusinessScope(16823): Finish running the #709 block
+06-28 23:01:08.351 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:09.015 I/UsageStatsService(16260): User[0] Flushing usage stats to disk
+06-28 23:01:09.159 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:01:09.395 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:01:09.395 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:01:09.395 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:01:09.395 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:11.457 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:12.897 V/SafetyCenterRefreshTrac(16260): Clearing refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1
+06-28 23:01:12.897 W/SafetyCenterRefreshTrac(16260): Timeout after PT1H0.017S for refresh with reason: 600, and id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1
+06-28 23:01:12.898 W/SafetyCenterRefreshTrac(16260): Refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1 timed out for tracked source id: AdvancedProtection, and user id: 0
+06-28 23:01:12.899 W/SafetyCenterRefreshTrac(16260): Refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1 timed out for tracked source id: GoogleSecurityUpdates, and user id: 0
+06-28 23:01:12.899 W/SafetyCenterRefreshTrac(16260): Refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1 timed out for tracked source id: GoogleFindMyDevice, and user id: 0
+06-28 23:01:12.899 W/SafetyCenterRefreshTrac(16260): Refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1 timed out for tracked source id: AdvancedProtectionIssueSource, and user id: 0
+06-28 23:01:12.899 W/SafetyCenterRefreshTrac(16260): Refresh with id: 076fc391-6788-45c2-9fab-e507c8dfd5cc_1 timed out for tracked source id: GoogleAutoLock, and user id: 0
+06-28 23:01:13.408 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:12:408 - 23:01:13:408, duration: 1000, le_adv_count: 1, total_le_adv_count: 93, total_event_count: 1
+06-28 23:01:13.584 I/WPKTRT  ( 1152): process_address_event: fdd1:10c1:d9d9:5e6a:5c50:ceff:fef7:1e2c added to wlan0
+06-28 23:01:13.584 I/WPKTRT  ( 1152): process_address_event: fdd1:10c1:d9d9:5e6a:d56:2aa:e2b:c1f added to wlan0
+06-28 23:01:13.590 D/IpClient/wlan0(16788): addressUpdated: fdd1:10c1:d9d9:5e6a:5c50:ceff:fef7:1e2c/64 on ifindex 47 flags 0x00000100 scope 0
+06-28 23:01:13.590 D/IpClient/wlan0(16788): addressUpdated: fdd1:10c1:d9d9:5e6a:d56:2aa:e2b:c1f/64 on ifindex 47 flags 0x00000001 scope 0
+06-28 23:01:13.591 W/AlarmManager(16788): Unrecognized alarm listener com.android.networkstack.android.net.ip.IpClientLinkObserver$Dhcp6PdPreferredPrefixAlarmListener@187da97
+06-28 23:01:13.594 D/ApfFilter(16788): (wlan0): Adding RA fe80::9d8b:58ab:795c:8387 -> ff02::1 0s fdd1:10c1:d9d9:5e6a::/64 1800s/1800s RIO 1800s fd23:980d:149f:1::/64 
+06-28 23:01:13.597 E/WifiHAL ( 1013): Setting APF program, halHandle = 0xb40000791a9d19d0
+06-28 23:01:13.597 E/WifiHAL ( 1013): Set apf filter for iface = wlan0
+06-28 23:01:13.597 I/WifiHAL ( 1013): createRequest: APF set program request
+06-28 23:01:13.597 I/WifiHAL ( 1013): mProgramLen : 509
+06-28 23:01:14.567 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:15.173 I/dtnd    (17590): (REDACTED) Probing voice interaction service recovery for condition(%s).
+06-28 23:01:15.174 I/dtnd    (17590): (REDACTED) Skipping voice interaction service recovery(%s) for condition(%s).
+06-28 23:01:15.174 I/dtnd    (17590): (REDACTED) Skipping voice interaction service recovery(%s) for condition(%s).
+06-28 23:01:17.058 I/AiAiStatsd(17595): (REDACTED) No op: the most recent atoms from the date %s have been uploaded.
+06-28 23:01:17.660 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:17.884 D/TemperatureStateSource(16823): sequence=350 actualDelay=10001
+06-28 23:01:17.885 D/TemperatureStateSource(16823): Reading temperature: sequence=351
+06-28 23:01:17.890 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7424 raw data: VIRTUAL-GNSS-BATT:28640 VIRTUAL-NEUTRAL-QI:25366.4 VIRTUAL-QI-DISP:32742.4 VIRTUAL-SKIN:32742.4 VIRTUAL-USB2-BATT:28263.9 battery:27200 disp_therm:30926 gnss_tcxo_therm:27080 neutral_therm:27476 qi_therm:29702 usb_pwr_therm2:28478 
+06-28 23:01:17.891 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=351 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.742405]
+06-28 23:01:17.891 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:17.891 D/TemperatureStateSource(16823): sequence=351 waitTime=10000
+06-28 23:01:17.891 D/BusinessScope(16823): Start running the #710 block
+06-28 23:01:17.892 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:17.893 D/ImpulseStateSource(16823): Notify clients: 354
+06-28 23:01:17.893 D/BusinessScope(16823): Finish running the #710 block
+06-28 23:01:17.893 D/BusinessScope(16823): Start running the #711 block
+06-28 23:01:17.893 D/BusinessScope(16823): Finish running the #711 block
+06-28 23:01:19.398 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:01:19.398 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:01:19.398 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:01:19.398 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:20.754 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:21.621 I/BluetoothAdapterProperties( 3891): getBondedDevices: length=13
+06-28 23:01:21.627 I/BluetoothAdapterProperties( 3891): getBondedDevices: length=13
+06-28 23:01:21.806 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:20:805 - 23:01:21:806, duration: 1000, le_adv_count: 1, total_le_adv_count: 94, total_event_count: 1
+06-28 23:01:22.194 V/ClearcutMetricXmitter(17590): Transmission is done.
+06-28 23:01:23.326 I/pixel-thermal( 1755): VIRTUAL-SKIN-CPU:32.7807 raw data: VIRTUAL-GNSS-BATT:28511.5 VIRTUAL-NEUTRAL-QI:25406.6 VIRTUAL-QI-DISP:32780.7 VIRTUAL-SKIN:32780.7 VIRTUAL-SKIN-CPU:32780.7 VIRTUAL-USB2-BATT:28267.2 battery:27200 disp_therm:30971 gnss_tcxo_therm:26823 neutral_therm:27543 qi_therm:29702 usb_pwr_therm2:28544 
+06-28 23:01:23.327 I/pixel-thermal( 1755): VIRTUAL-SKIN-HINT:32.7807 raw data: VIRTUAL-SKIN:32780.7 VIRTUAL-SKIN-HINT:32780.7 
+06-28 23:01:23.327 I/pixel-thermal( 1755): VIRTUAL-SKIN-CPU-GPU:32.7807 raw data: VIRTUAL-SKIN:32780.7 VIRTUAL-SKIN-CPU-GPU:32780.7 
+06-28 23:01:23.857 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:23.966 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 109 ms
+06-28 23:01:25.875 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:24:874 - 23:01:25:875, duration: 1000, le_adv_count: 1, total_le_adv_count: 95, total_event_count: 1
+06-28 23:01:26.998 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:27.892 D/TemperatureStateSource(16823): sequence=351 actualDelay=10002
+06-28 23:01:27.893 D/TemperatureStateSource(16823): Reading temperature: sequence=352
+06-28 23:01:27.894 D/ImpulseConnection(16823): timeout happen: com.google.android.apps.turbo
+06-28 23:01:27.894 D/ImpulseConnection(16823): unbindService for releasing a CONNECTED connection com.google.android.apps.turbo
+06-28 23:01:27.898 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7807 raw data: VIRTUAL-GNSS-BATT:28511.5 VIRTUAL-NEUTRAL-QI:25406.6 VIRTUAL-QI-DISP:32780.7 VIRTUAL-SKIN:32780.7 VIRTUAL-USB2-BATT:28267.2 battery:27200 disp_therm:30971 gnss_tcxo_therm:26823 neutral_therm:27543 qi_therm:29702 usb_pwr_therm2:28544 
+06-28 23:01:27.902 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=352 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.780655]
+06-28 23:01:27.902 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:27.902 D/TemperatureStateSource(16823): sequence=352 waitTime=10000
+06-28 23:01:27.902 D/BusinessScope(16823): Start running the #712 block
+06-28 23:01:27.902 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:27.903 D/ImpulseStateSource(16823): Notify clients: 355
+06-28 23:01:27.903 D/BusinessScope(16823): Finish running the #712 block
+06-28 23:01:27.903 D/BusinessScope(16823): Start running the #713 block
+06-28 23:01:27.903 D/BusinessScope(16823): Finish running the #713 block
+06-28 23:01:29.400 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:01:29.400 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 2 times.
+06-28 23:01:29.400 I/NearbyMediums(17169): Total 2 fast advertisements from 1 unique advertisers.
+06-28 23:01:29.400 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:30.086 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:33.184 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:35.965 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7357 raw data: VIRTUAL-GNSS-BATT:28382.5 VIRTUAL-NEUTRAL-QI:25335.2 VIRTUAL-QI-DISP:32735.7 VIRTUAL-SKIN:32735.7 VIRTUAL-USB2-BATT:28263.9 battery:27200 disp_therm:30926 gnss_tcxo_therm:26565 neutral_therm:27454 qi_therm:29657 usb_pwr_therm2:28478 
+06-28 23:01:36.297 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:36.421 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 124 ms
+06-28 23:01:37.904 D/TemperatureStateSource(16823): sequence=352 actualDelay=10001
+06-28 23:01:37.904 D/TemperatureStateSource(16823): Reading temperature: sequence=353
+06-28 23:01:37.907 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7357 raw data: VIRTUAL-SKIN:32735.7 
+06-28 23:01:37.910 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=353 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.735653]
+06-28 23:01:37.910 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:37.910 D/TemperatureStateSource(16823): sequence=353 waitTime=10000
+06-28 23:01:37.910 D/BusinessScope(16823): Start running the #714 block
+06-28 23:01:37.911 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:37.911 D/ImpulseStateSource(16823): Notify clients: 356
+06-28 23:01:37.911 D/BusinessScope(16823): Finish running the #714 block
+06-28 23:01:37.912 D/BusinessScope(16823): Start running the #715 block
+06-28 23:01:37.915 D/BusinessScope(16823): Finish running the #715 block
+06-28 23:01:37.956 D/ActivityManager(16260): freezing 22726 com.google.android.apps.turbo
+06-28 23:01:37.968 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+06-28 23:01:37.975 D/InetDiagMessage(16260): Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+06-28 23:01:37.975 D/InetDiagMessage(16260): Destroyed live tcp sockets for uids={10141} in 14ms
+06-28 23:01:39.403 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:01:39.403 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:39.404 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@86a07ed size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 23:01:39.404 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@86a07ed size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 23:01:39.405 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 23:01:39.409 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 23:01:39.460 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:41.961 I/pixel-thermal( 1755): VIRTUAL-SKIN-CHARGE:32.7706 raw data: VIRTUAL-GNSS-BATT:28543.5 VIRTUAL-NEUTRAL-QI:25339.6 VIRTUAL-QI-DISP:32770.6 VIRTUAL-SKIN-CHARGE:32770.6 VIRTUAL-USB2-BATT:28167.8 battery:27100 disp_therm:30971 gnss_tcxo_therm:26987 neutral_therm:27476 qi_therm:29635 usb_pwr_therm2:28455 
+06-28 23:01:42.556 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:45.663 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:45.929 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 23:01:45.930 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 23:01:45.931 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 23:01:45.932 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 23:01:46.920 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:45:919 - 23:01:46:920, duration: 1000, le_adv_count: 1, total_le_adv_count: 96, total_event_count: 1
+06-28 23:01:47.912 D/TemperatureStateSource(16823): sequence=353 actualDelay=10001
+06-28 23:01:47.912 D/TemperatureStateSource(16823): Reading temperature: sequence=354
+06-28 23:01:47.917 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7706 raw data: VIRTUAL-GNSS-BATT:28543.5 VIRTUAL-NEUTRAL-QI:25339.6 VIRTUAL-QI-DISP:32770.6 VIRTUAL-SKIN:32770.6 VIRTUAL-USB2-BATT:28167.8 battery:27100 disp_therm:30971 gnss_tcxo_therm:26987 neutral_therm:27476 qi_therm:29635 usb_pwr_therm2:28455 
+06-28 23:01:47.919 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=354 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.770603]
+06-28 23:01:47.920 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:47.920 D/TemperatureStateSource(16823): sequence=354 waitTime=10000
+06-28 23:01:47.920 D/BusinessScope(16823): Start running the #716 block
+06-28 23:01:47.921 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:47.921 D/ImpulseStateSource(16823): Notify clients: 357
+06-28 23:01:47.921 D/BusinessScope(16823): Finish running the #716 block
+06-28 23:01:47.922 D/BusinessScope(16823): Start running the #717 block
+06-28 23:01:47.922 D/BusinessScope(16823): Finish running the #717 block
+06-28 23:01:48.761 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:49.405 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:01:49.405 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:01:49.405 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:01:49.405 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:51.863 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:54.462 I/bluetooth( 3891): system/gd/hci/le_advertising_manager_impl.cc:831 set_advertising_set_random_address_on_timer: Scheduling address rotation for advertiser_id=2
+06-28 23:01:54.462 I/bluetooth( 3891): system/gd/hci/le_address_manager.cc:578 GetNextPrivateAddressIntervalRange: client=advertising_set_2, nonwake=8m30s, wake=13m8s
+06-28 23:01:54.485 I/bluetooth( 3891): system/gd/hci/le_advertising_manager_impl.cc:1735 on_set_advertising_set_random_address_complete: update random address for advertising set 2 : xx:xx:xx:xx:ea:3e
+06-28 23:01:54.956 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:57.921 D/TemperatureStateSource(16823): sequence=354 actualDelay=10001
+06-28 23:01:57.922 D/TemperatureStateSource(16823): Reading temperature: sequence=355
+06-28 23:01:57.929 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.6787 raw data: VIRTUAL-GNSS-BATT:28555 VIRTUAL-NEUTRAL-QI:25361.6 VIRTUAL-QI-DISP:32678.7 VIRTUAL-SKIN:32678.7 VIRTUAL-USB2-BATT:28165.6 battery:27100 disp_therm:30859 gnss_tcxo_therm:27010 neutral_therm:27498 qi_therm:29657 usb_pwr_therm2:28411 
+06-28 23:01:57.929 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=355 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.678703]
+06-28 23:01:57.929 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:57.930 D/TemperatureStateSource(16823): sequence=355 waitTime=10000
+06-28 23:01:57.930 D/BusinessScope(16823): Start running the #718 block
+06-28 23:01:57.932 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.6787 raw data: VIRTUAL-SKIN:32678.7 
+06-28 23:01:57.934 I/TemperatureStateSource(16823): temperature was set
+06-28 23:01:57.935 D/BusinessScope(16823): Enqueuing the block
+06-28 23:01:57.935 D/ImpulseStateSource(16823): Notify clients: 358
+06-28 23:01:57.935 D/BusinessScope(16823): Finish running the #718 block
+06-28 23:01:57.936 D/BusinessScope(16823): Start running the #719 block
+06-28 23:01:57.939 D/ImpulseConnection(16823): bindService: com.google.android.apps.turbo
+06-28 23:01:57.942 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:01:57.951 D/ActivityManager(16260): sync unfroze 22726 com.google.android.apps.turbo for 6
+06-28 23:01:57.952 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:01:57.958 D/ImpulseConnection(16823): onServiceConnected: ComponentInfo{com.google.android.apps.turbo/com.google.android.apps.turbo.adaptiveplatform.impulse.ImpulseClientService} service is null false
+06-28 23:01:57.960 D/BusinessScope(16823): Finish running the #719 block
+06-28 23:01:57.961 W/ProcessStats(16260): Tracking association SourceState{bd88784 com.google.android.pixelsystemservice/10377 ImpFg #13139} whose proc state 5 is better than process ProcessState{c240bec com.google.android.apps.turbo/10141 pkg=com.google.android.apps.turbo} proc state 14 (0 skipped)
+06-28 23:01:57.973 W/Turbo.DeviceHealthLeversManagerImpl(22726): applyLeversWithMaintenanceWindow: ignore the same request
+06-28 23:01:58.064 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:01:58.168 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 103 ms
+06-28 23:01:59.407 I/NearbyMediums(17169): No BLE Fast/GATT advertisements found in the latest cycle.
+06-28 23:01:59.407 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:01:59.410 I/NearbyConnections(17169): Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@30c1146 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-28 23:01:59.410 I/NearbyConnections(17169): Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@30c1146 size=2 contents="\025g">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ]).
+06-28 23:01:59.411 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointLost(7W9I)
+06-28 23:01:59.412 I/NearbySharing(17169): NearbySharing Internal event EndpointLost(endpointId=7W9I)
+06-28 23:02:00.004 I/NearbyConnections(17169): Found BleAdvertisement [ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ] (with EndpointId 7W9I and EndpointInfo [ 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ])
+06-28 23:02:00.004 I/NearbyConnections(17169): ClientProxy(1750107 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(7W9I)
+06-28 23:02:00.005 I/NearbyConnections(17169): ClientProxy(1750107) reporting onEndpointDistanceChanged(7W9I, UNKNOWN)
+06-28 23:02:00.009 I/NearbySharing(17169): NearbySharing Internal event EndpointDiscovered(endpointId=7W9I)
+06-28 23:02:00.996 I/bthal.activity(  950): bt_power: LeAdvStat: 23:01:59:995 - 23:02:00:996, duration: 1000, le_adv_count: 1, total_le_adv_count: 97, total_event_count: 1
+06-28 23:02:01.201 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:01.425 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 0, knownAnswers: 0, sendDelayMs 104}
+06-28 23:02:01.457 I/pixel-thermal( 1755): usb_pwr_therm2:28.411 raw data: usb_pwr_therm2:28411 
+06-28 23:02:01.457 I/pixel-thermal( 1755): quiet_therm:26.799 raw data: quiet_therm:26799 
+06-28 23:02:01.458 I/pixel-thermal( 1755): VIRTUAL-USB-THROTTLING:0 raw data: USB2-MINUS-QI:-1246 USB2-MINUS-USB:-22 VIRTUAL-USB-THROTTLING:0 qi_therm:29657 usb_pwr_therm:28433 usb_pwr_therm2:28411 
+06-28 23:02:01.459 I/pixel-thermal( 1755): VIRTUAL-USB-UI:0 raw data: USB2-MINUS-QI:-1246 USB2-MINUS-USB:-22 VIRTUAL-USB-UI:0 usb_pwr_therm2:28411 
+06-28 23:02:01.459 I/pixel-thermal( 1755): Power rails total power: 477.62 mW for 60029 ms
+06-28 23:02:01.459 I/pixel-thermal( 1755): Power rails [VSYS_PWR_DISPLAY: 142.15 mW] [S2S_VDD_G3D: 1.76 mW] [S10S_VDD2L: 16.02 mW] [S5S_VDDQ_MEM: 4.30 mW] [S10M_VDD_TPU: 2.20 mW] [L2S_VDD_AOC_RET: 7.03 mW] 
+06-28 23:02:01.459 I/pixel-thermal( 1755): Power rails [VSYS_PWR_MMWAVE: 0.06 mW] [S1M_VDD_MIF: 32.93 mW] [S5M_VDD_INT: 22.58 mW] [VSYS_PWR_RFFE: 4.95 mW] [S4M_VDD_CPUCL0: 19.45 mW] [S2M_VDD_CPUCL2: 4.83 mW] 
+06-28 23:02:01.459 I/pixel-thermal( 1755): Power rails [S3M_VDD_CPUCL1: 7.62 mW] [S4S_VDD2H_MEM: 21.89 mW] [S9S_VDD_AOC: 26.71 mW] [VSYS_PWR_MODEM: 163.16 mW] 
+06-28 23:02:01.460 I/pixel-thermal( 1755): CDEV log dc_icl state:0 tpu_cooling state:0 usbc-port state:0 wlc_fcc state:0 thermal-cpufreq-1 state:0 fcc state:0 thermal-gpufreq-0 state:0 thermal-cpufreq-2 state:0 thermal-cpufreq-0 state:0 
+06-28 23:02:04.308 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:06.522 I/MdnsReplySender(16260): Sending {MdnsReplyInfo: /192.168.1.253:5353 to /224.0.0.251:5353, answers: 2, additionalAnswers: 10, knownAnswers: 0, sendDelayMs 84}
+06-28 23:02:07.405 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:07.931 D/TemperatureStateSource(16823): sequence=355 actualDelay=10001
+06-28 23:02:07.932 D/TemperatureStateSource(16823): Reading temperature: sequence=356
+06-28 23:02:07.937 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.7104 raw data: VIRTUAL-GNSS-BATT:28543.5 VIRTUAL-NEUTRAL-QI:25317.6 VIRTUAL-QI-DISP:32710.4 VIRTUAL-SKIN:32710.4 VIRTUAL-USB2-BATT:28165.6 battery:27100 disp_therm:30904 gnss_tcxo_therm:26987 neutral_therm:27454 qi_therm:29613 usb_pwr_therm2:28411 
+06-28 23:02:07.939 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=356 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.710354]
+06-28 23:02:07.939 D/BusinessScope(16823): Enqueuing the block
+06-28 23:02:07.939 D/TemperatureStateSource(16823): sequence=356 waitTime=10000
+06-28 23:02:07.939 D/BusinessScope(16823): Start running the #720 block
+06-28 23:02:07.939 D/BusinessScope(16823): Enqueuing the block
+06-28 23:02:07.939 D/ImpulseStateSource(16823): Notify clients: 359
+06-28 23:02:07.939 D/BusinessScope(16823): Finish running the #720 block
+06-28 23:02:07.940 D/BusinessScope(16823): Start running the #721 block
+06-28 23:02:07.941 D/BusinessScope(16823): Finish running the #721 block
+06-28 23:02:09.410 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:02:09.410 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:02:09.410 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:02:09.410 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:02:10.296 I/android.hardware.health-service.gs101(  967): Recording a sample at time 9180
+06-28 23:02:10.503 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:12.090 I/bthal.activity(  950): bt_power: LeAdvStat: 23:02:11:089 - 23:02:12:090, duration: 1000, le_adv_count: 1, total_le_adv_count: 98, total_event_count: 1
+06-28 23:02:13.602 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:16.716 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:16.831 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 115 ms
+06-28 23:02:17.941 D/TemperatureStateSource(16823): sequence=356 actualDelay=10002
+06-28 23:02:17.941 D/TemperatureStateSource(16823): Reading temperature: sequence=357
+06-28 23:02:17.946 I/pixel-thermal( 1755): VIRTUAL-SKIN:32.6754 raw data: VIRTUAL-GNSS-BATT:28531.5 VIRTUAL-NEUTRAL-QI:25326.4 VIRTUAL-QI-DISP:32675.4 VIRTUAL-SKIN:32675.4 VIRTUAL-USB2-BATT:28164.4 battery:27100 disp_therm:30859 gnss_tcxo_therm:26963 neutral_therm:27454 qi_therm:29635 usb_pwr_therm2:28389 
+06-28 23:02:17.947 D/TemperatureStateSource(16823): getDeviceTemperatures: sequence=357 deviceTemperatureType=3 temperatureSource=0 temperatures=[32.675404]
+06-28 23:02:17.947 D/BusinessScope(16823): Enqueuing the block
+06-28 23:02:17.947 D/TemperatureStateSource(16823): sequence=357 waitTime=10000
+06-28 23:02:17.948 D/BusinessScope(16823): Start running the #722 block
+06-28 23:02:17.948 D/BusinessScope(16823): Enqueuing the block
+06-28 23:02:17.948 D/ImpulseStateSource(16823): Notify clients: 360
+06-28 23:02:17.948 D/BusinessScope(16823): Finish running the #722 block
+06-28 23:02:17.949 D/BusinessScope(16823): Start running the #723 block
+06-28 23:02:17.949 D/BusinessScope(16823): Finish running the #723 block
+06-28 23:02:19.412 I/NearbyMediums(17169): Found Fast Ble Advertisements :
+06-28 23:02:19.412 I/NearbyMediums(17169): BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x37 0x57 0x39 0x49 0x11 0x34 0x8b 0x5b 0x8a 0x28 0xb0 0xef 0x92 0x53 0xce 0xe2 0x4a 0x72 0x72 0xd9 0x2d 0xf8 ], deviceToken=[ 0x15 0x67 ], rxAdvertisement=null } : 1 times.
+06-28 23:02:19.412 I/NearbyMediums(17169): Total 1 fast advertisements from 1 unique advertisers.
+06-28 23:02:19.413 I/NearbyMediums(17169): Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-28 23:02:19.872 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:22.980 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:23.091 D/IwlanDataService(17243): onCapabilitiesChanged: 102 [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=20645Kbps LinkDnBandwidth>=46613Kbps TransportInfo: <SSID: "pyrolan", BSSID: 4a:d9:e7:f8:c7:2b, MAC: 5e:50:ce:f7:1e:2c, IP: /192.168.1.210, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -60, Link speed: 400Mbps, Tx Link speed: 400Mbps, Max Supported Tx Link speed: 400Mbps, Rx Link speed: 300Mbps, Max Supported Rx Link speed: 400Mbps, Frequency: 5180MHz, Net ID: 103, Metered hint: false, score: 51, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"pyrolan"wpa3-saeMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -60 AdminUids: [10161] SSID: "pyrolan" UnderlyingNetworks: Null]
+06-28 23:02:23.092 D/IwlanDataService(17243): Network 102 connected using transport WIFI
+06-28 23:02:23.096 D/IwlanNetworkService(17243): onCapabilitiesChanged: 102
+06-28 23:02:23.107 D/DeviceStateHelper(18085): Wifi freq: 5180
+06-28 23:02:23.108 I/WifiSignalInfo(18085): onCapabilitiesChanged: rssi:-60
+06-28 23:02:23.113 I/BugleRcsEngine(17604): handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[c59b510c-a1f8]>Handler" thread_id=63 ]
+06-28 23:02:23.116 I/BugleRcsEngine(17604): Cannot use CS.apk as it's battery optimized [CONTEXT thread_id=63 ]
+06-28 23:02:23.117 E/PhoneInterfaceManager(16971): getCarrierPrivilegeStatusForUid: Invalid subId
+06-28 23:02:23.118 I/MagicTether(17169): (REDACTED) [ActiveNetworkTracker] setActiveNetwork: %s
+06-28 23:02:23.118 I/MagicTether(17169): (REDACTED) [TetherService] onActiveNetworkChanged: network=%s isLost=%s
+06-28 23:02:23.119 I/MagicTether(17169): [WifiConnectionHandler] Ignoring getWifiConfigurationByNetworkId when checking connected state [CONTEXT service_id=276 ]
+06-28 23:02:23.119 I/MagicTether(17169): [WifiConnectionHandler] No networkId set, can't be connected. [CONTEXT service_id=276 ]
+06-28 23:02:23.119 I/BugleRcsEngine(17604): Connected state: [1], networkType: [WIFI] [CONTEXT thread_id=58 ]
+06-28 23:02:23.123 I/NullBinder(17169): NullBinder for android.net.action.RECOMMEND_NETWORKS triggering remote TransactionTooLargeException due to Service without Chimera impl, calling uid: 1000, calling pid: 0
+06-28 23:02:23.123 W/libbinder.Binder(17169): Large reply transaction of 1056768 bytes, interface descriptor , code 1, flags 17
+06-28 23:02:23.124 D/CHRE    (  957): @ 9187.888: Parsed nanoapp message from host: app ID 0x476f6f676c00100b endpoint 0x3 msgType 112 payload size 14
+06-28 23:02:23.124 I/CHRE    (  957): @ 9187.888: [NanoMinion] received MSG Type 0x70, Version 1, 10 bytes
+06-28 23:02:23.124 I/CHRE    (  957): @ 9187.888: [AR] context-signal: has_bt=0, bt=0, has_wifi=1, wifi=1
+06-28 23:02:23.125 D/ActivityManager(16260): sync unfroze 18298 com.google.android.apps.messaging for 7
+06-28 23:02:23.126 D/BackgroundInstallControlService(16260): Package event received: 0
+06-28 23:02:23.127 I/MagicTether(17169): (REDACTED) [TetherService] TRANSPORT_CELLULAR [%s], TRANSPORT_ETHERNET [%s], TRANSPORT_WIFI [%s]
+06-28 23:02:23.130 I/MagicTether(17169): (REDACTED) [TetherService] setRoles hasActiveNetworkConnection=%s canActiveNetworkBeTethered=%s isConnectedToInstantTether=%s isWifiEnabled=%s isHosting=%s
+06-28 23:02:23.138 I/MagicTether(17169): (REDACTED) [LaunchUtils] Instant Wifi for status account: name: %s | type: %s | isLaunched: %s
+06-28 23:02:23.138 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 23:02:23.138 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantWifiEnabled=%s
+06-28 23:02:23.138 I/MagicTether(17169): (REDACTED) [TetherService] startNearbyClientRole: start: %s isInstantHotspotEnabled: %s isInstantWifiEnabled: %s
+06-28 23:02:23.138 I/MagicTether(17169): [TetherService] Stopping Nearby client role [CONTEXT service_id=276 ]
+06-28 23:02:23.138 I/MagicTether(17169): [ClientTetherRole] Client role already stopped [CONTEXT service_id=276 ]
+06-28 23:02:23.139 I/MagicTether(17169): (REDACTED) [LaunchUtils] Instant Wifi for status account: name: %s | type: %s | isLaunched: %s
+06-28 23:02:23.139 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 23:02:23.139 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantWifiEnabled=%s
+06-28 23:02:23.139 I/MagicTether(17169): (REDACTED) [TetherService] startNearbyHostRole: start: %s isInstantHotspotEnabled: %s isInstantWifiEnabled: %s
+06-28 23:02:23.139 I/MagicTether(17169): (REDACTED) [TidepoolFeatureStatusManager] isInstantHotspotEnabled=%s
+06-28 23:02:23.139 I/MagicTether(17169): [HostTetherRole] Nearby host role already started [CONTEXT service_id=276 ]
+06-28 23:02:23.611 I/NearbySharing(17169): Network state changed: NetworkState(isRestricted=false, isOnline=true, isCongested=false, isMetered=false, isWifiConnected=true)
+06-28 23:02:26.085 I/WifiHAL ( 1013): Creating message to get link statistics; iface = 47
+06-28 23:02:26.193 I/bthal.activity(  950): bt_power: LeAdvStat: 23:02:25:192 - 23:02:26:193, duration: 1000, le_adv_count: 1, total_le_adv_count: 99, total_event_count: 1
+06-28 23:02:26.209 E/libbinder.IPCThreadState( 1013): binder thread pool (1 threads) starved for 124 ms

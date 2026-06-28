@@ -107,6 +107,10 @@ class TandemPumpController private constructor(
         @Volatile private var activePump: TandemPump? = null
         @Volatile private var activeChallenge: AbstractCentralChallengeResponse? = null
         private const val HISTORY_CHUNK = 250
+        // First sync only pulls a recent window — the pump can hold hundreds of thousands of logs and
+        // fetching them all over an unstable BLE link never completes. Reconnects then extend forward
+        // via the persisted cursor.
+        private const val MAX_INITIAL_LOGS = 2000L
         private const val WATCHDOG_MS = 6000L
         private const val MAX_STALLS = 8
         private const val CURSOR_KEY = "tandem_last_seq"
@@ -295,7 +299,7 @@ class TandemPumpController private constructor(
             super.onPumpConnected(peripheral)
             main.post { listener?.onConnected(meta.model) }
             status("Connected — syncing into xDrip…")
-            beginSnapshotThenHistory(peripheral)
+            beginSync(peripheral)
         }
         override fun onReceiveMessage(peripheral: BluetoothPeripheral?, message: Message?) {
             if (message == null) return
@@ -318,11 +322,21 @@ class TandemPumpController private constructor(
         override fun onPumpCriticalError(peripheral: BluetoothPeripheral?, reason: TandemError?) { super.onPumpCriticalError(peripheral, reason); error("Pump error: ${reason?.name}") }
     }
 
-    private fun beginSnapshotThenHistory(per: BluetoothPeripheral?) {
+    private fun beginSync(per: BluetoothPeripheral?) {
         per ?: return
-        var delay = 600L
-        for (req in ReadRequests.all()) { senderHandler.postDelayed({ safeSend(per, req) }, delay); delay += 150L }
-        senderHandler.postDelayed({ status("Requesting history log…"); safeSend(per, HistoryLogStatusRequest()) }, delay + 400L)
+        // History FIRST (boluses/carbs/basal — the data that matters for the graph), and keep BLE
+        // traffic light: the pump terminates the link if hit with many simultaneous requests. The
+        // small status-read set runs afterwards, one at a time (see finishHistory -> sendStatusReads).
+        historyStarted = false; historyComplete = false; stalls = 0; lastSeenAtWatchdog = -1
+        senderHandler.postDelayed({ status("Requesting history log…"); safeSend(per, HistoryLogStatusRequest()) }, 700L)
+    }
+
+    /** Send the minimal status reads one-at-a-time (paced) so we never flood the pump. */
+    private fun sendStatusReads(per: BluetoothPeripheral, queue: ArrayDeque<Message>) {
+        if (stopped || !connected) return
+        val msg = queue.removeFirstOrNull() ?: return
+        safeSend(per, msg)
+        senderHandler.postDelayed({ sendStatusReads(per, queue) }, 600L)
     }
 
     private fun safeSend(per: BluetoothPeripheral, msg: Message) {
@@ -335,7 +349,10 @@ class TandemPumpController private constructor(
         historyStarted = true; historyComplete = false
         histLast = resp.lastSequenceNum
         val cursor = PersistentStore.getLong(CURSOR_KEY)
-        startSeq = if (cursor > 0) maxOf(resp.firstSequenceNum, cursor + 1) else resp.firstSequenceNum
+        startSeq = when {
+            cursor > 0 -> maxOf(resp.firstSequenceNum, cursor + 1)               // incremental: only new
+            else -> maxOf(resp.firstSequenceNum, histLast - MAX_INITIAL_LOGS + 1) // first sync: recent only
+        }
         nextSeq = startSeq
         val sessionTotal = if (histLast >= startSeq) histLast - startSeq + 1 else 0
         meta.historyTotal = sessionTotal; emitMeta()
@@ -420,6 +437,9 @@ class TandemPumpController private constructor(
         meta.lastSync = System.currentTimeMillis()
         status("Synced — ${meta.boluses} boluses, ${meta.carbs} carbs, ${meta.basal} basal → xDrip.")
         main.post { listener?.onDone(meta) }
+        // Now (and only now) fetch the small status set for the pump-status display, paced one-by-one.
+        val per = peripheral
+        if (per != null && !stopped && connected) senderHandler.postDelayed({ sendStatusReads(per, ArrayDeque(ReadRequests.all())) }, 500L)
     }
 
     private fun emitMeta() { main.post { listener?.onMetadata(meta) } }
