@@ -8,6 +8,30 @@ protocol library), downloads the pump history + live status, and writes **boluse
 > ⚠️ Read-only research tool. Not affiliated with / approved by Tandem or Dexcom. Use only with a
 > pump you own. It can **not** dose insulin (see Safety below).
 
+## Verified on Android 17 (Pixel, 16 KB pages)
+
+Built by CI and installed on an **Android 17 / API 37, 16 KB-page Pixel emulator**
+(`sdk_gphone16k_x86_64`, 1440×3120). The APK has **no native libraries**, so the 16 KB-page
+requirement is satisfied automatically; `minSdk 26` installs fine.
+
+| Tandem screen (idle) | Enabled — background service scanning | Launcher entry |
+|---|---|---|
+| ![Tandem screen](docs/screenshots/01_tandem_screen.png) | ![Scanning](docs/screenshots/02_enabled_scanning.png) | ![Launcher](docs/screenshots/03_app_drawer.png) |
+
+What was exercised on-device:
+- ✅ Installs + launches on Android 17 (16 KB pages); separate **"xDrip Tandem"** launcher icon.
+- ✅ The one screen renders: **Enable & Sync / Disable / Open xDrip**, Pump status, Log.
+- ✅ **Enable** starts the foreground service and BLE scan — status shows *"Scanning for a Tandem
+  pump…"* and the button switches to **Sync now**. Verified running as a foreground service:
+  `dumpsys` reports `TandemPumpService isForeground=true foregroundId=7713 channel=ongoingChannel`
+  — so it keeps syncing in the background and is restarted on launch (START_STICKY + `Home`).
+- On launch xDrip shows its usual *"older Android version"* notice + self-updater (stock xDrip
+  behaviour, target SDK 24) — just dismiss them.
+
+> Not emulator-testable: the actual BLE **pairing + pump data pull** needs a real Bluetooth radio,
+> so live boluses/carbs/basal on the native graph require the APK on a **physical phone + the pump**.
+> The wiring that places them there (`Treatments` + `APStatus`) is covered below.
+
 ## Design: feed xDrip's NATIVE screens, add no display UI
 All diabetes data is written into xDrip's own stores and shown on the **standard** xDrip
 graph / treatments / IOB-COB / basal screens. The **only** new screen is pump pairing + pump
