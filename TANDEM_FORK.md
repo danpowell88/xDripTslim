@@ -1,143 +1,70 @@
-# xDrip+ — Tandem pump fork (read-only insulin/pump ingest)
+# xDrip+ for Tandem pumps — user guide
 
-This fork adds a **read-only** Tandem **t:slim X2 / Mobi** integration to xDrip+. It connects to
-the pump over Bluetooth LE (via the MIT-licensed [pumpX2](https://github.com/jwoglom/pumpX2)
-protocol library), downloads the pump history + live status, and writes **boluses (insulin)** and
-**carbs** into xDrip's `Treatments` store so they render on the main graph and feed IOB/COB.
+See your Tandem **t:slim X2 / Mobi** pump's **insulin, carbs and basal** inside xDrip+, straight over
+Bluetooth — no cloud account, no t:connect upload. It is **read-only**: it can only *read* from the
+pump and can never change anything on it.
 
-> ⚠️ Read-only research tool. Not affiliated with / approved by Tandem or Dexcom. Use only with a
-> pump you own. It can **not** dose insulin (see Safety below).
+> ⚠️ Unofficial research tool. **Not** affiliated with, approved by, or supported by Tandem or
+> Dexcom. Use only with a pump you own, and never for treatment decisions.
 
-## Verified on Android 17 (Pixel, 16 KB pages)
+## What it looks like
 
-Built by CI and installed on an **Android 17 / API 37, 16 KB-page Pixel emulator**
-(`sdk_gphone16k_x86_64`, 1440×3120). The APK has **no native libraries**, so the 16 KB-page
-requirement is satisfied automatically; `minSdk 26` installs fine.
-
-Open it from **xDrip → menu → Settings → Experimental → "Tandem pump (read-only)"** (its own pump
-logo; no separate app icon). The pump screen follows xDrip's design — section headings + label/value
-rows. (Pump page shown with sample data; live values appear once paired to a real pump.)
-
-| Settings → Experimental (pump logo) | Tandem pump page (sample data) |
+| Find it under Settings → Experimental | The pump screen |
 |---|---|
 | ![Experimental menu](docs/screenshots/04_experimental_menu.png) | ![Pump page](docs/screenshots/05_pump_page_populated.png) |
 
-What was exercised on-device:
-- ✅ Installs + launches on Android 17 (16 KB pages); opened from the in-app Experimental menu.
-- ✅ The one screen renders: **Enable & Sync / Disable / Sync now**, Pump status, Log.
-- ✅ **Enable** starts the foreground service and BLE scan — status shows *"Scanning for a Tandem
-  pump…"* and the button switches to **Sync now**. Verified running as a foreground service:
-  `dumpsys` reports `TandemPumpService isForeground=true foregroundId=7713 channel=ongoingChannel`
-  — so it keeps syncing in the background and is restarted on launch (START_STICKY + `Home`).
-- On launch xDrip shows its usual *"older Android version"* notice + self-updater (stock xDrip
-  behaviour, target SDK 24) — just dismiss them.
+*(Sample data shown — your real pump values appear once paired.)*
 
-> Not emulator-testable: the actual BLE **pairing + pump data pull** needs a real Bluetooth radio,
-> so live boluses/carbs/basal on the native graph require the APK on a **physical phone + the pump**.
-> The wiring that places them there (`Treatments` + `APStatus`) is covered below.
+## Get the app
 
-## Design: feed xDrip's NATIVE screens, add no display UI
-All diabetes data is written into xDrip's own stores and shown on the **standard** xDrip
-graph / treatments / IOB-COB / basal screens. The **only** new screen is pump pairing + pump
-metadata (battery / cartridge / IOB / basal) — things xDrip has no native source for.
+1. Download the latest build: this repo → **Actions** tab → newest **Build Tandem APK** run →
+   **Artifacts** → **`xdrip-tandem-fastDebug-apk`** → unzip to get **`app-fast-debug.apk`**.
+2. Copy it to your phone and tap it to install (allow "install unknown apps" if prompted).
+   - If you already had a previous build installed, **uninstall that first** — each build is signed
+     with a different key, so an in-place update is rejected.
 
-## What was added (vs upstream xDrip)
-Follows xDrip's own BLE-device lifecycle (like InPen/Pendiq): a foreground **service** does the
-work, an **Entry** class enables/starts it, and **Home** restarts it on launch — so it runs in the
-background and survives restarts. pumpX2 still drives the actual BLE/JPAKE/protocol.
-- `app/src/main/java/com/eveningoutpost/dexdrip/tandem/`
-  - `TandemPumpService.kt` — **foreground service** (START_STICKY) that owns the pump connection,
-    auto-reconnects, and posts an ongoing notification. Survives backgrounding + process death.
-  - `TandemEntry.kt` — enable flag `tandem_enabled` (`Pref`) + `startIfEnabled()` (mirrors `InPenEntry`).
-  - `TandemPumpController.kt` — pumpX2 driver: scan → pair → snapshot reads → **incremental** history
-    stream (persisted sequence cursor in `PersistentStore`, so reconnects only pull new records) →
-    write into xDrip's native stores (idempotent via deterministic UUIDs):
-    - boluses → `Treatments` (insulin)  → native graph / treatments / **IOB**
-    - carbs   → `Treatments` (carbs)    → native graph / **COB**
-    - basal   → `APStatus`  (abs U/hr)  → native **basal line / BasalChart**
-  - `ReadRequests.kt` — the read-only `currentStatus` snapshot request list.
-  - `TandemDownloadActivity.kt` — the ONE new screen: Enable/Disable + pairing-code entry + pump
-    status (battery/cartridge/IOB/basal). It only drives the service; closing it does **not** stop
-    syncing. Opened from **Settings → Experimental → "Tandem pump (read-only)"** (no separate app icon).
-- `res/xml/xdrip_plus_prefs.xml` — adds the "Tandem pump" entry under the Experimental category.
-- `Home.java` — calls `TandemEntry.startIfEnabled()` on launch (restart-survival hook, next to InPen).
-- `AndroidManifest.xml` — registers the internal activity + the `TandemPumpService`.
-- `app/src/main/res/layout/activity_tandem_download.xml`
-- `app/build.gradle` — adds pumpX2 (`v1.9.0`) + BouncyCastle deps; **minSdk raised 24 → 26**
-  (pumpX2-android requires 26).
-- `app/src/main/AndroidManifest.xml` — registers `TandemDownloadActivity` (launcher). All BLE
-  permissions were already declared by xDrip.
+## Pair your pump
 
-> Note: to see the basal line on the main graph you may need to enable it in xDrip settings
-> (the basal/AP-status line is off by default). Boluses + carbs show with no extra config.
+1. **On the pump:** Settings → Bluetooth → **Pair Device** — it shows a pairing code.
+2. **Close / log out of the official t:connect app** (only one app can use the pump's Bluetooth at a time).
+3. **In xDrip:** ☰ menu → **Settings → Experimental → "Tandem pump (read-only)"**.
+4. Tap **Enable & Sync** and allow the Bluetooth / Location permission.
+5. Accept the Android pairing prompt, then type the **code shown on the pump** and tap **Pair**.
 
-## Safety (read-only by construction)
-- Only `currentStatus` + `historyLog` **read** requests are ever sent.
-- The `CONTROL` / `CONTROL_STREAM` characteristics are never touched.
-- pumpX2 blocks every insulin-delivery message unless `enableActionsAffectingInsulinDelivery()` is
-  called — this fork never calls it. There is no code path that can command the pump.
+That's it. It then keeps syncing **in the background and after restarts** — you don't re-enter the code.
+Use **Sync now** any time to force a refresh.
 
-## Data mapped into xDrip
-| Pump source (pumpX2) | xDrip native target | Where it shows |
-|---|---|---|
-| `BolusCompletedHistoryLog` | `Treatments` insulin | graph ▲ + treatments + IOB |
-| `BolexCompletedHistoryLog` (extended) | `Treatments` insulin | graph ▲ + IOB |
-| `CarbEnteredHistoryLog` | `Treatments` carbs | graph ● + COB |
-| `BasalRateChangeHistoryLog` (`getCommandBasalRate`) | `APStatus` absolute U/hr | native basal line / BasalChart |
-| `CurrentBattery*` / `InsulinStatus` / `ControlIQIOB` / `CurrentBasalStatus` | pump-metadata screen | the one new screen |
+## Where your data shows up
 
-Timestamps convert via `Dates.fromJan12008ToUnixEpochSeconds()` (Tandem epoch = 2008-01-01).
-Re-downloads are de-duplicated by a deterministic UUID per pump sequence number, so running it
-repeatedly won't create duplicate treatments. (CGM glucose is intentionally **not** pushed into
-xDrip's BgReading to avoid conflicting with xDrip's own sensor source.)
+Everything lands on the **normal xDrip screens** — there are no extra screens to learn:
+
+- **Boluses** and **carbs** → on the main graph and treatments list, and drive **IOB / COB**.
+- **Basal** → the basal line / basal chart. *(If you don't see it, turn the basal line on in xDrip
+  settings — it's off by default.)*
+
+The **"Tandem pump"** screen itself only shows **pairing** and **pump status** — model, battery,
+cartridge units, insulin-on-board, current basal, last sync, and a small activity log. To get back to
+your data, just press **Back**.
+
+## Tips & troubleshooting
+
+- **"This app was built for an older version of Android"** on launch — a harmless Android notice
+  (xDrip targets an older SDK on purpose for reliable background operation). Tap **OK**.
+- **xDrip "Update available" popup** — that's xDrip's own updater, unrelated to this fork; close it
+  (or disable update checks in xDrip settings).
+- **"Pump rejected the pairing code"** — re-open *Pair Device* on the pump for a fresh code, make
+  sure t:connect is fully closed, and if it persists, unpair the pump in Android Bluetooth settings
+  and try again.
+- **Stuck on "Scanning…"** — check Bluetooth and Location are on, the permission was granted, and the
+  pump is in *Pair Device* mode and nearby.
+- A pump can only be actively connected to **one** app at a time.
+
+## Status
+
+Built and verified to install and run on **Android 17 (Pixel)**. Live pump pairing requires a real
+phone with Bluetooth (it can't be exercised on an emulator).
 
 ---
 
-## Build the APK (on a machine with the Android SDK + internet)
-
-> This was scaffolded in a sandbox without the Android SDK and with Maven Central / JitPack / the
-> Gradle distribution blocked, so the APK must be compiled on your machine. xDrip pulls hundreds of
-> dependencies from those repos.
-
-**Android Studio (easiest):** File → Open → this folder → let it sync → select build variant
-`fastDebug` → Run ▶ (or Build → Build APK(s)).
-
-**Command line:**
-```bash
-cd xdrip-fork
-./gradlew :app:assembleFastDebug      # Windows: gradlew.bat :app:assembleFastDebug
-```
-APK: `app/build/outputs/apk/fast/debug/app-fast-debug.apk`
-
-If Gradle can't find the SDK, add `local.properties` with `sdk.dir=/path/to/Android/Sdk`.
-
-If the manifest merger still complains about minSdk from a transitive lib, add to the `<manifest>`
-tag: `xmlns:tools="http://schemas.android.com/tools"` and inside `<uses-sdk
-tools:overrideLibrary="com.jwoglom.pumpx2, com.welie.blessed" />`.
-
-## Install + use
-```bash
-adb install -r app/build/outputs/apk/fast/debug/app-fast-debug.apk
-```
-1. On the pump: Settings → Bluetooth → **Pair Device** (shows a 6- or 16-char code).
-2. Close the official t:connect app (only one app can hold the pump's auth slot).
-3. In xDrip: **menu → Settings → Experimental → "Tandem pump (read-only)"** → **Enable & Sync** →
-   grant Bluetooth permissions.
-4. Accept the system pairing prompt, then type the **pump's pairing code** → **Pair**.
-5. It syncs in the background. Press **Back** to return to xDrip — boluses/carbs/basal now appear on
-   the normal graph / treatments / IOB-COB / basal screens. After the first pair it auto-reconnects
-   and re-syncs on its own (and after restarts).
-
-## Verify with screenshots (emulator)
-On a machine with the SDK:
-```bash
-sdkmanager "system-images;android-34;google_apis;x86_64"
-avdmanager create avd -n x -k "system-images;android-34;google_apis;x86_64" --device pixel_6
-emulator -avd x &
-adb install -r app/build/outputs/apk/fast/debug/app-fast-debug.apk
-adb shell am start -n com.eveningoutpost.dexdrip/.tandem.TandemDownloadActivity
-adb exec-out screencap -p > tandem_screen.png
-```
-(The pairing/download steps need a real pump in range; the emulator has no BLE radio. To screenshot
-the *data display* without a pump, you can seed a couple of test treatments and screenshot xDrip's
-Home graph.)
+*Developers: architecture, data mapping, dependencies and build instructions are in
+**[TANDEM_TECHNICAL.md](TANDEM_TECHNICAL.md)**.*
