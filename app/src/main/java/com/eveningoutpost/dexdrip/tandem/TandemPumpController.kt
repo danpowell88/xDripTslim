@@ -29,6 +29,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBasalStatu
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryAbstractResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BasalRateChangeHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolexCompletedHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusCompletedHistoryLog
@@ -141,6 +142,10 @@ class TandemPumpController private constructor(
     private var stalls = 0
     private var lastSeenAtWatchdog = -1
     @Volatile private var maxSeqSeen = 0L
+    // Pump clocks drift (this test pump was ~49 days behind). Anchor every history timestamp to the
+    // phone's clock: offset = phone-now − pump-now. The newest pump event then maps to ~now and lands
+    // in xDrip's graph window; relative spacing of older events is preserved.
+    @Volatile private var pumpClockOffsetMs = 0L
     @Volatile private var historyStarted = false
     @Volatile private var historyComplete = false
 
@@ -311,6 +316,11 @@ class TandemPumpController private constructor(
                 is InsulinStatusResponse -> { meta.cartridgeUnits = message.currentInsulinAmount; emitMeta() }
                 is ControlIQIOBResponse -> { meta.iobUnits = InsulinUnit.from1000To1(message.mudaliarIOB); emitMeta() }
                 is CurrentBasalStatusResponse -> { meta.currentBasal = InsulinUnit.from1000To1(message.currentBasalRate); emitMeta() }
+                is TimeSinceResetResponse -> {
+                    val pumpNowMs = Dates.fromJan12008ToUnixEpochSeconds(message.currentTime) * 1000L
+                    pumpClockOffsetMs = System.currentTimeMillis() - pumpNowMs
+                    log("Pump clock=${message.currentTimeInstant} -> offset ${pumpClockOffsetMs / 86400000L}d (anchoring history to phone time)")
+                }
                 else -> log("RESP ${message.javaClass.simpleName}")
             }
         }
@@ -388,7 +398,7 @@ class TandemPumpController private constructor(
     }
 
     private fun ingest(hl: HistoryLog) {
-        val ts = Dates.fromJan12008ToUnixEpochSeconds(hl.pumpTimeSec) * 1000L
+        val ts = Dates.fromJan12008ToUnixEpochSeconds(hl.pumpTimeSec) * 1000L + pumpClockOffsetMs
         when (hl) {
             is BolusCompletedHistoryLog -> addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
             is BolexCompletedHistoryLog -> addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
