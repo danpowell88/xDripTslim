@@ -53,19 +53,19 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
                 return START_NOT_STICKY
             }
             else -> { // "refresh" / null
-                if (controller == null) {
-                    UserError.Log.d(TAG, "Starting pump controller")
-                    controller = TandemPumpController(applicationContext, this).also { it.start() }
-                } else {
-                    controller?.refresh()
-                }
+                // Always the process-wide singleton controller (rebinds our listener). start() is
+                // idempotent: it refreshes if already connected, otherwise scans/pairs.
+                UserError.Log.d(TAG, "Starting/refreshing pump controller")
+                controller = TandemPumpController.get(applicationContext, this).also { it.start() }
             }
         }
         return START_STICKY
     }
 
     override fun onDestroy() {
-        controller?.stop(); controller = null
+        // Do NOT stop the (process-singleton) controller on a transient service teardown — only the
+        // explicit "stop" command (Disable) stops syncing. Just unbind this service instance.
+        controller = null
         INSTANCE = null
         super.onDestroy()
     }

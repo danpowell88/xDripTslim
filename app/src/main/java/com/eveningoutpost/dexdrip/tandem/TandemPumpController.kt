@@ -56,10 +56,11 @@ import kotlin.math.min
  * CONTROL_STREAM are never used; pumpX2 blocks insulin-delivery messages unless
  * enableActionsAffectingInsulinDelivery() is called — never called here.
  */
-class TandemPumpController(
-    private val appContext: Context,
-    private val listener: Listener
+class TandemPumpController private constructor(
+    private val appContext: Context
 ) {
+    /** Reassigned whenever a (re)started service binds; may briefly be null. */
+    @Volatile var listener: Listener? = null
     data class PumpMetadata(
         var model: String? = null,
         var connected: Boolean = false,
@@ -87,6 +88,16 @@ class TandemPumpController(
 
     companion object {
         private const val TAG = "TandemPump"
+        // Process-wide singleton. pumpX2's TandemBluetoothHandler is itself a singleton bound to the
+        // first Pump it is given, so there must be exactly ONE controller (one Pump, one handler, one
+        // sender thread) for the app's lifetime — otherwise BLE callbacks land on a stale controller
+        // whose sender thread has been quit. The service always (re)binds its listener via get().
+        @Volatile private var INSTANCE: TandemPumpController? = null
+        fun get(context: Context, listener: Listener): TandemPumpController {
+            val existing = INSTANCE
+            if (existing != null) { existing.listener = listener; return existing }
+            return TandemPumpController(context.applicationContext).also { it.listener = listener; INSTANCE = it }
+        }
         @Volatile private var loggingPlanted = false
         // pumpX2's TandemBluetoothHandler is a process singleton bound to the FIRST Pump it sees,
         // so all BLE callbacks fire on that Pump even after we create a new controller (e.g. after
@@ -134,23 +145,26 @@ class TandemPumpController(
         if (!loggingPlanted) { loggingPlanted = true; try { timber.log.Timber.plant(timber.log.Timber.DebugTree()) } catch (_: Throwable) {} }
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) != null) Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
         Security.addProvider(BouncyCastleProvider())
+        stopped = false; keepConnected = true
+        // Create the Pump + handler exactly once for the process (the handler is a pumpX2 singleton).
+        if (pump == null) {
+            // t:slim X2 firmware v7.7+ (current) uses the 6-digit JPAKE pairing code. Without this,
+            // pumpX2 doesn't know the API version yet and defaults to LONG_16CHAR -> it sends the
+            // legacy CentralChallengeRequest, which a v7.7+ pump silently rejects before the code box
+            // can appear. SHORT_6CHAR makes the fallback report a v7.7+ API version, so pumpX2 takes
+            // the JPAKE path. withUnbond… auto-clears a stale bond after repeated init failures.
+            val p = Pump(
+                TandemConfig()
+                    .withPairingCodeType(PairingCodeType.SHORT_6CHAR)
+                    .withUnbondAfterInitialConnectionHardFailuresCount(2)
+            ); pump = p
+            btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
+        }
+        if (connected) { status("Connected — syncing into xDrip…"); refresh(); return }
         status("Scanning for a Tandem pump…")
-        // Auto-remove a stale Android bond after repeated initial-connection failures, so the OS
-        // re-shows the pairing request (a stale bond is the usual cause of "no pairing prompt").
-        // t:slim X2 firmware v7.7+ (current) uses the 6-digit JPAKE pairing code. Without this,
-        // pumpX2 doesn't know the API version yet and defaults to LONG_16CHAR -> it sends the legacy
-        // CentralChallengeRequest, which a v7.7+ pump silently rejects (INITIAL_AUTH_NO_REPLY) before
-        // the code box can appear. SHORT_6CHAR makes the fallback report a v7.7+ API version, so
-        // pumpX2 takes the JPAKE path and prompts for the pairing code.
-        val p = Pump(
-            TandemConfig()
-                .withPairingCodeType(PairingCodeType.SHORT_6CHAR)
-                .withUnbondAfterInitialConnectionHardFailuresCount(2)
-        ); pump = p
-        btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
         // First-time pairing (no saved pairing code yet): proactively clear any stale Android bond
         // BEFORE connecting, so bondState != BONDED on connect -> createBond() fires -> the OS shows a
-        // fresh pairing request -> pump answers the CentralChallenge -> the in-app code box appears.
+        // fresh pairing request -> pump answers the JPAKE -> the in-app code box appears.
         // (ControlX2's ensurePumpUnbondedForFreshInit pattern.) Once paired we keep the bond so
         // reconnects are seamless.
         if (PumpState.getPairingCode(appContext).isNullOrBlank() && removeStaleBonds()) {
@@ -215,13 +229,17 @@ class TandemPumpController(
     fun metadata() = meta
 
     fun stop() {
+        // Singleton: stop syncing without tearing down the (reusable) handler/central or the sender
+        // thread — pumpX2's handler is a singleton and central.close() can't be cleanly re-opened.
         stopped = true; keepConnected = false
-        try { btHandler?.stop() } catch (_: Throwable) {}
-        try { sender.quitSafely() } catch (_: Throwable) {}
+        try { btHandler?.central?.stopScan() } catch (_: Throwable) {}
+        try { (activePeripheral ?: peripheral)?.cancelConnection() } catch (_: Throwable) {}
+        connected = false; meta.connected = false
     }
 
     private inner class Pump(config: TandemConfig) : TandemPump(appContext, config) {
         override fun onPumpDiscovered(peripheral: BluetoothPeripheral?, scanResult: android.bluetooth.le.ScanResult?, readyState: PumpReadyState?): Boolean {
+            if (stopped) return false // disabled mid-scan: don't auto-connect
             log("Discovered ${peripheral?.name} (${peripheral?.address})")
             return super.onPumpDiscovered(peripheral, scanResult, readyState)
         }
@@ -259,11 +277,11 @@ class TandemPumpController(
             activePeripheral = peripheral; activePump = this; activeChallenge = centralChallengeResponse
             val saved = PumpState.getPairingCode(appContext)
             if (!saved.isNullOrBlank()) { status("Re-using saved pairing code…"); senderHandler.post { pair(peripheral, centralChallengeResponse, saved) } }
-            else { log("Prompting for pairing code"); main.post { listener.onNeedPairingCode(peripheral?.name) } }
+            else { log("Prompting for pairing code"); main.post { listener?.onNeedPairingCode(peripheral?.name) } }
         }
         override fun onInvalidPairingCode(peripheral: BluetoothPeripheral?, resp: AbstractPumpChallengeResponse?) {
             error("Pump rejected the pairing code — re-check it on the pump and retry.")
-            main.post { listener.onNeedPairingCode(peripheral?.name) }
+            main.post { listener?.onNeedPairingCode(peripheral?.name) }
         }
         override fun onPumpModel(peripheral: BluetoothPeripheral?, model: KnownDeviceModel?) {
             super.onPumpModel(peripheral, model)
@@ -275,7 +293,7 @@ class TandemPumpController(
             activePeripheral = peripheral; activePump = this
             connected = true; meta.connected = true
             super.onPumpConnected(peripheral)
-            main.post { listener.onConnected(meta.model) }
+            main.post { listener?.onConnected(meta.model) }
             status("Connected — syncing into xDrip…")
             beginSnapshotThenHistory(peripheral)
         }
@@ -401,11 +419,11 @@ class TandemPumpController(
         if (maxSeen > 0) PersistentStore.setLong(CURSOR_KEY, maxOf(PersistentStore.getLong(CURSOR_KEY), maxSeen))
         meta.lastSync = System.currentTimeMillis()
         status("Synced — ${meta.boluses} boluses, ${meta.carbs} carbs, ${meta.basal} basal → xDrip.")
-        main.post { listener.onDone(meta) }
+        main.post { listener?.onDone(meta) }
     }
 
-    private fun emitMeta() { main.post { listener.onMetadata(meta) } }
-    private fun status(s: String) { Log.i(TAG, s); main.post { listener.onStatus(s) } }
-    private fun log(s: String) { Log.i(TAG, s); main.post { listener.onLog(s) } }
-    private fun error(s: String) { Log.e(TAG, s); main.post { listener.onError(s) } }
+    private fun emitMeta() { main.post { listener?.onMetadata(meta) } }
+    private fun status(s: String) { Log.i(TAG, s); main.post { listener?.onStatus(s) } }
+    private fun log(s: String) { Log.i(TAG, s); main.post { listener?.onLog(s) } }
+    private fun error(s: String) { Log.e(TAG, s); main.post { listener?.onError(s) } }
 }
