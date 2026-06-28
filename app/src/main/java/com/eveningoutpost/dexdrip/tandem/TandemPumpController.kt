@@ -354,13 +354,22 @@ class TandemPumpController private constructor(
                 is ControlIQIOBResponse -> { meta.iobUnits = InsulinUnit.from1000To1(message.mudaliarIOB); emitMeta() }
                 is CurrentBasalStatusResponse -> {
                     val rate = InsulinUnit.from1000To1(message.currentBasalRate)
+                    val profileRate = InsulinUnit.from1000To1(message.profileBasalRate)
                     meta.currentBasal = rate; emitMeta()
-                    // The history log only records basal *changes*, which on a flat profile (Control-IQ
-                    // off) can be weeks apart — so the graph would show no recent basal even though
-                    // delivery is continuous. Anchor the live current rate at "now" each sync so the
-                    // basal line reflects what the pump is actually delivering.
-                    if (TandemSync.isOn(TandemSync.BASAL))
-                        try { APStatus.createEfficientRecord(System.currentTimeMillis(), rate) } catch (_: Throwable) {}
+                    // The history log only records basal *changes* (weeks apart on a flat profile), so
+                    // anchor the live rate at "now". xDrip's basal line plots basal_percent (TBR%), so
+                    // derive it from the pump's current-vs-profile rate — otherwise it defaults to -1
+                    // and draws at y=0 (off-screen). Write a carry-in point a few hours back too, since
+                    // xDrip needs >=2 points in the window to draw a line; for an actively-changing
+                    // basal the rate-change events from history fill in the detail.
+                    if (TandemSync.isOn(TandemSync.BASAL)) {
+                        val pct = if (profileRate > 0.0) Math.round(rate / profileRate * 100.0).toInt() else 100
+                        val now = System.currentTimeMillis()
+                        try {
+                            APStatus.createEfficientRecord(now, pct, rate)
+                            APStatus.createEfficientRecord(now - 6 * 3600_000L, pct, rate)
+                        } catch (_: Throwable) {}
+                    }
                 }
                 is TimeSinceResetResponse -> {
                     val pumpNowMs = Dates.fromJan12008ToUnixEpochSeconds(message.currentTime) * 1000L
