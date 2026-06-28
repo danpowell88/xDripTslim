@@ -127,7 +127,35 @@ class TandemPumpController(
         // re-shows the pairing request (a stale bond is the usual cause of "no pairing prompt").
         val p = Pump(TandemConfig().withUnbondAfterInitialConnectionHardFailuresCount(2)); pump = p
         btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
+        // First-time pairing (no saved pairing code yet): proactively clear any stale Android bond
+        // BEFORE connecting, so bondState != BONDED on connect -> createBond() fires -> the OS shows a
+        // fresh pairing request -> pump answers the CentralChallenge -> the in-app code box appears.
+        // (ControlX2's ensurePumpUnbondedForFreshInit pattern.) Once paired we keep the bond so
+        // reconnects are seamless.
+        if (PumpState.getPairingCode(appContext).isNullOrBlank() && removeStaleBonds()) {
+            status("Cleared a previous pairing — rescanning for a fresh pairing request…")
+            senderHandler.postDelayed({ scanLoop() }, 1800L)
+            return
+        }
         senderHandler.post { scanLoop() }
+    }
+
+    /** Remove any leftover Android bond for a Tandem pump (returns true if one was removed). */
+    private fun removeStaleBonds(): Boolean {
+        var removed = false
+        try {
+            val adapter = (appContext.getSystemService(android.content.Context.BLUETOOTH_SERVICE)
+                as? android.bluetooth.BluetoothManager)?.adapter
+                ?: android.bluetooth.BluetoothAdapter.getDefaultAdapter() ?: return false
+            for (dev in adapter.bondedDevices ?: emptySet()) {
+                val n = dev.name ?: ""
+                if (n.contains("tslim", true) || n.contains("tandem", true) || n.contains("mobi", true)) {
+                    try { dev.javaClass.getMethod("removeBond").invoke(dev); removed = true; log("Removed stale bond: $n") }
+                    catch (t: Throwable) { log("removeBond failed for $n: ${t.message}") }
+                }
+            }
+        } catch (t: Throwable) { log("bond scan failed: ${t.message}") }
+        return removed
     }
 
     private fun scanLoop() {
