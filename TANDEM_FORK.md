@@ -8,17 +8,29 @@ protocol library), downloads the pump history + live status, and writes **boluse
 > ⚠️ Read-only research tool. Not affiliated with / approved by Tandem or Dexcom. Use only with a
 > pump you own. It can **not** dose insulin (see Safety below).
 
+## Design: feed xDrip's NATIVE screens, add no display UI
+All diabetes data is written into xDrip's own stores and shown on the **standard** xDrip
+graph / treatments / IOB-COB / basal screens. The **only** new screen is pump pairing + pump
+metadata (battery / cartridge / IOB / basal) — things xDrip has no native source for.
+
 ## What was added (vs upstream xDrip)
 - `app/src/main/java/com/eveningoutpost/dexdrip/tandem/`
   - `TandemPumpController.kt` — pumpX2 BLE driver: scan → pair → snapshot reads → stream full
-    history log → insert boluses/carbs into `Treatments` (idempotent via deterministic UUIDs).
+    history log → write into xDrip's native stores (idempotent via deterministic UUIDs):
+    - boluses → `Treatments` (insulin)  → native graph / treatments / **IOB**
+    - carbs   → `Treatments` (carbs)    → native graph / **COB**
+    - basal   → `APStatus`  (abs U/hr)  → native **basal line / BasalChart**
   - `ReadRequests.kt` — the read-only `currentStatus` snapshot request list.
-  - `TandemDownloadActivity.kt` — a simple in-app screen (own launcher icon **"xDrip Tandem"**).
+  - `TandemDownloadActivity.kt` — the ONE new screen: pairing + pump metadata, with an
+    "Open xDrip" button to view the data on the normal screens. (own launcher icon **"xDrip Tandem"**)
 - `app/src/main/res/layout/activity_tandem_download.xml`
 - `app/build.gradle` — adds pumpX2 (`v1.9.0`) + BouncyCastle deps; **minSdk raised 24 → 26**
   (pumpX2-android requires 26).
 - `app/src/main/AndroidManifest.xml` — registers `TandemDownloadActivity` (launcher). All BLE
   permissions were already declared by xDrip.
+
+> Note: to see the basal line on the main graph you may need to enable it in xDrip settings
+> (the basal/AP-status line is off by default). Boluses + carbs show with no extra config.
 
 ## Safety (read-only by construction)
 - Only `currentStatus` + `historyLog` **read** requests are ever sent.
@@ -27,12 +39,13 @@ protocol library), downloads the pump history + live status, and writes **boluse
   called — this fork never calls it. There is no code path that can command the pump.
 
 ## Data mapped into xDrip
-| Pump history record (pumpX2) | xDrip |
-|---|---|
-| `BolusCompletedHistoryLog` | Treatment: insulin units |
-| `BolexCompletedHistoryLog` (extended) | Treatment: insulin units |
-| `CarbEnteredHistoryLog` | Treatment: carbs |
-| live status (battery, IOB, basal, cartridge, CGM, alerts…) | shown in the download screen log |
+| Pump source (pumpX2) | xDrip native target | Where it shows |
+|---|---|---|
+| `BolusCompletedHistoryLog` | `Treatments` insulin | graph ▲ + treatments + IOB |
+| `BolexCompletedHistoryLog` (extended) | `Treatments` insulin | graph ▲ + IOB |
+| `CarbEnteredHistoryLog` | `Treatments` carbs | graph ● + COB |
+| `BasalRateChangeHistoryLog` (`getCommandBasalRate`) | `APStatus` absolute U/hr | native basal line / BasalChart |
+| `CurrentBattery*` / `InsulinStatus` / `ControlIQIOB` / `CurrentBasalStatus` | pump-metadata screen | the one new screen |
 
 Timestamps convert via `Dates.fromJan12008ToUnixEpochSeconds()` (Tandem epoch = 2008-01-01).
 Re-downloads are de-duplicated by a deterministic UUID per pump sequence number, so running it

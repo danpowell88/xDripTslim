@@ -9,17 +9,11 @@
         android:id="@+id/tandemStatusText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Put the pump in Bluetooth → Pair Device, then tap Connect."
+        android:text="Put the pump in Bluetooth → Pair Device, then tap Connect. Boluses, carbs and basal appear on the normal xDrip screens."
         android:textStyle="bold"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tandemProgressText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="" />
-
+    <!-- Pairing entry (the only pump-specific input) -->
     <LinearLayout
         android:id="@+id/tandemPairingRow"
         android:layout_width="match_parent"
@@ -27,7 +21,6 @@
         android:orientation="horizontal"
         android:layout_marginTop="8dp"
         android:visibility="gone">
-
         <EditText
             android:id="@+id/tandemPairingInput"
             android:layout_width="0dp"
@@ -36,7 +29,6 @@
             android:hint="Pairing code from pump"
             android:inputType="textCapCharacters"
             android:autofillHints="" />
-
         <Button
             android:id="@+id/tandemPairButton"
             android:layout_width="wrap_content"
@@ -49,14 +41,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="8dp">
-
         <Button
             android:id="@+id/tandemConnectButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Connect &amp; Download" />
-
+            android:text="Connect &amp; Sync" />
         <Button
             android:id="@+id/tandemOpenButton"
             android:layout_width="wrap_content"
@@ -65,20 +55,42 @@
             android:text="Open xDrip" />
     </LinearLayout>
 
+    <!-- Pump metadata (no native xDrip source for these) -->
+    <TextView
+        android:id="@+id/tandemMetaTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Pump status"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tandemMetaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="monospace"
+        android:textSize="13sp"
+        android:text="—" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Log"
+        android:textStyle="bold" />
     <ScrollView
         android:id="@+id/tandemLogScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="#11000000">
-
         <TextView
             android:id="@+id/tandemLogText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:textSize="11sp"
+            android:textSize="10sp"
             android:padding="6dp"
             android:textIsSelectable="true" />
     </ScrollView>
