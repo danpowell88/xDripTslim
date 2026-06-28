@@ -574,12 +574,13 @@ class TandemPumpController private constructor(
         }
     }
 
-    /** Expand the collected IDP segments into xDrip's 48 half-hour basal blocks and save the profile. */
+    /** Expand the collected IDP segments into xDrip's 24 hourly basal blocks and save the profile. */
     private fun saveBasalProfile() {
         try {
             if (idpRates.isEmpty()) return
-            val perSeg = 30                               // xDrip basal granularity (minutes)
-            val blocks = 24 * 60 / perSeg                 // 48 blocks/day
+            val perSeg = 60                               // xDrip basal profile granularity (minutes)
+            val blocks = 24 * 60 / perSeg                 // 24 hourly blocks/day — must match
+                                                          // BasalChart.segments or the editor ignores it
             val starts = idpRates.keys.toList()           // ascending segment start-minutes
             val rates = ArrayList<Double>(blocks)
             for (b in 0 until blocks) {
