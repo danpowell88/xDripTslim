@@ -86,6 +86,7 @@ class TandemPumpController(
 
     companion object {
         private const val TAG = "TandemPump"
+        @Volatile private var loggingPlanted = false
         private const val HISTORY_CHUNK = 250
         private const val WATCHDOG_MS = 6000L
         private const val MAX_STALLS = 8
@@ -120,6 +121,9 @@ class TandemPumpController(
     @Volatile private var historyComplete = false
 
     fun start() {
+        // Surface pumpX2's own Timber diagnostics into logcat (auth gate, CentralChallenge,
+        // connection-sharing detection, errors) — otherwise they are silently dropped.
+        if (!loggingPlanted) { loggingPlanted = true; try { timber.log.Timber.plant(timber.log.Timber.DebugTree()) } catch (_: Throwable) {} }
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) != null) Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
         Security.addProvider(BouncyCastleProvider())
         status("Scanning for a Tandem pump…")
