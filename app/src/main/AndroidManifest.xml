@@ -210,7 +210,7 @@
              Settings → Experimental → "Tandem pump"; not a separate launcher icon. -->
         <activity
             android:name="com.eveningoutpost.dexdrip.tandem.TandemDownloadActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="Tandem pump" />
 
         <!-- Foreground service that keeps the read-only Tandem pump connection alive
