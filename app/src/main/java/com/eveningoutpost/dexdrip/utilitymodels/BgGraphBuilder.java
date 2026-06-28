@@ -439,6 +439,13 @@ public class BgGraphBuilder {
     }
 
 
+    // Safely read an hourly basal rate (U/hr) from a 24-entry profile.
+    private static double safeBasalRate(final List<Float> profile, final int hour) {
+        if (profile == null || hour < 0 || hour >= profile.size()) return 0;
+        final Float f = profile.get(hour);
+        return f == null ? 0 : f;
+    }
+
     private List<Line> basalLines() {
         final List<Line> basalLines = new ArrayList<>();
         if (prefs.getBoolean("show_basal_line", false)) {
@@ -447,6 +454,118 @@ public class BgGraphBuilder {
 
             final List<APStatus> aplist = APStatus.latestForGraph(2000, loaded_start, loaded_end);
 
+            // Absolute-basal mode: when records carry an absolute U/hr rate and/or a basal profile is
+            // configured (e.g. synced from a Tandem pump), draw basal in real U/hr — solid for what was
+            // delivered, dashed for the upcoming scheduled profile so you can see basal before it
+            // happens (the dashed part turns solid as time reaches it).
+            List<Float> basalProfile = null;
+            try {
+                basalProfile = com.eveningoutpost.dexdrip.profileeditor.BasalProfile.load(
+                        com.eveningoutpost.dexdrip.profileeditor.BasalProfile.getActiveRateName());
+            } catch (Exception e) { /* no profile */ }
+            final boolean haveProfile = basalProfile != null && basalProfile.size() == 24;
+            boolean haveAbsolute = false;
+            for (APStatus a : aplist) { if (a.basal_absolute >= 0) { haveAbsolute = true; break; } }
+
+            if (haveAbsolute || haveProfile) {
+                final int basalColor = getCol(X.color_basal_tbr);
+
+                // Reference rate that maps to the top of the basal band (nearest 0.5 U/hr above the max).
+                double maxRate = 0.5;
+                for (APStatus a : aplist) if (a.basal_absolute > maxRate) maxRate = a.basal_absolute;
+                if (haveProfile) for (Float f : basalProfile) if (f != null && f > maxRate) maxRate = f;
+                final double ref = Math.max(0.5, Math.ceil(maxRate * 2.0) / 2.0);
+
+                // dashed reference line at the top of the band (= ref U/hr)
+                final Line refLine = new Line();
+                refLine.setHasPoints(false);
+                refLine.setHasLines(true);
+                refLine.setStrokeWidth(1);
+                refLine.setColor(basalColor);
+                refLine.setPathEffect(new DashPathEffect(new float[]{10.0f, 10.0f}, 0));
+                refLine.setReverseYAxis(true);
+                final List<PointValue> refPts = new ArrayList<>(2);
+                refPts.add(new HPointValue((double) loaded_start / FUZZER, (float) yscale));
+                refPts.add(new HPointValue((double) loaded_end / FUZZER, (float) yscale));
+                refLine.setValues(refPts);
+                refLine.setPointRadius(0);
+                basalLines.add(refLine);
+
+                final long now = System.currentTimeMillis();
+
+                // SOLID: delivered basal (absolute U/hr) held forward to "now"
+                final List<PointValue> deliveredPts = new ArrayList<>();
+                double lastRate = -1;
+                for (APStatus item : aplist) {
+                    if (item.basal_absolute < 0) continue;
+                    final float y = clampNonGlucoseY((float) (item.basal_absolute / ref * yscale) + panCompensationOffset);
+                    deliveredPts.add(new HPointValue((double) item.timestamp / FUZZER, y));
+                    lastRate = item.basal_absolute;
+                }
+                if (lastRate >= 0) {
+                    final float y = clampNonGlucoseY((float) (lastRate / ref * yscale) + panCompensationOffset);
+                    deliveredPts.add(new HPointValue((double) now / FUZZER, y));
+                }
+                if (!deliveredPts.isEmpty()) {
+                    final Line delivered = new Line(deliveredPts);
+                    delivered.setFilled(true);
+                    delivered.setFillFlipped(true);
+                    delivered.setHasGradientToTransparent(true);
+                    delivered.setHasPoints(false);
+                    delivered.setStrokeWidth(1);
+                    delivered.setHasLines(true);
+                    delivered.setSquare(true);
+                    delivered.setReverseYAxis(true);
+                    delivered.setBackgroundUnclipped(true);
+                    delivered.setGradientDivider(10f);
+                    delivered.setColor(basalColor);
+                    basalLines.add(delivered);
+                }
+
+                // DASHED: upcoming scheduled basal from the profile, "now" -> end of day
+                if (haveProfile) {
+                    final List<PointValue> futurePts = new ArrayList<>();
+                    final java.util.Calendar cal = java.util.Calendar.getInstance();
+                    cal.setTimeInMillis(now);
+                    final int nowHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
+                    futurePts.add(new HPointValue((double) now / FUZZER,
+                            clampNonGlucoseY((float) (safeBasalRate(basalProfile, nowHour) / ref * yscale) + panCompensationOffset)));
+                    for (int h = nowHour + 1; h < 24; h++) {
+                        cal.setTimeInMillis(now);
+                        cal.set(java.util.Calendar.HOUR_OF_DAY, h);
+                        cal.set(java.util.Calendar.MINUTE, 0);
+                        cal.set(java.util.Calendar.SECOND, 0);
+                        cal.set(java.util.Calendar.MILLISECOND, 0);
+                        futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER,
+                                clampNonGlucoseY((float) (safeBasalRate(basalProfile, h) / ref * yscale) + panCompensationOffset)));
+                    }
+                    // hold the last hour's rate out to next midnight (end of the schedule day)
+                    cal.setTimeInMillis(now);
+                    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                    cal.set(java.util.Calendar.MINUTE, 0);
+                    cal.set(java.util.Calendar.SECOND, 0);
+                    cal.set(java.util.Calendar.MILLISECOND, 0);
+                    cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
+                    futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER,
+                            clampNonGlucoseY((float) (safeBasalRate(basalProfile, 23) / ref * yscale) + panCompensationOffset)));
+
+                    final Line future = new Line(futurePts);
+                    future.setHasPoints(false);
+                    future.setHasLines(true);
+                    future.setSquare(true);
+                    future.setStrokeWidth(2);
+                    future.setReverseYAxis(true);
+                    future.setPathEffect(new DashPathEffect(new float[]{14.0f, 8.0f}, 0));
+                    future.setColor(android.graphics.Color.argb(150,
+                            android.graphics.Color.red(basalColor),
+                            android.graphics.Color.green(basalColor),
+                            android.graphics.Color.blue(basalColor)));
+                    basalLines.add(future);
+                }
+                return basalLines;
+            }
+
+            // ---- relative (TBR %) rendering: original behaviour for non-absolute sources ----
             if (!aplist.isEmpty()) {
 
                 // divider line
