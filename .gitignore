@@ -58,3 +58,9 @@ patches/
 *.exe
 *.iml
 .claude/
+
+# local Tandem debug artifacts
+_now.txt
+_pairlog*.txt
+_xd.db*
+_dbg*.apk
