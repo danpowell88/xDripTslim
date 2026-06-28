@@ -2,7 +2,6 @@ package com.eveningoutpost.dexdrip.tandem
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import com.eveningoutpost.dexdrip.Home
 import com.eveningoutpost.dexdrip.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -37,7 +35,6 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
     private lateinit var connectButton: Button
     private lateinit var disableButton: Button
     private lateinit var syncButton: Button
-    private lateinit var openButton: Button
 
     private lateinit var valModel: TextView
     private lateinit var valConn: TextView
@@ -66,7 +63,6 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
         connectButton = findViewById(R.id.tandemConnectButton)
         disableButton = findViewById(R.id.tandemDisableButton)
         syncButton = findViewById(R.id.tandemSyncButton)
-        openButton = findViewById(R.id.tandemOpenButton)
         valModel = findViewById(R.id.valModel)
         valConn = findViewById(R.id.valConn)
         valBattery = findViewById(R.id.valBattery)
@@ -88,9 +84,6 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
             if (code.isBlank()) { toast("Enter the code shown on the pump"); return@setOnClickListener }
             TandemPumpService.submitPairingCode(code)
             pairingRow.visibility = View.GONE
-        }
-        openButton.setOnClickListener {
-            startActivity(Intent(this, Home::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }
 

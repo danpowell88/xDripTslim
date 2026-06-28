@@ -24,7 +24,7 @@ rows. (Pump page shown with sample data; live values appear once paired to a rea
 
 What was exercised on-device:
 - ✅ Installs + launches on Android 17 (16 KB pages); opened from the in-app Experimental menu.
-- ✅ The one screen renders: **Enable & Sync / Disable / Open xDrip**, Pump status, Log.
+- ✅ The one screen renders: **Enable & Sync / Disable / Sync now**, Pump status, Log.
 - ✅ **Enable** starts the foreground service and BLE scan — status shows *"Scanning for a Tandem
   pump…"* and the button switches to **Sync now**. Verified running as a foreground service:
   `dumpsys` reports `TandemPumpService isForeground=true foregroundId=7713 channel=ongoingChannel`
@@ -124,9 +124,9 @@ adb install -r app/build/outputs/apk/fast/debug/app-fast-debug.apk
 3. In xDrip: **menu → Settings → Experimental → "Tandem pump (read-only)"** → **Enable & Sync** →
    grant Bluetooth permissions.
 4. Accept the system pairing prompt, then type the **pump's pairing code** → **Pair**.
-5. It syncs in the background; **Open xDrip** to see boluses/carbs/basal on the normal screens.
-   After the first pair it auto-reconnects and re-syncs on its own (and after restarts).
-6. Tap **Open xDrip** — boluses/carbs now appear on the graph (and drive IOB/COB).
+5. It syncs in the background. Press **Back** to return to xDrip — boluses/carbs/basal now appear on
+   the normal graph / treatments / IOB-COB / basal screens. After the first pair it auto-reconnects
+   and re-syncs on its own (and after restarts).
 
 ## Verify with screenshots (emulator)
 On a machine with the SDK:
