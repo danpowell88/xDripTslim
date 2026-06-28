@@ -30,6 +30,20 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryAbs
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEGVGuiDataResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV1Response
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentActiveIdpValuesResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV1Request
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest
+import com.eveningoutpost.dexdrip.models.BgReading
+import com.eveningoutpost.dexdrip.profileeditor.BasalProfile
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BasalRateChangeHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolexCompletedHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusCompletedHistoryLog
@@ -74,8 +88,22 @@ class TandemPumpController private constructor(
         var basal: Int = 0,
         var historyReceived: Int = 0,
         var historyTotal: Long = 0,
-        var lastSync: Long = 0
+        var lastSync: Long = 0,
+        // ---- extra live values shown on the "Pump" tab (not on xDrip's native screens) ----
+        var glucoseMgdl: Int? = null,
+        var trendRate: Double? = null,
+        var closedLoop: Boolean? = null,
+        var controlIqMode: String? = null,
+        var tddUnits: Double? = null,
+        var carbRatio: Double? = null,
+        var isf: Int? = null,
+        var targetBg: Int? = null,
+        var insulinDurationMin: Int? = null,
+        var basalProfileName: String? = null
     )
+
+    /** High-level connection state used to drive button enable/disable in the UI. */
+    enum class State { DISABLED, SCANNING, NEEDS_CODE, CONNECTED, SYNCING }
 
     interface Listener {
         fun onStatus(text: String)
@@ -85,6 +113,7 @@ class TandemPumpController private constructor(
         fun onMetadata(meta: PumpMetadata)
         fun onDone(meta: PumpMetadata)
         fun onError(text: String)
+        fun onState(state: State)
     }
 
     companion object {
@@ -146,6 +175,12 @@ class TandemPumpController private constructor(
     // phone's clock: offset = phone-now − pump-now. The newest pump event then maps to ~now and lands
     // in xDrip's graph window; relative spacing of older events is preserved.
     @Volatile private var pumpClockOffsetMs = 0L
+
+    @Volatile private var state: State = State.DISABLED
+    // Basal-profile (IDP) import: read the active profile's segments, then write xDrip's basal profile.
+    private var idpActiveId = -1
+    private var idpSegmentsExpected = 0
+    private val idpRates = java.util.TreeMap<Int, Double>() // segment start-minute -> rate U/hr
     @Volatile private var historyStarted = false
     @Volatile private var historyComplete = false
 
@@ -170,8 +205,8 @@ class TandemPumpController private constructor(
             ); pump = p
             btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
         }
-        if (connected) { status("Connected — syncing into xDrip…"); refresh(); return }
-        status("Scanning for a Tandem pump…")
+        if (connected) { status("Connected — syncing into xDrip…"); emitState(State.CONNECTED); refresh(); return }
+        status("Scanning for a Tandem pump…"); emitState(State.SCANNING)
         // First-time pairing (no saved pairing code yet): proactively clear any stale Android bond
         // BEFORE connecting, so bondState != BONDED on connect -> createBond() fires -> the OS shows a
         // fresh pairing request -> pump answers the JPAKE -> the in-app code box appears.
@@ -245,6 +280,7 @@ class TandemPumpController private constructor(
         try { btHandler?.central?.stopScan() } catch (_: Throwable) {}
         try { (activePeripheral ?: peripheral)?.cancelConnection() } catch (_: Throwable) {}
         connected = false; meta.connected = false
+        emitState(State.DISABLED)
     }
 
     private inner class Pump(config: TandemConfig) : TandemPump(appContext, config) {
@@ -287,10 +323,11 @@ class TandemPumpController private constructor(
             activePeripheral = peripheral; activePump = this; activeChallenge = centralChallengeResponse
             val saved = PumpState.getPairingCode(appContext)
             if (!saved.isNullOrBlank()) { status("Re-using saved pairing code…"); senderHandler.post { pair(peripheral, centralChallengeResponse, saved) } }
-            else { log("Prompting for pairing code"); main.post { listener?.onNeedPairingCode(peripheral?.name) } }
+            else { log("Prompting for pairing code"); emitState(State.NEEDS_CODE); main.post { listener?.onNeedPairingCode(peripheral?.name) } }
         }
         override fun onInvalidPairingCode(peripheral: BluetoothPeripheral?, resp: AbstractPumpChallengeResponse?) {
             error("Pump rejected the pairing code — re-check it on the pump and retry.")
+            emitState(State.NEEDS_CODE)
             main.post { listener?.onNeedPairingCode(peripheral?.name) }
         }
         override fun onPumpModel(peripheral: BluetoothPeripheral?, model: KnownDeviceModel?) {
@@ -304,7 +341,7 @@ class TandemPumpController private constructor(
             connected = true; meta.connected = true
             super.onPumpConnected(peripheral)
             main.post { listener?.onConnected(meta.model) }
-            status("Connected — syncing into xDrip…")
+            status("Connected — syncing into xDrip…"); emitState(State.SYNCING)
             beginSync(peripheral)
         }
         override fun onReceiveMessage(peripheral: BluetoothPeripheral?, message: Message?) {
@@ -322,12 +359,50 @@ class TandemPumpController private constructor(
                     // off) can be weeks apart — so the graph would show no recent basal even though
                     // delivery is continuous. Anchor the live current rate at "now" each sync so the
                     // basal line reflects what the pump is actually delivering.
-                    try { APStatus.createEfficientRecord(System.currentTimeMillis(), rate) } catch (_: Throwable) {}
+                    if (TandemSync.isOn(TandemSync.BASAL))
+                        try { APStatus.createEfficientRecord(System.currentTimeMillis(), rate) } catch (_: Throwable) {}
                 }
                 is TimeSinceResetResponse -> {
                     val pumpNowMs = Dates.fromJan12008ToUnixEpochSeconds(message.currentTime) * 1000L
                     pumpClockOffsetMs = System.currentTimeMillis() - pumpNowMs
                     log("Pump clock=${message.currentTimeInstant} -> offset ${pumpClockOffsetMs / 86400000L}d (anchoring history to phone time)")
+                }
+                // ---- live values for the Pump tab (+ optional glucose -> BG) ----
+                is CurrentEGVGuiDataResponse -> {
+                    meta.glucoseMgdl = message.cgmReading; meta.trendRate = message.trendRate / 10.0; emitMeta()
+                    if (TandemSync.isOn(TandemSync.GLUCOSE) && message.cgmReading in 10..600) {
+                        val ts = Dates.fromJan12008ToUnixEpochSeconds(message.bgReadingTimestampSeconds) * 1000L + pumpClockOffsetMs
+                        try { BgReading.bgReadingInsertFromInt(message.cgmReading, ts, 12 * 60000L, false, "Tandem pump") } catch (t: Throwable) { log("BG insert failed: ${t.message}") }
+                    }
+                }
+                is ControlIQInfoV1Response -> {
+                    meta.closedLoop = message.closedLoopEnabled
+                    meta.tddUnits = InsulinUnit.from1000To1(message.totalDailyInsulin.toLong())
+                    meta.controlIqMode = "mode ${message.currentUserModeTypeId}"
+                    emitMeta()
+                }
+                is CurrentActiveIdpValuesResponse -> {
+                    meta.carbRatio = message.currentCarbRatio / 1000.0
+                    meta.isf = message.currentIsf
+                    meta.targetBg = message.currentTargetBg
+                    meta.insulinDurationMin = message.currentInsulinDuration
+                    emitMeta()
+                }
+                is ProfileStatusResponse -> {
+                    idpActiveId = message.idpSlot0Id
+                    if (TandemSync.isOn(TandemSync.PROFILE) && idpActiveId >= 0) {
+                        idpRates.clear(); idpSegmentsExpected = 0
+                        senderHandler.postDelayed({ activePeripheral?.let { safeSend(it, IDPSettingsRequest(idpActiveId)) } }, 300L)
+                    }
+                }
+                is IDPSettingsResponse -> {
+                    meta.basalProfileName = message.name; emitMeta()
+                    idpSegmentsExpected = message.numberOfProfileSegments
+                    requestIdpSegments()
+                }
+                is IDPSegmentResponse -> {
+                    idpRates[message.profileStartTime] = InsulinUnit.from1000To1(message.profileBasalRate.toLong())
+                    if (idpRates.size >= idpSegmentsExpected) saveBasalProfile()
                 }
                 else -> log("RESP ${message.javaClass.simpleName}")
             }
@@ -336,6 +411,7 @@ class TandemPumpController private constructor(
         override fun onPumpDisconnected(peripheral: BluetoothPeripheral?, status: HciStatus?): Boolean {
             connected = false; meta.connected = false; emitMeta()
             log("Disconnected: $status (reconnect=${keepConnected})")
+            emitState(if (keepConnected) State.SCANNING else State.DISABLED)
             return keepConnected // auto-reconnect unless we were told to stop
         }
         override fun onPumpCriticalError(peripheral: BluetoothPeripheral?, reason: TandemError?) { super.onPumpCriticalError(peripheral, reason); error("Pump error: ${reason?.name}") }
@@ -408,10 +484,10 @@ class TandemPumpController private constructor(
     private fun ingest(hl: HistoryLog) {
         val ts = Dates.fromJan12008ToUnixEpochSeconds(hl.pumpTimeSec) * 1000L + pumpClockOffsetMs
         when (hl) {
-            is BolusCompletedHistoryLog -> addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
-            is BolexCompletedHistoryLog -> addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
-            is CarbEnteredHistoryLog -> addCarbs(hl.sequenceNum, hl.carbs.toDouble(), ts)
-            is BasalRateChangeHistoryLog -> addBasal(hl.commandBasalRate.toDouble(), ts)
+            is BolusCompletedHistoryLog -> if (TandemSync.isOn(TandemSync.BOLUSES)) addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
+            is BolexCompletedHistoryLog -> if (TandemSync.isOn(TandemSync.BOLUSES)) addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
+            is CarbEnteredHistoryLog -> if (TandemSync.isOn(TandemSync.CARBS)) addCarbs(hl.sequenceNum, hl.carbs.toDouble(), ts)
+            is BasalRateChangeHistoryLog -> if (TandemSync.isOn(TandemSync.BASAL)) addBasal(hl.commandBasalRate.toDouble(), ts)
             else -> {}
         }
     }
@@ -460,11 +536,50 @@ class TandemPumpController private constructor(
         meta.lastSync = System.currentTimeMillis()
         status("Synced — ${meta.boluses} boluses, ${meta.carbs} carbs, ${meta.basal} basal → xDrip.")
         main.post { listener?.onDone(meta) }
-        // Now (and only now) fetch the small status set for the pump-status display, paced one-by-one.
+        emitState(State.CONNECTED)
+        // Now (and only now) fetch the small status set for the Pump tab, paced one-by-one. If basal
+        // profile sync is on, append ProfileStatus — its response chains to IDPSettings + IDPSegments.
         val per = peripheral
-        if (per != null && !stopped && connected) senderHandler.postDelayed({ sendStatusReads(per, ArrayDeque(ReadRequests.all())) }, 500L)
+        if (per != null && !stopped && connected) {
+            val q = ArrayDeque<Message>(ReadRequests.all())
+            if (TandemSync.isOn(TandemSync.PROFILE)) q.add(ProfileStatusRequest())
+            senderHandler.postDelayed({ sendStatusReads(per, q) }, 500L)
+        }
     }
 
+    /** Request each segment of the active IDP profile, paced one-at-a-time so we never flood. */
+    private fun requestIdpSegments() {
+        val per = activePeripheral ?: return
+        if (idpSegmentsExpected <= 0) return
+        var delay = 250L
+        for (i in 0 until idpSegmentsExpected) {
+            senderHandler.postDelayed({ if (!stopped) safeSend(per, IDPSegmentRequest(idpActiveId, i)) }, delay)
+            delay += 400L
+        }
+    }
+
+    /** Expand the collected IDP segments into xDrip's 48 half-hour basal blocks and save the profile. */
+    private fun saveBasalProfile() {
+        try {
+            if (idpRates.isEmpty()) return
+            val perSeg = 30                               // xDrip basal granularity (minutes)
+            val blocks = 24 * 60 / perSeg                 // 48 blocks/day
+            val starts = idpRates.keys.toList()           // ascending segment start-minutes
+            val rates = ArrayList<Double>(blocks)
+            for (b in 0 until blocks) {
+                val minute = b * perSeg
+                var rate = idpRates[starts.last()] ?: 0.0 // before first start -> last segment (midnight wrap)
+                for (s in starts) { if (s <= minute) rate = idpRates[s] ?: rate else break }
+                rates.add(rate)
+            }
+            val ref = BasalProfile.getActiveRateName()
+            BasalProfile.save(ref, rates)
+            log("Saved basal profile '${meta.basalProfileName}' (${idpRates.size} segments) -> xDrip profile $ref")
+        } catch (t: Throwable) { log("basal profile save failed: ${t.message}") }
+    }
+
+    fun currentState(): State = state
+    private fun emitState(s: State) { state = s; main.post { listener?.onState(s) } }
     private fun emitMeta() { main.post { listener?.onMetadata(meta) } }
     private fun status(s: String) { Log.i(TAG, s); main.post { listener?.onStatus(s) } }
     private fun log(s: String) { Log.i(TAG, s); main.post { listener?.onLog(s) } }

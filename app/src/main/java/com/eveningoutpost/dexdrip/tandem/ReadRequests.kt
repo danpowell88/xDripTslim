@@ -12,9 +12,12 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.*
  */
 object ReadRequests {
     fun all(): List<Message> = listOf(
-        CurrentBatteryV2Request(),   // battery %
-        InsulinStatusRequest(),      // cartridge units remaining
-        ControlIQIOBRequest(),       // insulin on board
-        CurrentBasalStatusRequest()  // current basal rate
+        CurrentBatteryV2Request(),       // battery %
+        InsulinStatusRequest(),          // cartridge units remaining
+        ControlIQIOBRequest(),           // insulin on board
+        CurrentBasalStatusRequest(),     // current basal rate
+        CurrentEGVGuiDataRequest(),      // latest CGM glucose + trend (Pump tab; -> BG if enabled)
+        ControlIQInfoV1Request(),        // closed-loop on/off, user mode, total daily insulin
+        CurrentActiveIdpValuesRequest()  // active carb ratio / ISF / target / insulin duration
     )
 }

@@ -1,12 +1,14 @@
 package com.eveningoutpost.dexdrip.tandem
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import com.eveningoutpost.dexdrip.models.UserError
-import com.eveningoutpost.dexdrip.utilitymodels.NotificationChannels
 
 /**
  * Foreground service that owns the read-only Tandem pump connection (pumpX2),
@@ -23,9 +25,13 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
     companion object {
         private const val TAG = "TandemPumpService"
         private const val NOTIF_ID = 7713
+        // Our own channel — xDrip's ONGOING_CHANNEL is registered under a hashed id, so posting to
+        // the raw id silently fails ("No Channel found"), leaving the foreground notification missing.
+        private const val CHANNEL_ID = "tandem_pump_ongoing"
 
         @Volatile var lastMeta: TandemPumpController.PumpMetadata? = null
         @Volatile var lastStatus: String = "Idle"
+        @Volatile var lastState: TandemPumpController.State = TandemPumpController.State.DISABLED
         @Volatile var uiListener: TandemPumpController.Listener? = null
         @Volatile private var INSTANCE: TandemPumpService? = null
 
@@ -36,7 +42,19 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onCreate() { super.onCreate(); INSTANCE = this }
+    override fun onCreate() { super.onCreate(); INSTANCE = this; ensureChannel() }
+
+    private fun ensureChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            if (nm.getNotificationChannel(CHANNEL_ID) == null) {
+                nm.createNotificationChannel(
+                    NotificationChannel(CHANNEL_ID, "Tandem pump (read-only)", NotificationManager.IMPORTANCE_LOW)
+                        .apply { description = "Ongoing Tandem pump sync status" }
+                )
+            }
+        }
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (!TandemEntry.isEnabled()) {
@@ -75,7 +93,7 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
             this, 0, Intent(this, TandemDownloadActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        return Notification.Builder(this, NotificationChannels.ONGOING_CHANNEL)
+        return Notification.Builder(this, CHANNEL_ID)
             .setContentTitle("xDrip Tandem")
             .setContentText(text)
             .setSmallIcon(android.R.drawable.stat_sys_data_bluetooth)
@@ -104,4 +122,5 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
         uiListener?.onDone(meta)
     }
     override fun onError(text: String) { uiListener?.onError(text) }
+    override fun onState(state: TandemPumpController.State) { lastState = state; uiListener?.onState(state) }
 }
