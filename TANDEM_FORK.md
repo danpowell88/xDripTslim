@@ -29,10 +29,17 @@ pump and can never change anything on it.
 2. **Close / log out of the official t:connect app** (only one app can use the pump's Bluetooth at a time).
 3. **In xDrip:** ☰ menu → **Settings → Experimental → "Tandem pump (read-only)"**.
 4. Tap **Enable & Sync** and allow the Bluetooth / Location permission.
-5. Accept the Android pairing prompt, then type the **code shown on the pump** and tap **Pair**.
+5. **Accept the Android "Bluetooth pairing request"** when it pops up. *(If you don't see a dialog,
+   swipe down the **notification shade** — Android often shows the pairing request there.)*
+6. Then type the **code shown on the pump** and tap **Pair**.
 
 That's it. It then keeps syncing **in the background and after restarts** — you don't re-enter the code.
 Use **Sync now** any time to force a refresh.
+
+> **No pairing request appeared?** This almost always means your phone still has an **old bond** for
+> the pump (from a previous attempt, or because you re-opened *Pair Device* on the pump). Tap
+> **Forget & re-pair** on the Tandem screen — it clears the stale pairing and starts fresh, so the
+> request appears again. Then re-do steps 1 and 5–6.
 
 ## Where your data shows up
 
@@ -52,9 +59,12 @@ your data, just press **Back**.
   (xDrip targets an older SDK on purpose for reliable background operation). Tap **OK**.
 - **xDrip "Update available" popup** — that's xDrip's own updater, unrelated to this fork; close it
   (or disable update checks in xDrip settings).
+- **No pairing prompt / "Waiting for you to accept the pairing request…"** — check the
+  **notification shade** for a "Bluetooth pairing request". If there's nothing there, tap **Forget &
+  re-pair** (this removes a stale bond that stops Android re-prompting), put the pump back in *Pair
+  Device*, and try **Enable & Sync** again.
 - **"Pump rejected the pairing code"** — re-open *Pair Device* on the pump for a fresh code, make
-  sure t:connect is fully closed, and if it persists, unpair the pump in Android Bluetooth settings
-  and try again.
+  sure t:connect is fully closed, and if it persists, tap **Forget & re-pair** and try again.
 - **Stuck on "Scanning…"** — check Bluetooth and Location are on, the permission was granted, and the
   pump is in *Pair Device* mode and nearby.
 - A pump can only be actively connected to **one** app at a time.

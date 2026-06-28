@@ -40,6 +40,28 @@ Other touched files:
 - `AndroidManifest.xml` — registers the internal (`exported=false`) activity + the `TandemPumpService`.
 - `app/build.gradle` — pumpX2 deps; **minSdk raised 24 → 26** (pumpX2-android requires 26).
 
+## Bonding / pairing (why the prompt sometimes didn't show)
+pumpX2 gates authentication on `bondState == BONDED` (`TandemPump.startAuthenticationWhenBonded`) but
+**never calls `createBond()` itself** — it relies on the pump forcing link encryption to make Android
+auto-bond. On the t:slim that doesn't fire reliably, so the bond never completes: pumpX2 raises
+`PAIRING_PROMPT_NOT_ACCEPTED_YET` and the pump drops the link (`REMOTE_USER_TERMINATED_CONNECTION`),
+with no system prompt ever shown. Two fixes:
+
+1. **Actively initiate bonding** — `TandemPumpController.Pump.onInitialPumpConnection` calls
+   blessed's `peripheral.createBond()` when `bondState != BONDED` (mirrors xDrip's `InPenService`).
+   While connected, blessed enqueues the bond and registers the pairing-request receiver, so the OS
+   pairing request actually appears.
+2. **Clear stale bonds** — a leftover bond from a half-finished attempt makes Android report `BONDED`
+   with stale keys; the pump then terminates and no new prompt shows. Handled two ways:
+   - `TandemConfig.withUnbondAfterInitialConnectionHardFailuresCount(2)` — pumpX2 auto-removes the
+     bond after repeated initial-connection failures, so the next reconnect re-prompts.
+   - **Forget & re-pair** button → `TandemEntry.forgetAndRepair()`: `PumpState.resetState()` (pairing
+     code + JPAKE + saved MAC), reset the history cursor, and `removeBond` (reflection) on any bonded
+     `tslim`/`tandem`/`mobi` device, then re-enable for a clean pairing.
+
+`onPairingPromptNotAcceptedYet` is overridden to **not** call super (which would raise the critical
+error) — it just shows actionable guidance while pumpX2 keeps retrying.
+
 ## Data mapping
 | Pump source (pumpX2) | xDrip native target | Where it shows |
 |---|---|---|

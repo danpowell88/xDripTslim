@@ -8,6 +8,7 @@ import android.util.Log
 import com.eveningoutpost.dexdrip.models.APStatus
 import com.eveningoutpost.dexdrip.models.Treatments
 import com.eveningoutpost.dexdrip.utilitymodels.PersistentStore
+import com.welie.blessed.BondState
 import com.jwoglom.pumpx2.pump.PumpState
 import com.jwoglom.pumpx2.pump.TandemError
 import com.jwoglom.pumpx2.pump.bluetooth.PumpReadyState
@@ -122,7 +123,9 @@ class TandemPumpController(
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) != null) Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
         Security.addProvider(BouncyCastleProvider())
         status("Scanning for a Tandem pump…")
-        val p = Pump(TandemConfig()); pump = p
+        // Auto-remove a stale Android bond after repeated initial-connection failures, so the OS
+        // re-shows the pairing request (a stale bond is the usual cause of "no pairing prompt").
+        val p = Pump(TandemConfig().withUnbondAfterInitialConnectionHardFailuresCount(2)); pump = p
         btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
         senderHandler.post { scanLoop() }
     }
@@ -170,8 +173,28 @@ class TandemPumpController(
         }
         override fun onInitialPumpConnection(peripheral: BluetoothPeripheral?) {
             this@TandemPumpController.peripheral = peripheral
-            status("Connected — accept the Bluetooth pairing prompt if shown…")
+            // pumpX2 waits until Android reports BONDED, but it never *initiates* bonding itself —
+            // it relies on the pump forcing link encryption. The t:slim's authorization
+            // characteristic doesn't always trigger that auto-bond in time, so the pump terminates
+            // the connection and no prompt ever appears. Kick off bonding here (the same thing
+            // xDrip's InPen service does) so the system pairing request actually shows.
+            try {
+                if (peripheral != null && peripheral.bondState != BondState.BONDED) {
+                    status("Connected — starting Bluetooth pairing. Accept the request on your phone (check the notification shade)…")
+                    val started = peripheral.createBond()
+                    log("createBond() -> $started (bondState=${peripheral.bondState})")
+                } else {
+                    status("Connected — already paired; syncing…")
+                }
+            } catch (t: Throwable) {
+                log("createBond failed: ${t.message}")
+            }
             super.onInitialPumpConnection(peripheral)
+        }
+        override fun onPairingPromptNotAcceptedYet(peripheral: BluetoothPeripheral?, retryAttempt: Int) {
+            // Intentionally NOT calling super: the default raises a PAIRING_PROMPT_NOT_ACCEPTED_YET
+            // critical error. pumpX2 keeps retrying on its own; we just guide the user instead.
+            status("Waiting for you to accept the Bluetooth pairing request — check your phone's notification shade. Make sure the pump still shows “Pair Device”. If nothing appears, tap “Forget & re-pair”.")
         }
         override fun onWaitingForPairingCode(peripheral: BluetoothPeripheral?, centralChallengeResponse: AbstractCentralChallengeResponse?) {
             this@TandemPumpController.peripheral = peripheral

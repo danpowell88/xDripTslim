@@ -79,6 +79,13 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
             refreshButtons()
         }
         syncButton.setOnClickListener { ensurePermsThen { TandemEntry.startWithRefresh() } }
+        findViewById<Button>(R.id.tandemForgetButton).setOnClickListener {
+            ensurePermsThen {
+                pairingRow.visibility = View.GONE
+                TandemEntry.forgetAndRepair()
+                statusText.text = "Forgetting the pump and re-pairing… put the pump in Bluetooth → Pair Device, then accept the pairing request on your phone."
+            }
+        }
         findViewById<Button>(R.id.tandemPairButton).setOnClickListener {
             val code = pairingInput.text.toString()
             if (code.isBlank()) { toast("Enter the code shown on the pump"); return@setOnClickListener }

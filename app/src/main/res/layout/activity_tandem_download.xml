@@ -81,6 +81,15 @@
             android:text="Disable" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/tandemForgetButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Forget &amp; re-pair"
+        android:textColor="#FF8A80"
+        style="?android:attr/buttonBarButtonStyle" />
+
     <!-- ===== PUMP STATUS ===== -->
     <TextView style="@style/TandemSectionHeader" android:text="PUMP STATUS" />
     <View style="@style/TandemDivider" />
