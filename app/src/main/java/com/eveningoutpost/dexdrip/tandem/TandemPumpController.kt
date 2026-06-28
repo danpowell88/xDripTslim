@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.Log
 import com.eveningoutpost.dexdrip.models.APStatus
 import com.eveningoutpost.dexdrip.models.Treatments
+import com.eveningoutpost.dexdrip.utilitymodels.PersistentStore
 import com.jwoglom.pumpx2.pump.PumpState
 import com.jwoglom.pumpx2.pump.TandemError
 import com.jwoglom.pumpx2.pump.bluetooth.PumpReadyState
@@ -42,16 +43,16 @@ import kotlin.math.min
 /**
  * READ-ONLY Tandem t:slim X2 / Mobi driver for xDrip+, built on pumpX2 (MIT).
  *
- * Design goal: feed xDrip's NATIVE screens, don't add display UI.
- *   - boluses  -> [Treatments] (insulin)   -> native graph / treatments / IOB
- *   - carbs    -> [Treatments] (carbs)     -> native graph / COB
- *   - basal    -> [APStatus]   (abs rate)  -> native basal line / BasalChart
- * The only new screen is pairing + pump metadata (battery/cartridge/IOB), which
- * xDrip has no native source for.
+ * Owned by [TandemPumpService] (a foreground service) so the connection survives
+ * backgrounding and process restarts, and auto-reconnects (like xDrip's InPen).
+ *
+ * Feeds xDrip NATIVE stores (no new display UI):
+ *   boluses -> Treatments(insulin) ; carbs -> Treatments(carbs) ; basal -> APStatus(abs U/hr).
+ * Reads are incremental across runs via a persisted sequence cursor.
  *
  * SAFETY: only currentStatus + historyLog READ requests are sent. CONTROL /
- * CONTROL_STREAM are never used and pumpX2 blocks insulin-delivery messages
- * unless enableActionsAffectingInsulinDelivery() is called — never called here.
+ * CONTROL_STREAM are never used; pumpX2 blocks insulin-delivery messages unless
+ * enableActionsAffectingInsulinDelivery() is called — never called here.
  */
 class TandemPumpController(
     private val appContext: Context,
@@ -59,6 +60,7 @@ class TandemPumpController(
 ) {
     data class PumpMetadata(
         var model: String? = null,
+        var connected: Boolean = false,
         var batteryPercent: Int? = null,
         var cartridgeUnits: Int? = null,
         var iobUnits: Double? = null,
@@ -67,7 +69,8 @@ class TandemPumpController(
         var carbs: Int = 0,
         var basal: Int = 0,
         var historyReceived: Int = 0,
-        var historyTotal: Long = 0
+        var historyTotal: Long = 0,
+        var lastSync: Long = 0
     )
 
     interface Listener {
@@ -85,6 +88,7 @@ class TandemPumpController(
         private const val HISTORY_CHUNK = 250
         private const val WATCHDOG_MS = 6000L
         private const val MAX_STALLS = 8
+        private const val CURSOR_KEY = "tandem_last_seq"
         private fun uuidFor(kind: String, seq: Long): String =
             java.util.UUID.nameUUIDFromBytes("tandem-$kind-$seq".toByteArray()).toString()
     }
@@ -98,13 +102,19 @@ class TandemPumpController(
     @Volatile private var peripheral: BluetoothPeripheral? = null
     @Volatile private var centralChallenge: AbstractCentralChallengeResponse? = null
     @Volatile private var stopped = false
+    @Volatile private var keepConnected = true
+    @Volatile private var connected = false
 
     private val meta = PumpMetadata()
     private val seenSeq = HashSet<Long>()
 
-    private var histFirst = 0L; private var histLast = 0L; private var histTotal = 0L
-    private var nextSeq = 0L; private var chunkStart = 0L; private var chunkEndExcl = 0L
-    private var stalls = 0; private var lastDeliveredAtWatchdog = -1
+    private var histLast = 0L
+    private var startSeq = 0L
+    private var nextSeq = 0L
+    private var chunkStart = 0L
+    private var chunkEndExcl = 0L
+    private var stalls = 0
+    private var lastSeenAtWatchdog = -1
     @Volatile private var historyStarted = false
     @Volatile private var historyComplete = false
 
@@ -136,8 +146,19 @@ class TandemPumpController(
         }
     }
 
+    /** Re-pull new history while connected (called periodically / on demand by the service). */
+    fun refresh() {
+        val per = peripheral ?: return
+        if (!connected) return
+        historyStarted = false; historyComplete = false; stalls = 0; lastSeenAtWatchdog = -1
+        senderHandler.post { safeSend(per, HistoryLogStatusRequest()) }
+    }
+
+    fun isConnected() = connected
+    fun metadata() = meta
+
     fun stop() {
-        stopped = true
+        stopped = true; keepConnected = false
         try { btHandler?.stop() } catch (_: Throwable) {}
         try { sender.quitSafely() } catch (_: Throwable) {}
     }
@@ -165,16 +186,15 @@ class TandemPumpController(
         }
         override fun onPumpModel(peripheral: BluetoothPeripheral?, model: KnownDeviceModel?) {
             super.onPumpModel(peripheral, model)
-            meta.model = when (model) {
-                KnownDeviceModel.TSLIM_X2 -> "t:slim X2"; KnownDeviceModel.MOBI -> "Tandem Mobi"; else -> model?.name ?: "Tandem Pump"
-            }
+            meta.model = when (model) { KnownDeviceModel.TSLIM_X2 -> "t:slim X2"; KnownDeviceModel.MOBI -> "Tandem Mobi"; else -> model?.name ?: "Tandem Pump" }
             emitMeta()
         }
         override fun onPumpConnected(peripheral: BluetoothPeripheral?) {
             this@TandemPumpController.peripheral = peripheral
+            connected = true; meta.connected = true
             super.onPumpConnected(peripheral)
             main.post { listener.onConnected(meta.model) }
-            status("Authenticated — reading pump state & history…")
+            status("Connected — syncing into xDrip…")
             beginSnapshotThenHistory(peripheral)
         }
         override fun onReceiveMessage(peripheral: BluetoothPeripheral?, message: Message?) {
@@ -190,7 +210,11 @@ class TandemPumpController(
             }
         }
         override fun onReceiveQualifyingEvent(peripheral: BluetoothPeripheral?, events: MutableSet<QualifyingEvent>?) { log("EVENT $events") }
-        override fun onPumpDisconnected(peripheral: BluetoothPeripheral?, status: HciStatus?): Boolean { log("Disconnected: $status"); return false }
+        override fun onPumpDisconnected(peripheral: BluetoothPeripheral?, status: HciStatus?): Boolean {
+            connected = false; meta.connected = false; emitMeta()
+            log("Disconnected: $status (reconnect=${keepConnected})")
+            return keepConnected // auto-reconnect unless we were told to stop
+        }
         override fun onPumpCriticalError(peripheral: BluetoothPeripheral?, reason: TandemError?) { super.onPumpCriticalError(peripheral, reason); error("Pump error: ${reason?.name}") }
     }
 
@@ -208,17 +232,21 @@ class TandemPumpController(
 
     private fun onHistoryStatus(resp: HistoryLogStatusResponse) {
         if (historyStarted) return
-        historyStarted = true
-        histTotal = resp.numEntries; histFirst = resp.firstSequenceNum; histLast = resp.lastSequenceNum; nextSeq = histFirst
-        meta.historyTotal = histTotal; emitMeta()
-        log("HISTORY: $histTotal entries, seq $histFirst..$histLast")
-        if (histTotal <= 0 || histLast < histFirst) { finishHistory(); return }
+        historyStarted = true; historyComplete = false
+        histLast = resp.lastSequenceNum
+        val cursor = PersistentStore.getLong(CURSOR_KEY)
+        startSeq = if (cursor > 0) maxOf(resp.firstSequenceNum, cursor + 1) else resp.firstSequenceNum
+        nextSeq = startSeq
+        val sessionTotal = if (histLast >= startSeq) histLast - startSeq + 1 else 0
+        meta.historyTotal = sessionTotal; emitMeta()
+        log("HISTORY: seq $startSeq..$histLast ($sessionTotal new, cursor=$cursor)")
+        if (sessionTotal <= 0) { finishHistory(); return }
         requestNextChunk(); scheduleWatchdog()
     }
 
     private fun requestNextChunk() {
         if (stopped) return
-        if (seenSeq.size >= histTotal || nextSeq > histLast) { finishHistory(); return }
+        if (nextSeq > histLast) { finishHistory(); return }
         val per = peripheral ?: return
         chunkStart = nextSeq
         val count = min(HISTORY_CHUNK.toLong(), histLast - chunkStart + 1).toInt()
@@ -237,7 +265,6 @@ class TandemPumpController(
         if (have >= (chunkEndExcl - chunkStart)) requestNextChunk()
     }
 
-    /** Map a pump history record into xDrip's NATIVE stores. */
     private fun ingest(hl: HistoryLog) {
         val ts = Dates.fromJan12008ToUnixEpochSeconds(hl.pumpTimeSec) * 1000L
         when (hl) {
@@ -245,25 +272,24 @@ class TandemPumpController(
             is BolexCompletedHistoryLog -> addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
             is CarbEnteredHistoryLog -> addCarbs(hl.sequenceNum, hl.carbs.toDouble(), ts)
             is BasalRateChangeHistoryLog -> addBasal(hl.commandBasalRate.toDouble(), ts)
-            else -> { /* other record types are read but not surfaced as treatments */ }
+            else -> {}
         }
     }
 
     private fun addBolus(seq: Long, units: Double, ts: Long) {
         if (units <= 0.0) return
         val uuid = uuidFor("bolus", seq)
-        try { if (Treatments.byuuid(uuid) == null) { Treatments.create(0.0, units, ts, uuid); meta.boluses++; log("BOLUS ${"%.2f".format(units)}u") } }
+        try { if (Treatments.byuuid(uuid) == null) { Treatments.create(0.0, units, ts, uuid); meta.boluses++ } }
         catch (t: Throwable) { log("bolus insert failed seq$seq: ${t.message}") }
     }
 
     private fun addCarbs(seq: Long, grams: Double, ts: Long) {
         if (grams <= 0.0) return
         val uuid = uuidFor("carb", seq)
-        try { if (Treatments.byuuid(uuid) == null) { Treatments.create(grams, 0.0, ts, uuid); meta.carbs++; log("CARBS ${"%.0f".format(grams)}g") } }
+        try { if (Treatments.byuuid(uuid) == null) { Treatments.create(grams, 0.0, ts, uuid); meta.carbs++ } }
         catch (t: Throwable) { log("carb insert failed seq$seq: ${t.message}") }
     }
 
-    /** Basal rate change -> xDrip native basal line (APStatus, absolute U/hr). */
     private fun addBasal(rateUperHr: Double, ts: Long) {
         if (rateUperHr < 0.0) return
         try { APStatus.createEfficientRecord(ts, rateUperHr); meta.basal++ }
@@ -274,14 +300,13 @@ class TandemPumpController(
     private val watchdog = object : Runnable {
         override fun run() {
             if (stopped || historyComplete) return
-            val delivered = seenSeq.size
-            if (delivered >= histTotal || nextSeq > histLast) { finishHistory(); return }
-            if (delivered == lastDeliveredAtWatchdog) {
-                stalls++; log("HISTORY stall ($stalls) at $delivered/$histTotal")
+            if (nextSeq > histLast) { finishHistory(); return }
+            if (seenSeq.size == lastSeenAtWatchdog) {
+                stalls++; log("HISTORY stall ($stalls) at ${seenSeq.size}")
                 if (stalls >= MAX_STALLS) { finishHistory(); return }
                 requestNextChunk()
             }
-            lastDeliveredAtWatchdog = delivered
+            lastSeenAtWatchdog = seenSeq.size
             senderHandler.postDelayed(this, WATCHDOG_MS)
         }
     }
@@ -290,8 +315,10 @@ class TandemPumpController(
         if (historyComplete) return
         historyComplete = true
         senderHandler.removeCallbacks(watchdog)
-        meta.historyReceived = seenSeq.size
-        status("Done: ${seenSeq.size}/$histTotal records — ${meta.boluses} boluses, ${meta.carbs} carbs, ${meta.basal} basal → xDrip.")
+        val maxSeen = seenSeq.maxOrNull() ?: 0L
+        if (maxSeen > 0) PersistentStore.setLong(CURSOR_KEY, maxOf(PersistentStore.getLong(CURSOR_KEY), maxSeen))
+        meta.lastSync = System.currentTimeMillis()
+        status("Synced — ${meta.boluses} boluses, ${meta.carbs} carbs, ${meta.basal} basal → xDrip.")
         main.post { listener.onDone(meta) }
     }
 

@@ -14,15 +14,25 @@ graph / treatments / IOB-COB / basal screens. The **only** new screen is pump pa
 metadata (battery / cartridge / IOB / basal) — things xDrip has no native source for.
 
 ## What was added (vs upstream xDrip)
+Follows xDrip's own BLE-device lifecycle (like InPen/Pendiq): a foreground **service** does the
+work, an **Entry** class enables/starts it, and **Home** restarts it on launch — so it runs in the
+background and survives restarts. pumpX2 still drives the actual BLE/JPAKE/protocol.
 - `app/src/main/java/com/eveningoutpost/dexdrip/tandem/`
-  - `TandemPumpController.kt` — pumpX2 BLE driver: scan → pair → snapshot reads → stream full
-    history log → write into xDrip's native stores (idempotent via deterministic UUIDs):
+  - `TandemPumpService.kt` — **foreground service** (START_STICKY) that owns the pump connection,
+    auto-reconnects, and posts an ongoing notification. Survives backgrounding + process death.
+  - `TandemEntry.kt` — enable flag `tandem_enabled` (`Pref`) + `startIfEnabled()` (mirrors `InPenEntry`).
+  - `TandemPumpController.kt` — pumpX2 driver: scan → pair → snapshot reads → **incremental** history
+    stream (persisted sequence cursor in `PersistentStore`, so reconnects only pull new records) →
+    write into xDrip's native stores (idempotent via deterministic UUIDs):
     - boluses → `Treatments` (insulin)  → native graph / treatments / **IOB**
     - carbs   → `Treatments` (carbs)    → native graph / **COB**
     - basal   → `APStatus`  (abs U/hr)  → native **basal line / BasalChart**
   - `ReadRequests.kt` — the read-only `currentStatus` snapshot request list.
-  - `TandemDownloadActivity.kt` — the ONE new screen: pairing + pump metadata, with an
-    "Open xDrip" button to view the data on the normal screens. (own launcher icon **"xDrip Tandem"**)
+  - `TandemDownloadActivity.kt` — the ONE new screen: Enable/Disable + pairing-code entry + pump
+    status (battery/cartridge/IOB/basal). It only drives the service; closing it does **not** stop
+    syncing. (own launcher icon **"xDrip Tandem"**)
+- `Home.java` — calls `TandemEntry.startIfEnabled()` on launch (restart-survival hook, next to InPen).
+- `AndroidManifest.xml` — registers the activity (launcher) + the `TandemPumpService`.
 - `app/src/main/res/layout/activity_tandem_download.xml`
 - `app/build.gradle` — adds pumpX2 (`v1.9.0`) + BouncyCastle deps; **minSdk raised 24 → 26**
   (pumpX2-android requires 26).

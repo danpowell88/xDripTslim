@@ -46,12 +46,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Connect &amp; Sync" />
+            android:text="Enable &amp; Sync" />
+        <Button
+            android:id="@+id/tandemDisableButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disable" />
         <Button
             android:id="@+id/tandemOpenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:text="Open xDrip" />
     </LinearLayout>
 

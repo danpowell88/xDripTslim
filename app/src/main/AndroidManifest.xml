@@ -217,6 +217,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Foreground service that keeps the read-only Tandem pump connection alive
+             (background + across restarts), mirroring xDrip's other BLE device services. -->
+        <service
+            android:name="com.eveningoutpost.dexdrip.tandem.TandemPumpService"
+            android:exported="false" />
+
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true"

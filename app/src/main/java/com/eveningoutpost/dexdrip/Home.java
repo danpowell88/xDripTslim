@@ -1945,6 +1945,7 @@ public class Home extends ActivityWithMenu implements ActivityCompat.OnRequestPe
 
         Inevitable.task("home-resume-bg", 2000, () -> {
             InPenEntry.startIfEnabled();
+            com.eveningoutpost.dexdrip.tandem.TandemEntry.startIfEnabled(); // Tandem pump (read-only)
             EmergencyAssistActivity.checkPermissionRemoved();
             NightscoutUploader.launchDownloadRest();
             Pendiq.immortality(); // Experimental testing phase

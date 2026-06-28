@@ -1,0 +1,39 @@
+package com.eveningoutpost.dexdrip.tandem
+
+import com.eveningoutpost.dexdrip.models.JoH
+import com.eveningoutpost.dexdrip.utilitymodels.Inevitable
+import com.eveningoutpost.dexdrip.utilitymodels.Pref
+
+/**
+ * Lightweight entry point for the Tandem pump integration, mirroring xDrip's
+ * InPenEntry: an enable flag + helpers that (re)start the foreground service.
+ * [startIfEnabled] is called from Home on app launch so it survives restarts.
+ */
+object TandemEntry {
+
+    const val PREF_ENABLED = "tandem_enabled"
+
+    @JvmStatic fun isEnabled(): Boolean = Pref.getBooleanDefaultFalse(PREF_ENABLED)
+
+    @JvmStatic fun setEnabled(enabled: Boolean) {
+        Pref.setBoolean(PREF_ENABLED, enabled)
+        if (enabled) startWithRefresh() else stop()
+    }
+
+    private fun startWith(function: String) {
+        Inevitable.task("tandem-changed-$function", 1000L) {
+            JoH.startService(TandemPumpService::class.java, "function", function)
+        }
+    }
+
+    @JvmStatic fun startWithRefresh() = startWith("refresh")
+
+    @JvmStatic fun stop() {
+        JoH.startService(TandemPumpService::class.java, "function", "stop")
+    }
+
+    /** Called on app launch (Home) — restarts the service if the user enabled it. */
+    @JvmStatic fun startIfEnabled() {
+        if (isEnabled() && JoH.ratelimit("tandem-start", 40)) startWithRefresh()
+    }
+}
