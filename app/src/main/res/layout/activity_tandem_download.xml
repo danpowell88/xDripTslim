@@ -52,10 +52,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Pairing code from pump"
+            android:hint="6-digit code from pump"
             android:textColor="#FFFFFF"
             android:textColorHint="#777777"
             android:inputType="textCapCharacters"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:autofillHints="" />
         <Button
             android:id="@+id/tandemPairButton"

@@ -19,6 +19,7 @@ import com.jwoglom.pumpx2.pump.messages.Message
 import com.jwoglom.pumpx2.pump.messages.helpers.Dates
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit
 import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel
+import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse
@@ -129,7 +130,16 @@ class TandemPumpController(
         status("Scanning for a Tandem pump…")
         // Auto-remove a stale Android bond after repeated initial-connection failures, so the OS
         // re-shows the pairing request (a stale bond is the usual cause of "no pairing prompt").
-        val p = Pump(TandemConfig().withUnbondAfterInitialConnectionHardFailuresCount(2)); pump = p
+        // t:slim X2 firmware v7.7+ (current) uses the 6-digit JPAKE pairing code. Without this,
+        // pumpX2 doesn't know the API version yet and defaults to LONG_16CHAR -> it sends the legacy
+        // CentralChallengeRequest, which a v7.7+ pump silently rejects (INITIAL_AUTH_NO_REPLY) before
+        // the code box can appear. SHORT_6CHAR makes the fallback report a v7.7+ API version, so
+        // pumpX2 takes the JPAKE path and prompts for the pairing code.
+        val p = Pump(
+            TandemConfig()
+                .withPairingCodeType(PairingCodeType.SHORT_6CHAR)
+                .withUnbondAfterInitialConnectionHardFailuresCount(2)
+        ); pump = p
         btHandler = TandemBluetoothHandler.getInstance(appContext, p, null)
         // First-time pairing (no saved pairing code yet): proactively clear any stale Android bond
         // BEFORE connecting, so bondState != BONDED on connect -> createBond() fires -> the OS shows a
