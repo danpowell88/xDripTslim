@@ -9,9 +9,12 @@ pump and can never change anything on it.
 
 ## What it looks like
 
-| Find it under Settings → Experimental | The pump screen |
-|---|---|
-| ![Experimental menu](docs/screenshots/04_experimental_menu.png) | ![Pump page](docs/screenshots/05_pump_page_populated.png) |
+The pump screen has three tabs — **Sync** (connect / pair / status), **Pump** (live read-only
+values), and **Settings** (choose what to pull). Everything else shows on xDrip's normal screens.
+
+| Sync | Pump | Settings |
+|---|---|---|
+| ![Sync tab](docs/screenshots/07_tab_sync.png) | ![Pump tab](docs/screenshots/08_tab_pump.png) | ![Settings tab](docs/screenshots/09_tab_settings.png) |
 
 *(Sample data shown — your real pump values appear once paired.)*
 
@@ -20,59 +23,59 @@ pump and can never change anything on it.
 1. Download the latest build: this repo → **Actions** tab → newest **Build Tandem APK** run →
    **Artifacts** → **`xdrip-tandem-fastDebug-apk`** → unzip to get **`app-fast-debug.apk`**.
 2. Copy it to your phone and tap it to install (allow "install unknown apps" if prompted).
-   - If you already had a previous build installed, **uninstall that first** — each build is signed
-     with a different key, so an in-place update is rejected.
+   - Builds are now signed with a **stable key**, so newer builds **update in place** and keep your
+     pairing. (Coming from an older build from before this change? Uninstall it once, then future
+     updates install cleanly.)
 
-## Pair your pump
+## Set up & pair
 
-1. **On the pump:** Settings → Bluetooth → **Pair Device** — it shows a pairing code.
-2. **Close / log out of the official t:connect app** (only one app can use the pump's Bluetooth at a time).
-3. **In xDrip:** ☰ menu → **Settings → Experimental → "Tandem pump (read-only)"**.
-4. Tap **Enable & Sync** and allow the Bluetooth / Location permission.
-5. **Accept the Android "Bluetooth pairing request"** when it pops up. *(If you don't see a dialog,
-   swipe down the **notification shade** — Android often shows the pairing request there.)*
-6. Then type the **code shown on the pump** and tap **Pair**.
+1. **In xDrip:** ☰ menu → **Settings → Experimental → "Tandem pump (read-only)"**.
+2. **Settings tab:** tick what you want to pull — **Boluses, Carbs, Basal delivery, Basal profile**.
+   Leave **Glucose (CGM)** *off* unless this phone has no other CGM feeding xDrip (it would clash).
+3. **On the pump:** Settings → Bluetooth → **Pair Device** — keep it on the screen showing the
+   **6-digit code**.
+4. **Close / log out of the official t:connect app** (only one app can use the pump's Bluetooth).
+5. **Sync tab:** tap **Enable & Sync**, allow the Bluetooth / Location permission.
+6. **Accept the Android "Bluetooth pairing request"** (if no dialog pops, swipe down the
+   **notification shade** — it's often there).
+7. When xDrip shows the **code box**, type the **6-digit code from the pump** and tap **Pair**.
 
-That's it. It then keeps syncing **in the background and after restarts** — you don't re-enter the code.
-Use **Sync now** any time to force a refresh.
-
-> **No pairing request appeared?** This almost always means your phone still has an **old bond** for
-> the pump (from a previous attempt, or because you re-opened *Pair Device* on the pump). Tap
-> **Forget & re-pair** on the Tandem screen — it clears the stale pairing and starts fresh, so the
-> request appears again. Then re-do steps 1 and 5–6.
+It then keeps syncing **in the background and after restarts** — you don't re-enter the code. Use
+**Sync now** any time to force a refresh.
 
 ## Where your data shows up
 
-Everything lands on the **normal xDrip screens** — there are no extra screens to learn:
+Everything lands on the **normal xDrip screens** — the tabs are just for setup/status:
 
-- **Boluses** and **carbs** → on the main graph and treatments list, and drive **IOB / COB**.
-- **Basal** → the basal line / basal chart. *(If you don't see it, turn the basal line on in xDrip
-  settings — it's off by default.)*
+- **Boluses** and **carbs** → main graph + treatments list, and drive **IOB / COB**.
+- **Basal** → the basal line (turn on **Settings → Graph Settings → "Show Basal TBR"** if you don't
+  see it). The line reflects the pump's *current* rate too, not only logged rate changes.
+- **Glucose** (only if you ticked it) → the BG graph.
 
-The **"Tandem pump"** screen itself only shows **pairing** and **pump status** — model, battery,
-cartridge units, insulin-on-board, current basal, last sync, and a small activity log. To get back to
-your data, just press **Back**.
+The **Pump** tab shows live read-only extras that xDrip has no home for — model, battery, cartridge,
+insulin-on-board, current basal, sensor glucose, Control-IQ state, total daily insulin, and your
+active carb ratio / correction (ISF) / target / insulin duration.
 
 ## Tips & troubleshooting
 
-- **"This app was built for an older version of Android"** on launch — a harmless Android notice
-  (xDrip targets an older SDK on purpose for reliable background operation). Tap **OK**.
-- **xDrip "Update available" popup** — that's xDrip's own updater, unrelated to this fork; close it
-  (or disable update checks in xDrip settings).
-- **No pairing prompt / "Waiting for you to accept the pairing request…"** — check the
-  **notification shade** for a "Bluetooth pairing request". If there's nothing there, tap **Forget &
-  re-pair** (this removes a stale bond that stops Android re-prompting), put the pump back in *Pair
-  Device*, and try **Enable & Sync** again.
+- **No pairing prompt** — check the **notification shade** for a "Bluetooth pairing request". If
+  there's nothing, tap **Forget & re-pair** (clears a stale bond), put the pump back in *Pair
+  Device*, and **Enable & Sync** again.
 - **"Pump rejected the pairing code"** — re-open *Pair Device* on the pump for a fresh code, make
-  sure t:connect is fully closed, and if it persists, tap **Forget & re-pair** and try again.
-- **Stuck on "Scanning…"** — check Bluetooth and Location are on, the permission was granted, and the
-  pump is in *Pair Device* mode and nearby.
-- A pump can only be actively connected to **one** app at a time.
+  sure t:connect is closed, and if it persists tap **Forget & re-pair** and retry.
+- **Data isn't on the graph** — it's plotted at the **pump's own event times**. If your pump's clock
+  is wrong the app re-anchors recent data to your phone's time; older events (e.g. a bolus from days
+  ago) sit back at their real time — scroll/zoom the graph back to find them.
+- **"Built for an older version of Android"** on launch — a harmless notice (xDrip targets an older
+  SDK on purpose for reliable background operation). Tap **OK**.
+- **Stuck on "Scanning…"** — check Bluetooth + Location are on, permission granted, and the pump is
+  in *Pair Device* mode and nearby. A pump talks to only **one** app at a time.
 
 ## Status
 
-Built and verified to install and run on **Android 17 (Pixel)**. Live pump pairing requires a real
-phone with Bluetooth (it can't be exercised on an emulator).
+Built and verified end-to-end on a **Pixel / Android 16**: pairs (JPAKE, 6-digit code), stays
+connected, and imports boluses / carbs / basal into xDrip's native stores. Live pump values render on
+the Pump tab.
 
 ---
 
