@@ -28,17 +28,9 @@ jobs:
       - name: Grant gradlew execute permission
         run: chmod +x ./gradlew
 
-      # Use a committed, stable debug keystore so every CI build is signed with the SAME key.
-      # Without this the runner generates a fresh ~/.android/debug.keystore each run, so each APK
-      # has a different signature and can't update a previously-installed build in place (forcing an
-      # uninstall, which wipes the saved pump pairing). The keystore uses the standard Android debug
-      # credentials (alias androiddebugkey, store/key password "android"), so the default debug
-      # signingConfig picks it up automatically.
-      - name: Use stable debug keystore
-        run: |
-          mkdir -p ~/.android
-          cp tandem-debug.keystore ~/.android/debug.keystore
-
+      # Builds are signed with the committed tandem-debug.keystore via app/build.gradle's debug
+      # signingConfig (storeFile $rootDir/tandem-debug.keystore), so every CI build shares one
+      # signature and updates install in place — keeping the saved pump pairing.
       - name: Build fastDebug APK
         run: ./gradlew :app:assembleFastDebug --stacktrace
 
