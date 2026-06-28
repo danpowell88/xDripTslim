@@ -1225,7 +1225,7 @@
         android:key="xdrip_plus_experimental"
         android:title="@string/title_xdrip_plus_experimental">
         <Preference
-            android:icon="@drawable/ic_mode_edit_grey_600_48dp"
+            android:icon="@drawable/ic_tandem_pump"
             android:key="tandem_pump_screen"
             android:summary="Pair + read-only sync of a Tandem t:slim X2 / Mobi pump (boluses, carbs, basal)"
             android:title="Tandem pump (read-only)">
