@@ -88,6 +88,13 @@ class TandemPumpController(
     companion object {
         private const val TAG = "TandemPump"
         @Volatile private var loggingPlanted = false
+        // pumpX2's TandemBluetoothHandler is a process singleton bound to the FIRST Pump it sees,
+        // so all BLE callbacks fire on that Pump even after we create a new controller (e.g. after
+        // Forget & re-pair). Track the peripheral + Pump that actually received the callbacks here,
+        // so submitPairingCode() always pairs through the right one regardless of controller churn.
+        @Volatile private var activePeripheral: BluetoothPeripheral? = null
+        @Volatile private var activePump: TandemPump? = null
+        @Volatile private var activeChallenge: AbstractCentralChallengeResponse? = null
         private const val HISTORY_CHUNK = 250
         private const val WATCHDOG_MS = 6000L
         private const val MAX_STALLS = 8
@@ -181,12 +188,17 @@ class TandemPumpController(
     }
 
     fun submitPairingCode(code: String) {
-        val per = peripheral; val p = pump
-        if (per == null || p == null) { error("No pump connected yet."); return }
+        // Prefer the peripheral/Pump that actually received the BLE callbacks (the one bound to
+        // pumpX2's singleton handler), falling back to this controller's own references.
+        val per = activePeripheral ?: peripheral
+        val p: TandemPump? = activePump ?: pump
+        val challenge = activeChallenge ?: centralChallenge
         val clean = code.trim().replace("-", "").replace(" ", "")
+        log("submitPairingCode: len=${clean.length} per=${per?.address} pump=${p != null}")
+        if (per == null || p == null) { error("No pump connected yet."); return }
         status("Pairing…")
         senderHandler.post {
-            try { PumpState.setPairingCode(appContext, clean); p.pair(per, centralChallenge, clean) }
+            try { PumpState.setPairingCode(appContext, clean); p.pair(per, challenge, clean) }
             catch (t: Throwable) { error("Pairing failed: ${t.message}") }
         }
     }
@@ -215,6 +227,8 @@ class TandemPumpController(
         }
         override fun onInitialPumpConnection(peripheral: BluetoothPeripheral?) {
             this@TandemPumpController.peripheral = peripheral
+            activePeripheral = peripheral; activePump = this
+            log("onInitialPumpConnection: peripheral=${peripheral?.address} bond=${peripheral?.bondState}")
             // pumpX2 waits until Android reports BONDED, but it never *initiates* bonding itself —
             // it relies on the pump forcing link encryption. The t:slim's authorization
             // characteristic doesn't always trigger that auto-bond in time, so the pump terminates
@@ -239,11 +253,13 @@ class TandemPumpController(
             status("Waiting for you to accept the Bluetooth pairing request — check your phone's notification shade. Make sure the pump still shows “Pair Device”. If nothing appears, tap “Forget & re-pair”.")
         }
         override fun onWaitingForPairingCode(peripheral: BluetoothPeripheral?, centralChallengeResponse: AbstractCentralChallengeResponse?) {
+            log("onWaitingForPairingCode: peripheral=${peripheral?.address} challenge=${centralChallengeResponse != null}")
             this@TandemPumpController.peripheral = peripheral
             this@TandemPumpController.centralChallenge = centralChallengeResponse
+            activePeripheral = peripheral; activePump = this; activeChallenge = centralChallengeResponse
             val saved = PumpState.getPairingCode(appContext)
             if (!saved.isNullOrBlank()) { status("Re-using saved pairing code…"); senderHandler.post { pair(peripheral, centralChallengeResponse, saved) } }
-            else main.post { listener.onNeedPairingCode(peripheral?.name) }
+            else { log("Prompting for pairing code"); main.post { listener.onNeedPairingCode(peripheral?.name) } }
         }
         override fun onInvalidPairingCode(peripheral: BluetoothPeripheral?, resp: AbstractPumpChallengeResponse?) {
             error("Pump rejected the pairing code — re-check it on the pump and retry.")
@@ -256,6 +272,7 @@ class TandemPumpController(
         }
         override fun onPumpConnected(peripheral: BluetoothPeripheral?) {
             this@TandemPumpController.peripheral = peripheral
+            activePeripheral = peripheral; activePump = this
             connected = true; meta.connected = true
             super.onPumpConnected(peripheral)
             main.post { listener.onConnected(meta.model) }
