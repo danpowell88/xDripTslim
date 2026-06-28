@@ -205,6 +205,18 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Tandem pump downloader (read-only). Adds a second launcher icon "xDrip Tandem". -->
+        <activity
+            android:name="com.eveningoutpost.dexdrip.tandem.TandemDownloadActivity"
+            android:exported="true"
+            android:label="xDrip Tandem">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true"

@@ -89,7 +89,7 @@ android {
 
     defaultConfig {
         applicationId "com.eveningoutpost.dexdrip"
-        minSdkVersion 24
+        minSdkVersion 26 // raised from 24: pumpX2-android (Tandem BLE) requires minSdk 26
         // increasing target SDK version can cause compatibility issues with Android 7+
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 24
@@ -225,7 +225,7 @@ android {
             // set minSdkVersion to 21 or higher. When using Android Studio 2.3 or higher,
             // the build automatically avoids legacy multidex when deploying to a device running
             // API level 21 or higher—regardless of what you set as your minSdkVersion.
-            minSdkVersion 24
+            minSdkVersion 26 // raised from 24 for pumpX2-android (Tandem BLE)
             versionNameSuffix "-dev"
             buildConfigField "int", "buildVersion", "2021010100"
             buildConfigField "String", "buildUUID", "\"0f79a60a-5616-99be-8eb1-a430edcfd9fd\""
@@ -249,6 +249,15 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // ---- Tandem pump BLE integration (read-only), via pumpX2 (MIT) ----
+    // Resolved from JitPack (already in repositories). Tags: https://github.com/jwoglom/pumpX2/tags
+    implementation 'com.github.jwoglom.pumpX2:pumpx2-android:v1.9.0'
+    implementation 'com.github.jwoglom.pumpX2:pumpx2-messages:v1.9.0'
+    implementation 'com.github.jwoglom.pumpX2:pumpx2-shared:v1.9.0'
+    // BouncyCastle: required by pumpX2 for the JPAKE pairing handshake.
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
+
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     wearApp project(':wear')
     //weapApp files('../wear/build/outputs/apk/wear_release.apk')

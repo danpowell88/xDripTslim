@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tandemStatusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Put the pump in Bluetooth → Pair Device, then tap Connect."
+        android:textStyle="bold"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tandemProgressText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="" />
+
+    <LinearLayout
+        android:id="@+id/tandemPairingRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/tandemPairingInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Pairing code from pump"
+            android:inputType="textCapCharacters"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/tandemPairButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pair" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/tandemConnectButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Connect &amp; Download" />
+
+        <Button
+            android:id="@+id/tandemOpenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Open xDrip" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/tandemLogScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:background="#11000000">
+
+        <TextView
+            android:id="@+id/tandemLogText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textSize="11sp"
+            android:padding="6dp"
+            android:textIsSelectable="true" />
+    </ScrollView>
+</LinearLayout>
