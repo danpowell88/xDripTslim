@@ -124,12 +124,25 @@
                 <TextView style="@style/TandemRowLabel" android:text="Imported into xDrip" />
                 <TextView android:id="@+id/valImported" style="@style/TandemRowValue" android:text="—" />
             </LinearLayout>
-            <Button
-                android:id="@+id/tandemSyncButton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Sync now" />
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp">
+                <Button
+                    android:id="@+id/tandemSyncButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sync now" />
+                <Button
+                    android:id="@+id/tandemResyncButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Resync all"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
 
             <TextView style="@style/TandemSectionHeader" android:text="ACTIVITY LOG" />
             <View style="@style/TandemDivider" />

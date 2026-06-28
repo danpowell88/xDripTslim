@@ -13,6 +13,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import com.eveningoutpost.dexdrip.R
+import com.eveningoutpost.dexdrip.utilitymodels.BgGraphBuilder
+import com.eveningoutpost.dexdrip.utilitymodels.Pref
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -119,6 +121,12 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
             applyButtons(TandemPumpController.State.DISABLED)
         }
         syncButton.setOnClickListener { ensurePermsThen { TandemEntry.startWithRefresh() } }
+        findViewById<Button>(R.id.tandemResyncButton).setOnClickListener {
+            ensurePermsThen {
+                TandemEntry.resyncAll()
+                statusText.text = "Resyncing all recent data from the pump…"
+            }
+        }
         forgetButton.setOnClickListener {
             ensurePermsThen {
                 pairingRow.visibility = View.GONE
@@ -207,19 +215,26 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
     override fun onError(text: String) { onLog("ERROR: $text"); if (!demo) statusText.text = text }
     override fun onState(state: TandemPumpController.State) { if (!demo) runOnUiThread { applyButtons(state) } }
 
+    private val useMgdl by lazy { Pref.getString("units", "mgdl") == "mgdl" }
+    /** Format a mg/dL pump value in the user's configured xDrip units (mg/dL or mmol/L). */
+    private fun bgStr(mgdl: Int): String {
+        val v = BgGraphBuilder.unitized(mgdl.toDouble(), useMgdl)
+        return if (useMgdl) "%.0f mg/dL".format(v) else "%.1f mmol/L".format(v)
+    }
+
     private fun renderMeta(m: TandemPumpController.PumpMetadata) {
         valModel.text = m.model ?: "—"
         valBattery.text = m.batteryPercent?.let { "$it%" } ?: "—"
         valCartridge.text = m.cartridgeUnits?.let { "$it U" } ?: "—"
         valIob.text = m.iobUnits?.let { "%.2f U".format(it) } ?: "—"
         valBasal.text = m.currentBasal?.let { "%.2f U/hr".format(it) } ?: "—"
-        valGlucose.text = m.glucoseMgdl?.let { "$it mg/dL" } ?: "—"
+        valGlucose.text = m.glucoseMgdl?.let { bgStr(it) } ?: "—"
         valControlIq.text = m.closedLoop?.let { if (it) "On" else "Off" } ?: "—"
         valTdd.text = m.tddUnits?.let { "%.1f U".format(it) } ?: "—"
         valProfile.text = m.basalProfileName ?: "—"
         valCarbRatio.text = m.carbRatio?.let { "%.1f g/U".format(it) } ?: "—"
-        valIsf.text = m.isf?.let { "$it mg/dL/U" } ?: "—"
-        valTarget.text = m.targetBg?.let { "$it mg/dL" } ?: "—"
+        valIsf.text = m.isf?.let { "${bgStr(it)}/U" } ?: "—"
+        valTarget.text = m.targetBg?.let { bgStr(it) } ?: "—"
         valInsDur.text = m.insulinDurationMin?.let { "$it min" } ?: "—"
         valLastSync.text = if (m.lastSync > 0) SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(m.lastSync)) else "—"
         valImported.text = "${m.boluses} bolus · ${m.carbs} carb · ${m.basal} basal"

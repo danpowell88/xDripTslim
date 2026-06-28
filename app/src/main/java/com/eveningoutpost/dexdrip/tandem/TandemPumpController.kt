@@ -225,8 +225,7 @@ class TandemPumpController private constructor(
         var removed = false
         try {
             val adapter = (appContext.getSystemService(android.content.Context.BLUETOOTH_SERVICE)
-                as? android.bluetooth.BluetoothManager)?.adapter
-                ?: android.bluetooth.BluetoothAdapter.getDefaultAdapter() ?: return false
+                as? android.bluetooth.BluetoothManager)?.adapter ?: return false
             for (dev in adapter.bondedDevices ?: emptySet()) {
                 val n = dev.name ?: ""
                 if (n.contains("tslim", true) || n.contains("tandem", true) || n.contains("mobi", true)) {
@@ -268,6 +267,15 @@ class TandemPumpController private constructor(
         if (!connected) return
         historyStarted = false; historyComplete = false; stalls = 0; lastSeenAtWatchdog = -1
         senderHandler.post { safeSend(per, HistoryLogStatusRequest()) }
+    }
+
+    /** Reset the history cursor + de-dup and re-pull the whole recent window from scratch. */
+    fun resync() {
+        PersistentStore.setLong(CURSOR_KEY, 0)
+        seenSeq.clear()
+        historyStarted = false; historyComplete = false; stalls = 0; lastSeenAtWatchdog = -1
+        val per = peripheral
+        if (connected && per != null) { status("Resyncing all recent data…"); senderHandler.post { safeSend(per, HistoryLogStatusRequest()) } }
     }
 
     fun isConnected() = connected

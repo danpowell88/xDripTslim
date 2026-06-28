@@ -1,6 +1,7 @@
 package com.eveningoutpost.dexdrip.tandem
 
-import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import com.eveningoutpost.dexdrip.models.JoH
 import com.eveningoutpost.dexdrip.utilitymodels.Inevitable
 import com.eveningoutpost.dexdrip.utilitymodels.PersistentStore
@@ -32,6 +33,16 @@ object TandemEntry {
 
     @JvmStatic fun startWithRefresh() = startWith("refresh")
 
+    /** Re-pull all recent history from scratch (resets the sequence cursor). */
+    @JvmStatic fun resyncAll() {
+        try { PersistentStore.setLong("tandem_last_seq", 0) } catch (_: Throwable) {}
+        when {
+            TandemPumpService.isRunning() -> TandemPumpService.resync()
+            isEnabled() -> startWithRefresh()
+            else -> setEnabled(true)
+        }
+    }
+
     @JvmStatic fun stop() {
         JoH.startService(TandemPumpService::class.java, "function", "stop")
     }
@@ -60,7 +71,8 @@ object TandemEntry {
     /** Remove any existing Android bond for a Tandem pump (legacy reflection, like ControlX2). */
     private fun removeTandemBonds() {
         try {
-            val adapter = BluetoothAdapter.getDefaultAdapter() ?: return
+            val adapter = (xdrip.getAppContext().getSystemService(Context.BLUETOOTH_SERVICE)
+                as? BluetoothManager)?.adapter ?: return
             for (dev in adapter.bondedDevices ?: emptySet()) {
                 val name = dev.name ?: ""
                 if (name.contains("tslim", true) || name.contains("tandem", true) || name.contains("mobi", true)) {

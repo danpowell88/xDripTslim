@@ -37,6 +37,8 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
 
         /** Called by the pairing screen when the user enters the pump's code. */
         fun submitPairingCode(code: String) { INSTANCE?.controller?.submitPairingCode(code) }
+        /** Re-pull all recent history from scratch (cursor reset). */
+        fun resync() { INSTANCE?.controller?.resync() }
         fun isRunning(): Boolean = INSTANCE != null
     }
 
@@ -59,7 +61,7 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (!TandemEntry.isEnabled()) {
             UserError.Log.d(TAG, "Not enabled — stopping")
-            stopForeground(true); stopSelf()
+            stopForeground(STOP_FOREGROUND_REMOVE); stopSelf()
             return START_NOT_STICKY
         }
         startForeground(NOTIF_ID, buildNotification(lastStatus))
@@ -67,7 +69,7 @@ class TandemPumpService : Service(), TandemPumpController.Listener {
         when (intent?.getStringExtra("function")) {
             "stop" -> {
                 controller?.stop(); controller = null
-                stopForeground(true); stopSelf()
+                stopForeground(STOP_FOREGROUND_REMOVE); stopSelf()
                 return START_NOT_STICKY
             }
             else -> { // "refresh" / null
