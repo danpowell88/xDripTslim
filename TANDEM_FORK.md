@@ -14,12 +14,15 @@ Built by CI and installed on an **Android 17 / API 37, 16 KB-page Pixel emulator
 (`sdk_gphone16k_x86_64`, 1440×3120). The APK has **no native libraries**, so the 16 KB-page
 requirement is satisfied automatically; `minSdk 26` installs fine.
 
-| Tandem screen (idle) | Enabled — background service scanning | Launcher entry |
+Open it from **xDrip → menu → Settings → Experimental → "Tandem pump (read-only)"** (no separate
+app icon).
+
+| Settings → Experimental | Tandem screen (idle) | Enabled — background service scanning |
 |---|---|---|
-| ![Tandem screen](docs/screenshots/01_tandem_screen.png) | ![Scanning](docs/screenshots/02_enabled_scanning.png) | ![Launcher](docs/screenshots/03_app_drawer.png) |
+| ![Experimental menu](docs/screenshots/04_experimental_menu.png) | ![Tandem screen](docs/screenshots/01_tandem_screen.png) | ![Scanning](docs/screenshots/02_enabled_scanning.png) |
 
 What was exercised on-device:
-- ✅ Installs + launches on Android 17 (16 KB pages); separate **"xDrip Tandem"** launcher icon.
+- ✅ Installs + launches on Android 17 (16 KB pages); opened from the in-app Experimental menu.
 - ✅ The one screen renders: **Enable & Sync / Disable / Open xDrip**, Pump status, Log.
 - ✅ **Enable** starts the foreground service and BLE scan — status shows *"Scanning for a Tandem
   pump…"* and the button switches to **Sync now**. Verified running as a foreground service:
@@ -54,9 +57,10 @@ background and survives restarts. pumpX2 still drives the actual BLE/JPAKE/proto
   - `ReadRequests.kt` — the read-only `currentStatus` snapshot request list.
   - `TandemDownloadActivity.kt` — the ONE new screen: Enable/Disable + pairing-code entry + pump
     status (battery/cartridge/IOB/basal). It only drives the service; closing it does **not** stop
-    syncing. (own launcher icon **"xDrip Tandem"**)
+    syncing. Opened from **Settings → Experimental → "Tandem pump (read-only)"** (no separate app icon).
+- `res/xml/xdrip_plus_prefs.xml` — adds the "Tandem pump" entry under the Experimental category.
 - `Home.java` — calls `TandemEntry.startIfEnabled()` on launch (restart-survival hook, next to InPen).
-- `AndroidManifest.xml` — registers the activity (launcher) + the `TandemPumpService`.
+- `AndroidManifest.xml` — registers the internal activity + the `TandemPumpService`.
 - `app/src/main/res/layout/activity_tandem_download.xml`
 - `app/build.gradle` — adds pumpX2 (`v1.9.0`) + BouncyCastle deps; **minSdk raised 24 → 26**
   (pumpX2-android requires 26).
@@ -116,9 +120,11 @@ adb install -r app/build/outputs/apk/fast/debug/app-fast-debug.apk
 ```
 1. On the pump: Settings → Bluetooth → **Pair Device** (shows a 6- or 16-char code).
 2. Close the official t:connect app (only one app can hold the pump's auth slot).
-3. Open the **"xDrip Tandem"** icon → **Connect & Download** → grant Bluetooth permissions.
+3. In xDrip: **menu → Settings → Experimental → "Tandem pump (read-only)"** → **Enable & Sync** →
+   grant Bluetooth permissions.
 4. Accept the system pairing prompt, then type the **pump's pairing code** → **Pair**.
-5. Watch progress; when done it reports e.g. `+N boluses +M carbs added to xDrip`.
+5. It syncs in the background; **Open xDrip** to see boluses/carbs/basal on the normal screens.
+   After the first pair it auto-reconnects and re-syncs on its own (and after restarts).
 6. Tap **Open xDrip** — boluses/carbs now appear on the graph (and drive IOB/COB).
 
 ## Verify with screenshots (emulator)

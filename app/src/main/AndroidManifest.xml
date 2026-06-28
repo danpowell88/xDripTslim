@@ -206,16 +206,12 @@
             </intent-filter>
         </activity>
 
-        <!-- Tandem pump downloader (read-only). Adds a second launcher icon "xDrip Tandem". -->
+        <!-- Tandem pump pairing/status screen (read-only). Opened from
+             Settings → Experimental → "Tandem pump"; not a separate launcher icon. -->
         <activity
             android:name="com.eveningoutpost.dexdrip.tandem.TandemDownloadActivity"
-            android:exported="true"
-            android:label="xDrip Tandem">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:label="Tandem pump" />
 
         <!-- Foreground service that keeps the read-only Tandem pump connection alive
              (background + across restarts), mirroring xDrip's other BLE device services. -->
