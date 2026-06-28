@@ -315,7 +315,15 @@ class TandemPumpController private constructor(
                 is CurrentBatteryAbstractResponse -> { meta.batteryPercent = message.batteryPercent; emitMeta() }
                 is InsulinStatusResponse -> { meta.cartridgeUnits = message.currentInsulinAmount; emitMeta() }
                 is ControlIQIOBResponse -> { meta.iobUnits = InsulinUnit.from1000To1(message.mudaliarIOB); emitMeta() }
-                is CurrentBasalStatusResponse -> { meta.currentBasal = InsulinUnit.from1000To1(message.currentBasalRate); emitMeta() }
+                is CurrentBasalStatusResponse -> {
+                    val rate = InsulinUnit.from1000To1(message.currentBasalRate)
+                    meta.currentBasal = rate; emitMeta()
+                    // The history log only records basal *changes*, which on a flat profile (Control-IQ
+                    // off) can be weeks apart — so the graph would show no recent basal even though
+                    // delivery is continuous. Anchor the live current rate at "now" each sync so the
+                    // basal line reflects what the pump is actually delivering.
+                    try { APStatus.createEfficientRecord(System.currentTimeMillis(), rate) } catch (_: Throwable) {}
+                }
                 is TimeSinceResetResponse -> {
                     val pumpNowMs = Dates.fromJan12008ToUnixEpochSeconds(message.currentTime) * 1000L
                     pumpClockOffsetMs = System.currentTimeMillis() - pumpNowMs
