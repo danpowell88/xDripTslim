@@ -356,19 +356,14 @@ class TandemPumpController private constructor(
                     val rate = InsulinUnit.from1000To1(message.currentBasalRate)
                     val profileRate = InsulinUnit.from1000To1(message.profileBasalRate)
                     meta.currentBasal = rate; emitMeta()
-                    // The history log only records basal *changes* (weeks apart on a flat profile), so
-                    // anchor the live rate at "now". xDrip's basal line plots basal_percent (TBR%), so
+                    // Anchor the live rate at "now". xDrip's basal line plots basal_percent (TBR%), so
                     // derive it from the pump's current-vs-profile rate — otherwise it defaults to -1
-                    // and draws at y=0 (off-screen). Write a carry-in point a few hours back too, since
-                    // xDrip needs >=2 points in the window to draw a line; for an actively-changing
-                    // basal the rate-change events from history fill in the detail.
+                    // and draws at y=0 (off-screen). (createEfficientRecord only ever appends newer
+                    // records, so a steady basal stays one point until the rate changes; an actively-
+                    // changing Control-IQ basal fills the line from the history rate-change events.)
                     if (TandemSync.isOn(TandemSync.BASAL)) {
                         val pct = if (profileRate > 0.0) Math.round(rate / profileRate * 100.0).toInt() else 100
-                        val now = System.currentTimeMillis()
-                        try {
-                            APStatus.createEfficientRecord(now, pct, rate)
-                            APStatus.createEfficientRecord(now - 6 * 3600_000L, pct, rate)
-                        } catch (_: Throwable) {}
+                        try { APStatus.createEfficientRecord(System.currentTimeMillis(), pct, rate) } catch (_: Throwable) {}
                     }
                 }
                 is TimeSinceResetResponse -> {
@@ -496,7 +491,7 @@ class TandemPumpController private constructor(
             is BolusCompletedHistoryLog -> if (TandemSync.isOn(TandemSync.BOLUSES)) addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
             is BolexCompletedHistoryLog -> if (TandemSync.isOn(TandemSync.BOLUSES)) addBolus(hl.sequenceNum, hl.insulinDelivered.toDouble(), ts)
             is CarbEnteredHistoryLog -> if (TandemSync.isOn(TandemSync.CARBS)) addCarbs(hl.sequenceNum, hl.carbs.toDouble(), ts)
-            is BasalRateChangeHistoryLog -> if (TandemSync.isOn(TandemSync.BASAL)) addBasal(hl.commandBasalRate.toDouble(), ts)
+            is BasalRateChangeHistoryLog -> if (TandemSync.isOn(TandemSync.BASAL)) addBasal(hl.commandBasalRate.toDouble(), hl.baseBasalRate.toDouble(), ts)
             else -> {}
         }
     }
@@ -515,9 +510,13 @@ class TandemPumpController private constructor(
         catch (t: Throwable) { log("carb insert failed seq$seq: ${t.message}") }
     }
 
-    private fun addBasal(rateUperHr: Double, ts: Long) {
+    private fun addBasal(rateUperHr: Double, profileRate: Double, ts: Long) {
         if (rateUperHr < 0.0) return
-        try { APStatus.createEfficientRecord(ts, rateUperHr); meta.basal++ }
+        // xDrip's basal line plots basal_percent (delivered vs profile base). The history log carries
+        // both the commanded rate and the base profile rate, so compute the TBR% directly — otherwise
+        // createEfficientRecord can't derive it (no active xDrip profile) and the line draws at 0.
+        val pct = if (profileRate > 0.0) Math.round(rateUperHr / profileRate * 100.0).toInt() else 100
+        try { APStatus.createEfficientRecord(ts, pct, rateUperHr); meta.basal++ }
         catch (t: Throwable) { log("basal insert failed: ${t.message}") }
     }
 
