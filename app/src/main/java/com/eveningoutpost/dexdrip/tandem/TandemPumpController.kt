@@ -591,6 +591,8 @@ class TandemPumpController private constructor(
             }
             val ref = BasalProfile.getActiveRateName()
             BasalProfile.save(ref, rates)
+            // Name the xDrip slot after the pump's profile (e.g. "Gym only"); user can rename in the editor.
+            meta.basalProfileName?.let { if (it.isNotBlank()) BasalProfile.setName(ref, it) }
             log("Saved basal profile '${meta.basalProfileName}' (${idpRates.size} segments) -> xDrip profile $ref")
         } catch (t: Throwable) { log("basal profile save failed: ${t.message}") }
     }
