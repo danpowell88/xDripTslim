@@ -115,10 +115,11 @@ class TandemDownloadActivity : Activity(), TandemPumpController.Listener {
         syncButton.isEnabled = enabled
     }
 
-    private fun requiredPerms(): Array<String> =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            arrayOf(Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT)
-        else arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    // xDrip targets SDK 24 and REMOVES BLUETOOTH_SCAN/CONNECT from the manifest (legacy BT model:
+    // the system auto-grants them from BLUETOOTH/BLUETOOTH_ADMIN). So the only runtime permission we
+    // can/should request for BLE scanning is location. Requesting the (undeclared) new BT perms would
+    // auto-deny and block enabling on a real device.
+    private fun requiredPerms(): Array<String> = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private var pendingAction: (() -> Unit)? = null
     private fun ensurePermsThen(action: () -> Unit) {

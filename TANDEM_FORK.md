@@ -14,12 +14,13 @@ Built by CI and installed on an **Android 17 / API 37, 16 KB-page Pixel emulator
 (`sdk_gphone16k_x86_64`, 1440×3120). The APK has **no native libraries**, so the 16 KB-page
 requirement is satisfied automatically; `minSdk 26` installs fine.
 
-Open it from **xDrip → menu → Settings → Experimental → "Tandem pump (read-only)"** (no separate
-app icon).
+Open it from **xDrip → menu → Settings → Experimental → "Tandem pump (read-only)"** (its own pump
+logo; no separate app icon). The pump screen follows xDrip's design — section headings + label/value
+rows. (Pump page shown with sample data; live values appear once paired to a real pump.)
 
-| Settings → Experimental | Tandem screen (idle) | Enabled — background service scanning |
-|---|---|---|
-| ![Experimental menu](docs/screenshots/04_experimental_menu.png) | ![Tandem screen](docs/screenshots/01_tandem_screen.png) | ![Scanning](docs/screenshots/02_enabled_scanning.png) |
+| Settings → Experimental (pump logo) | Tandem pump page (sample data) |
+|---|---|
+| ![Experimental menu](docs/screenshots/04_experimental_menu.png) | ![Pump page](docs/screenshots/05_pump_page_populated.png) |
 
 What was exercised on-device:
 - ✅ Installs + launches on Android 17 (16 KB pages); opened from the in-app Experimental menu.
