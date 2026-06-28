@@ -1,0 +1,39 @@
+name: Build Tandem APK
+
+# Builds the xDrip Tandem fork into an installable APK on GitHub's runners
+# (which have the Android SDK + access to Maven Central / JitPack that a locked-down
+# dev box may not). Push this branch to your GitHub fork, or run it manually from the
+# Actions tab, then download the APK from the run's "Artifacts".
+
+on:
+  push:
+    branches: [ tandem-pump ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Grant gradlew execute permission
+        run: chmod +x ./gradlew
+
+      - name: Build fastDebug APK
+        run: ./gradlew :app:assembleFastDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: xdrip-tandem-fastDebug-apk
+          path: app/build/outputs/apk/fast/debug/app-fast-debug.apk
+          if-no-files-found: error
