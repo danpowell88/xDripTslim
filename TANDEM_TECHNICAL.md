@@ -32,6 +32,18 @@ restarts it on launch — so it runs in the background and survives restarts (li
   CGM/EGV, Control-IQ info, active IDP values).
 - **`TandemDownloadActivity.kt`** — the one screen, three tabs (**Sync / Pump / Settings**). Drives
   the service only; closing it doesn't stop syncing. `--ez demo true` renders sample data.
+- **`TandemHistoryPager.kt`** — the history-log paging state machine (chunked requests, in-order
+  stream handling, persisted cursor, de-dup, stall watchdog), split out of the controller.
+- **`TandemMapping.kt`** — the pure pump→xDrip conversions (event UUIDs, basal percent, history
+  window, IDP→24-block profile, target-BG byte mask). No Android deps → unit-tested by
+  `TandemMappingTest` (run in CI).
+
+**Live updates.** While connected the controller stays close to real time: it reacts to the pump's own
+`onReceiveQualifyingEvent` push notifications (debounced) and runs a 30 s backstop poll, both
+rate-limited so the BLE link is never flooded. Each trigger is a cheap incremental pull (new history +
+the live status set). Basal is drawn on its **own mini-graph above the glucose chart** in real U/hr
+(`BgGraphBuilder.basalChartData()` / `basal_chart`), with a "now" line and shaded future region on
+both charts.
 
 Other touched files: `res/xml/xdrip_plus_prefs.xml` (Experimental entry), `res/drawable/ic_tandem_pump.xml`
 (logo), `res/layout/activity_tandem_download.xml`, `res/values/tandem_styles.xml`, `Home.java`
@@ -106,10 +118,13 @@ failed ("No Channel found") and the notification never appeared.
 **Android Studio:** open repo → sync → build variant `fastDebug` → Run ▶.
 **CLI:** `./gradlew :app:assembleFastDebug` → `app/build/outputs/apk/fast/debug/app-fast-debug.apk`.
 
-**CI:** `.github/workflows/build-tandem-apk.yml` builds on push to `tandem-tslim` (or *Run workflow*)
-and uploads `xdrip-tandem-fastDebug-apk`. It copies the committed **`tandem-debug.keystore`** to
-`~/.android/debug.keystore` first, so every build is signed with the same key and **updates install in
-place** (no uninstall, pairing preserved). The keystore uses the standard Android debug credentials.
+**CI:** `.github/workflows/build-tandem-apk.yml` builds on push to `tandem-tslim` (or *Run workflow*),
+uploads `xdrip-tandem-fastDebug-apk`, and runs the `TandemMapping` unit tests. Builds are signed with
+the committed **`tandem-debug.keystore`** via `app/build.gradle`'s debug `signingConfig` (storeFile
+`$rootDir/tandem-debug.keystore`) — **not** by copying it over `~/.android/debug.keystore`, which AGP
+ignored (it generated its own key, so updates wouldn't install in place). With the signingConfig every
+build shares one signature, so updates **install in place** (no uninstall, pairing preserved). The
+keystore uses the standard Android debug credentials.
 
 ### Dependency notes (xDrip ↔ pumpX2)
 1. **Duplicate BouncyCastle** → `exclude group: 'org.bouncycastle'` on the pumpX2 deps.

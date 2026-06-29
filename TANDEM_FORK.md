@@ -18,6 +18,13 @@ values), and **Settings** (choose what to pull). Everything else shows on xDrip'
 
 *(Sample data shown — your real pump values appear once paired.)*
 
+On xDrip's normal home screen, basal gets its **own mini-graph above the glucose chart** — in real
+U/hr, with a labelled scale and the rate marked at each change. Solid is delivered basal; the dashed
+line is the upcoming scheduled profile. A vertical **"now" line** and a **grey-shaded future** appear
+on both graphs, so it's clear what has happened versus what's still ahead.
+
+![Home graph — basal mini-graph, now line and shaded future](docs/screenshots/10_home_graph.png)
+
 ## Get the app
 
 1. Download the latest build: this repo → **Actions** tab → newest **Build Tandem APK** run →
@@ -48,9 +55,14 @@ It then keeps syncing **in the background and after restarts** — you don't re-
 Everything lands on the **normal xDrip screens** — the tabs are just for setup/status:
 
 - **Boluses** and **carbs** → main graph + treatments list, and drive **IOB / COB**.
-- **Basal** → the basal line (turn on **Settings → Graph Settings → "Show Basal TBR"** if you don't
-  see it). The line reflects the pump's *current* rate too, not only logged rate changes.
+- **Basal** → its own **mini-graph above the glucose chart**, in real U/hr, showing both delivered
+  basal and the upcoming scheduled profile (dashed). Turn the basal line on under **Settings → Graph
+  Settings → "Show Basal TBR"** if you don't see it.
 - **Glucose** (only if you ticked it) → the BG graph.
+
+While the pump is connected it updates close to **real time**: it reacts to the pump's own change
+notifications and also re-checks every 30 seconds, so new boluses, basal changes and CGM readings
+appear within seconds rather than only on a manual sync.
 
 The **Pump** tab shows live read-only extras that xDrip has no home for — model, battery, cartridge,
 insulin-on-board, current basal, sensor glucose, Control-IQ state, total daily insulin, and your
