@@ -486,16 +486,12 @@ public class BgGraphBuilder {
         if (!prefs.getBoolean("show_basal_line", false)) return;
         final List<Float> basalProfile = loadBasalProfile();
         if (basalProfile == null || basalProfile.size() != 24) return;
-        final long now = System.currentTimeMillis();
-        final java.util.Calendar cal = java.util.Calendar.getInstance();
-        cal.setTimeInMillis(now);
-        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
-        cal.set(java.util.Calendar.MINUTE, 0);
-        cal.set(java.util.Calendar.SECOND, 0);
-        cal.set(java.util.Calendar.MILLISECOND, 0);
-        cal.add(java.util.Calendar.DAY_OF_MONTH, 1); // next midnight = end of the schedule day
-        final int aheadHours = (int) Math.ceil((cal.getTimeInMillis() - now) / (double) Constants.HOUR_IN_MS);
-        predictivehours = Math.max(predictivehours, Math.max(1, Math.min(aheadHours, 24)));
+        // Nudge the future window just a couple of hours so the next scheduled basal change (and any
+        // near-future IOB/COB) is visible by default. Deliberately small: the chart anchors its default
+        // view to the right edge (now + predictivehours), so a large value pushes "now" off the left
+        // side — very noticeable in portrait, where DEFAULT_CHART_HOURS is only 2.5h. The basal chart's
+        // own data still projects to end-of-day, so the full schedule is there when you scroll/zoom.
+        predictivehours = Math.max(predictivehours, 2);
     }
 
     /**
