@@ -41,7 +41,8 @@ jobs:
           path: app/build/outputs/apk/fast/debug/app-fast-debug.apk
           if-no-files-found: error
 
-      # Run just the Tandem unit tests (TandemMapping pure logic + TandemSync defaults). Kept after
-      # the upload so the APK is always produced even if a test regresses.
+      # Run the Tandem unit tests (TandemMapping pure logic). Kept after the upload so the APK is
+      # always produced even if a test regresses. (Robolectric-based tests run via the project's
+      # standard unit_test.yml on prodRelease — the fastDebug variant can't host Robolectric.)
       - name: Run Tandem unit tests
         run: ./gradlew :app:testFastDebugUnitTest --tests "com.eveningoutpost.dexdrip.tandem.*" --stacktrace
