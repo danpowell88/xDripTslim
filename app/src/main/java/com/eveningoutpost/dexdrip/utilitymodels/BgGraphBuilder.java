@@ -561,6 +561,11 @@ public class BgGraphBuilder {
                             android.graphics.Color.green(basalColor),
                             android.graphics.Color.blue(basalColor)));
                     basalLines.add(future);
+
+                    // Extend the graph's future window so this projection (and any future IOB/COB) is
+                    // actually visible: cal is now at next midnight (end of the schedule day).
+                    final int aheadHours = (int) Math.ceil((cal.getTimeInMillis() - now) / (double) Constants.HOUR_IN_MS);
+                    predictivehours = Math.max(predictivehours, Math.max(1, Math.min(aheadHours, 24)));
                 }
                 return basalLines;
             }
