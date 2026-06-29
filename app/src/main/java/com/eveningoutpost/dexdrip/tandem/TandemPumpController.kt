@@ -141,6 +141,17 @@ class TandemPumpController private constructor(
     @Volatile private var keepConnected = true
     @Volatile private var connected = false
 
+    // --- near-realtime updates: stay connected and re-pull on the pump's own push events, with a
+    //     periodic poll as a backstop. refresh() is a cheap incremental pull (new history + the live
+    //     status set: CGM / basal / IOB / battery). ---
+    private val POLL_INTERVAL_MS = 30_000L  // backstop cadence while connected (events make it instant)
+    private val EVENT_DEBOUNCE_MS = 700L    // coalesce a burst of qualifying events into one pull
+    private val MIN_REFRESH_GAP_MS = 5_000L // never re-pull more often than this, whatever the trigger
+    @Volatile private var lastLiveRefreshAt = 0L
+    // The basal profile rarely changes and reading it chains to many segment requests, so pull it only
+    // once per connection (and on explicit resync) rather than on every poll.
+    @Volatile private var needProfileRead = true
+
     private val meta = PumpMetadata()
     // Pump clocks drift (this test pump was ~49 days behind). Anchor every history timestamp to the
     // phone's clock: offset = phone-now − pump-now. The newest pump event then maps to ~now and lands
@@ -174,7 +185,9 @@ class TandemPumpController private constructor(
             val per = peripheral
             if (per != null && !stopped && connected) {
                 val q = ArrayDeque<Message>(ReadRequests.all())
-                if (TandemSync.isOn(TandemSync.PROFILE)) q.add(ProfileStatusRequest())
+                if (TandemSync.isOn(TandemSync.PROFILE) && needProfileRead) {
+                    q.add(ProfileStatusRequest()); needProfileRead = false
+                }
                 senderHandler.postDelayed({ sendStatusReads(per, q) }, 500L)
             }
         }
@@ -265,9 +278,45 @@ class TandemPumpController private constructor(
         senderHandler.post { safeSend(per, HistoryLogStatusRequest()) }
     }
 
+    // Backstop poll loop: re-pull on a fixed cadence while connected (re-posts itself).
+    private val pollRunnable = object : Runnable {
+        override fun run() {
+            if (stopped || !connected) return
+            doLiveRefresh("poll")
+            senderHandler.postDelayed(this, POLL_INTERVAL_MS)
+        }
+    }
+    private val eventRefreshRunnable = Runnable { doLiveRefresh("event") }
+
+    private fun startPolling() {
+        senderHandler.removeCallbacks(pollRunnable)
+        senderHandler.postDelayed(pollRunnable, POLL_INTERVAL_MS)
+    }
+    private fun stopPolling() {
+        senderHandler.removeCallbacks(pollRunnable)
+        senderHandler.removeCallbacks(eventRefreshRunnable)
+    }
+
+    /** The pump pushed a change — re-pull promptly (debounced so a burst becomes a single pull). */
+    private fun onPumpEvent() {
+        senderHandler.removeCallbacks(eventRefreshRunnable)
+        senderHandler.postDelayed(eventRefreshRunnable, EVENT_DEBOUNCE_MS)
+    }
+
+    private fun doLiveRefresh(reason: String) {
+        if (stopped || !connected) return
+        if (state == State.SYNCING) return // initial history sync still running — let it finish
+        val now = System.currentTimeMillis()
+        if (now - lastLiveRefreshAt < MIN_REFRESH_GAP_MS) return // rate-limit, whatever the trigger
+        lastLiveRefreshAt = now
+        log("live refresh ($reason)")
+        refresh()
+    }
+
     /** Reset the history cursor + de-dup and re-pull the whole recent window from scratch. */
     fun resync() {
         pager.resetCursor()
+        needProfileRead = true // re-read the basal profile on an explicit resync
         val per = peripheral
         if (connected && per != null) { status("Resyncing all recent data…"); senderHandler.post { safeSend(per, HistoryLogStatusRequest()) } }
     }
@@ -280,6 +329,7 @@ class TandemPumpController private constructor(
         // thread — pumpX2's handler is a singleton and central.close() can't be cleanly re-opened.
         stopped = true; keepConnected = false
         pager.stop()
+        stopPolling()
         try { btHandler?.central?.stopScan() } catch (_: Throwable) {}
         try { (activePeripheral ?: peripheral)?.cancelConnection() } catch (_: Throwable) {}
         connected = false; meta.connected = false
@@ -345,7 +395,9 @@ class TandemPumpController private constructor(
             super.onPumpConnected(peripheral)
             main.post { listener?.onConnected(meta.model) }
             status("Connected — syncing into xDrip…"); emitState(State.SYNCING)
+            needProfileRead = true // read the basal profile once per fresh connection
             beginSync(peripheral)
+            startPolling() // keep pulling live updates after the initial sync
         }
         override fun onReceiveMessage(peripheral: BluetoothPeripheral?, message: Message?) {
             if (message == null) return
@@ -415,9 +467,15 @@ class TandemPumpController private constructor(
                 else -> log("RESP ${message.javaClass.simpleName}")
             }
         }
-        override fun onReceiveQualifyingEvent(peripheral: BluetoothPeripheral?, events: MutableSet<QualifyingEvent>?) { log("EVENT $events") }
+        override fun onReceiveQualifyingEvent(peripheral: BluetoothPeripheral?, events: MutableSet<QualifyingEvent>?) {
+            // The pump pushes these whenever something changes (new CGM reading, bolus, basal change,
+            // etc.) — react immediately for near-realtime updates instead of waiting for the next poll.
+            log("EVENT $events")
+            onPumpEvent()
+        }
         override fun onPumpDisconnected(peripheral: BluetoothPeripheral?, status: HciStatus?): Boolean {
             connected = false; meta.connected = false; emitMeta()
+            stopPolling()
             log("Disconnected: $status (reconnect=${keepConnected})")
             emitState(if (keepConnected) State.SCANNING else State.DISABLED)
             return keepConnected // auto-reconnect unless we were told to stop
