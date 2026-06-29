@@ -101,6 +101,10 @@ android {
         buildConfigField "String", "buildUUID", generateRandomUUID()
         buildConfigField "long", "buildTimestamp", generateTimestamp()
         buildConfigField "int", "targetSDK", targetSdkVersion.mApiLevel.toString()
+        // Robolectric must emulate an SDK >= the manifest minSdk (26). targetSDK stays at 24 on
+        // purpose (Android 7 behaviour, to keep background CGM collection alive), so unit tests run
+        // at minSdk instead — otherwise PackageParser rejects the app ("Requires newer sdk version").
+        buildConfigField "int", "robolectricSDK", minSdkVersion.mApiLevel.toString()
         //vectorDrawables.useSupportLibrary = true // broken in newer gradle versions
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled false
