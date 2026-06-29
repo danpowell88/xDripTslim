@@ -57,4 +57,13 @@ object TandemMapping {
             rate
         }
     }
+
+    /**
+     * Control-IQ target BG in mg/dL from the pump's CurrentActiveIdpValues message. pumpX2 reads this
+     * field as a 16-bit value, but its high byte overlaps the adjacent insulin-duration field, so that
+     * byte can leak in — e.g. with a 300-minute duration (0x012C) the low byte 0x2C lands in target's
+     * high byte: 110 + (0x2C shl 8) = 11374, which then renders as ~631 mmol/L. Target BG is always a
+     * single byte (< 256 mg/dL), so masking to the low byte recovers the real value (11374 -> 110).
+     */
+    fun targetBgMgdl(rawTargetBg: Int): Int = rawTargetBg and 0xFF
 }

@@ -102,4 +102,18 @@ class TandemMappingTest {
     fun expandProfile_emptyInput_returnsEmpty() {
         assertThat(TandemMapping.expandProfileToHourlyBlocks(emptyMap())).isEmpty()
     }
+
+    // ---- targetBgMgdl: strip the insulin-duration byte pumpX2 leaks into the 16-bit target field ----
+
+    @Test
+    fun targetBgMgdl_masksLeakedHighByteFromInsulinDuration() {
+        // 110 mg/dL with a 300-min (0x012C) duration leaking 0x2C into the high byte -> 11374.
+        assertThat(TandemMapping.targetBgMgdl(110 + (0x2C shl 8))).isEqualTo(110)
+    }
+
+    @Test
+    fun targetBgMgdl_leavesCleanValuesUnchanged() {
+        assertThat(TandemMapping.targetBgMgdl(110)).isEqualTo(110)
+        assertThat(TandemMapping.targetBgMgdl(0xFF)).isEqualTo(255) // max single-byte target
+    }
 }

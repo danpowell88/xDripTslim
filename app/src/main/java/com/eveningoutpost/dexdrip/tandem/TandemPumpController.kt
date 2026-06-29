@@ -391,7 +391,8 @@ class TandemPumpController private constructor(
                 is CurrentActiveIdpValuesResponse -> {
                     meta.carbRatio = message.currentCarbRatio / 1000.0
                     meta.isf = message.currentIsf
-                    meta.targetBg = message.currentTargetBg
+                    // Mask the leaked insulin-duration high byte (see TandemMapping.targetBgMgdl).
+                    meta.targetBg = TandemMapping.targetBgMgdl(message.currentTargetBg)
                     meta.insulinDurationMin = message.currentInsulinDuration
                     emitMeta()
                 }
