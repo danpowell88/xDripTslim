@@ -699,7 +699,7 @@ public class BgGraphBuilder {
         shade.setHasLines(false); // fill only — no visible top edge stroke
         shade.setFilled(true);
         shade.setColor(android.graphics.Color.rgb(150, 150, 150));
-        shade.setAreaTransparency(38); // subtle grey fill
+        shade.setAreaTransparency(64); // grey fill — visible enough to read "future" at a glance
         return shade;
     }
 
