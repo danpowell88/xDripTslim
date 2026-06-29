@@ -159,6 +159,10 @@ public class BgGraphBuilder {
     public static double capturePercentage = -1;
     @Getter
     private int predictivehours = 0;
+    // Set by basalChartData(): the top of the dedicated basal mini-graph's Y range (U/hr) and whether
+    // there is anything to plot — read by Home to size/show the separate basal chart.
+    public double basalChartMaxRate = 1.0;
+    public boolean basalChartHasData = false;
     private boolean prediction_enabled = false;
     private boolean simulation_enabled = false;
     private static double avg1value = 0;
@@ -446,193 +450,206 @@ public class BgGraphBuilder {
         return f == null ? 0 : f;
     }
 
-    private List<Line> basalLines() {
-        final List<Line> basalLines = new ArrayList<>();
-        if (prefs.getBoolean("show_basal_line", false)) {
+    // Load the active basal profile (24 hourly U/hr blocks) used for the future/scheduled projection.
+    private List<Float> loadBasalProfile() {
+        try {
+            return com.eveningoutpost.dexdrip.profileeditor.BasalProfile.load(
+                    com.eveningoutpost.dexdrip.profileeditor.BasalProfile.getActiveRateName());
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-            final float yscale = doMgdl ? (float) Constants.MMOLL_TO_MGDL : 1f;
+    // Trim a rate to a short axis label: whole numbers lose the decimal (1.0 -> "1", 0.85 -> "0.9").
+    private static String fmtRate(final double v) {
+        if (v == Math.floor(v)) return String.valueOf((int) v);
+        return String.valueOf(Math.round(v * 10.0) / 10.0);
+    }
 
-            final List<APStatus> aplist = APStatus.latestForGraph(2000, loaded_start, loaded_end);
+    /**
+     * Extend the chart's future window so the upcoming scheduled basal (and any future IOB/COB) is
+     * actually visible — out to next midnight, the end of the basal schedule day. The basal itself is
+     * drawn on its own chart (see basalChartData); this only nudges the shared time window so the two
+     * charts scroll together far enough to show the projection.
+     */
+    private void extendWindowForBasalProjection() {
+        if (!prefs.getBoolean("show_basal_line", false)) return;
+        final List<Float> basalProfile = loadBasalProfile();
+        if (basalProfile == null || basalProfile.size() != 24) return;
+        final long now = System.currentTimeMillis();
+        final java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTimeInMillis(now);
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        cal.set(java.util.Calendar.MINUTE, 0);
+        cal.set(java.util.Calendar.SECOND, 0);
+        cal.set(java.util.Calendar.MILLISECOND, 0);
+        cal.add(java.util.Calendar.DAY_OF_MONTH, 1); // next midnight = end of the schedule day
+        final int aheadHours = (int) Math.ceil((cal.getTimeInMillis() - now) / (double) Constants.HOUR_IN_MS);
+        predictivehours = Math.max(predictivehours, Math.max(1, Math.min(aheadHours, 24)));
+    }
 
-            // Absolute-basal mode: when records carry an absolute U/hr rate and/or a basal profile is
-            // configured (e.g. synced from a Tandem pump), draw basal in real U/hr — solid for what was
-            // delivered, dashed for the upcoming scheduled profile so you can see basal before it
-            // happens (the dashed part turns solid as time reaches it).
-            List<Float> basalProfile = null;
-            try {
-                basalProfile = com.eveningoutpost.dexdrip.profileeditor.BasalProfile.load(
-                        com.eveningoutpost.dexdrip.profileeditor.BasalProfile.getActiveRateName());
-            } catch (Exception e) { /* no profile */ }
-            final boolean haveProfile = basalProfile != null && basalProfile.size() == 24;
-            boolean haveAbsolute = false;
-            for (APStatus a : aplist) { if (a.basal_absolute >= 0) { haveAbsolute = true; break; } }
+    /**
+     * Data for the dedicated basal mini-graph shown directly below the main BG chart. Basal is drawn
+     * in real U/hr on its own (non-reversed) Y axis — solid for delivered basal held forward to "now",
+     * dashed for the upcoming scheduled profile — using the same X (time) coordinates as the main
+     * chart so the two line up. Sources without an absolute rate fall back to plotting temp-basal %.
+     *
+     * Sets {@link #basalChartHasData} and {@link #basalChartMaxRate} so Home can size and show/hide
+     * the chart. Drawing basal here (instead of overlaying it on the glucose axis) keeps the main
+     * graph readable — a basal rate is no longer rendered up near a glucose value of 12.
+     */
+    public LineChartData basalChartData() {
+        basalChartHasData = false;
+        basalChartMaxRate = 1.0;
+        final List<Line> lines = new ArrayList<>();
+        if (!prefs.getBoolean("show_basal_line", false)) {
+            return new LineChartData(lines);
+        }
 
-            if (haveAbsolute || haveProfile) {
-                final int basalColor = getCol(X.color_basal_tbr);
+        final List<APStatus> aplist = APStatus.latestForGraph(2000, loaded_start, loaded_end);
+        final List<Float> basalProfile = loadBasalProfile();
+        final boolean haveProfile = basalProfile != null && basalProfile.size() == 24;
+        boolean haveAbsolute = false;
+        for (APStatus a : aplist) { if (a.basal_absolute >= 0) { haveAbsolute = true; break; } }
 
-                // Reference rate that maps to the top of the basal band (nearest 0.5 U/hr above the max).
-                double maxRate = 0.5;
-                for (APStatus a : aplist) if (a.basal_absolute > maxRate) maxRate = a.basal_absolute;
-                if (haveProfile) for (Float f : basalProfile) if (f != null && f > maxRate) maxRate = f;
-                final double ref = Math.max(0.5, Math.ceil(maxRate * 2.0) / 2.0);
+        final int basalColor = getCol(X.color_basal_tbr);
+        final boolean absoluteMode = haveAbsolute || haveProfile;
+        final long now = System.currentTimeMillis();
 
-                // dashed reference line at the top of the band (= ref U/hr)
-                final Line refLine = new Line();
-                refLine.setHasPoints(false);
-                refLine.setHasLines(true);
-                refLine.setStrokeWidth(1);
-                refLine.setColor(basalColor);
-                refLine.setPathEffect(new DashPathEffect(new float[]{10.0f, 10.0f}, 0));
-                refLine.setReverseYAxis(true);
-                final List<PointValue> refPts = new ArrayList<>(2);
-                refPts.add(new HPointValue((double) loaded_start / FUZZER, (float) yscale));
-                refPts.add(new HPointValue((double) loaded_end / FUZZER, (float) yscale));
-                refLine.setValues(refPts);
-                refLine.setPointRadius(0);
-                basalLines.add(refLine);
+        // Reference rate = top of the Y range. Real U/hr in absolute mode (nearest 0.5 above the max);
+        // for the percent fallback, a little above the largest percent seen.
+        double ref;
+        if (absoluteMode) {
+            double maxRate = 0.5;
+            for (APStatus a : aplist) if (a.basal_absolute > maxRate) maxRate = a.basal_absolute;
+            if (haveProfile) for (Float f : basalProfile) if (f != null && f > maxRate) maxRate = f;
+            ref = Math.max(0.5, Math.ceil(maxRate * 2.0) / 2.0);
+        } else {
+            int maxPercent = 100;
+            for (APStatus a : aplist) if (a.basal_percent > maxPercent) maxPercent = a.basal_percent;
+            ref = Math.min(BgReading.BG_READING_MAXIMUM_VALUE, maxPercent);
+        }
 
-                final long now = System.currentTimeMillis();
+        if (absoluteMode) {
+            // SOLID: delivered basal (absolute U/hr), stepped and held forward to "now".
+            final List<PointValue> deliveredPts = new ArrayList<>();
+            double lastRate = -1;
+            for (APStatus item : aplist) {
+                if (item.basal_absolute < 0) continue;
+                deliveredPts.add(new HPointValue((double) item.timestamp / FUZZER, (float) item.basal_absolute));
+                lastRate = item.basal_absolute;
+            }
+            if (lastRate >= 0) deliveredPts.add(new HPointValue((double) now / FUZZER, (float) lastRate));
+            if (!deliveredPts.isEmpty()) {
+                final Line delivered = new Line(deliveredPts);
+                delivered.setFilled(true);
+                delivered.setHasGradientToTransparent(true);
+                delivered.setGradientDivider(10f);
+                delivered.setHasPoints(false);
+                delivered.setStrokeWidth(1);
+                delivered.setHasLines(true);
+                delivered.setSquare(true);
+                delivered.setColor(basalColor);
+                lines.add(delivered);
+                basalChartHasData = true;
+            }
 
-                // SOLID: delivered basal (absolute U/hr) held forward to "now"
-                final List<PointValue> deliveredPts = new ArrayList<>();
-                double lastRate = -1;
-                for (APStatus item : aplist) {
-                    if (item.basal_absolute < 0) continue;
-                    final float y = clampNonGlucoseY((float) (item.basal_absolute / ref * yscale) + panCompensationOffset);
-                    deliveredPts.add(new HPointValue((double) item.timestamp / FUZZER, y));
-                    lastRate = item.basal_absolute;
-                }
-                if (lastRate >= 0) {
-                    final float y = clampNonGlucoseY((float) (lastRate / ref * yscale) + panCompensationOffset);
-                    deliveredPts.add(new HPointValue((double) now / FUZZER, y));
-                }
-                if (!deliveredPts.isEmpty()) {
-                    final Line delivered = new Line(deliveredPts);
-                    delivered.setFilled(true);
-                    delivered.setFillFlipped(true);
-                    delivered.setHasGradientToTransparent(true);
-                    delivered.setHasPoints(false);
-                    delivered.setStrokeWidth(1);
-                    delivered.setHasLines(true);
-                    delivered.setSquare(true);
-                    delivered.setReverseYAxis(true);
-                    delivered.setBackgroundUnclipped(true);
-                    delivered.setGradientDivider(10f);
-                    delivered.setColor(basalColor);
-                    basalLines.add(delivered);
-                }
-
-                // DASHED: upcoming scheduled basal from the profile, "now" -> end of day
-                if (haveProfile) {
-                    final List<PointValue> futurePts = new ArrayList<>();
-                    final java.util.Calendar cal = java.util.Calendar.getInstance();
+            // DASHED: upcoming scheduled basal from the profile, "now" -> next midnight.
+            if (haveProfile) {
+                final List<PointValue> futurePts = new ArrayList<>();
+                final java.util.Calendar cal = java.util.Calendar.getInstance();
+                cal.setTimeInMillis(now);
+                final int nowHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
+                futurePts.add(new HPointValue((double) now / FUZZER, (float) safeBasalRate(basalProfile, nowHour)));
+                for (int h = nowHour + 1; h < 24; h++) {
                     cal.setTimeInMillis(now);
-                    final int nowHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-                    futurePts.add(new HPointValue((double) now / FUZZER,
-                            clampNonGlucoseY((float) (safeBasalRate(basalProfile, nowHour) / ref * yscale) + panCompensationOffset)));
-                    for (int h = nowHour + 1; h < 24; h++) {
-                        cal.setTimeInMillis(now);
-                        cal.set(java.util.Calendar.HOUR_OF_DAY, h);
-                        cal.set(java.util.Calendar.MINUTE, 0);
-                        cal.set(java.util.Calendar.SECOND, 0);
-                        cal.set(java.util.Calendar.MILLISECOND, 0);
-                        futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER,
-                                clampNonGlucoseY((float) (safeBasalRate(basalProfile, h) / ref * yscale) + panCompensationOffset)));
-                    }
-                    // hold the last hour's rate out to next midnight (end of the schedule day)
-                    cal.setTimeInMillis(now);
-                    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                    cal.set(java.util.Calendar.HOUR_OF_DAY, h);
                     cal.set(java.util.Calendar.MINUTE, 0);
                     cal.set(java.util.Calendar.SECOND, 0);
                     cal.set(java.util.Calendar.MILLISECOND, 0);
-                    cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-                    futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER,
-                            clampNonGlucoseY((float) (safeBasalRate(basalProfile, 23) / ref * yscale) + panCompensationOffset)));
-
-                    final Line future = new Line(futurePts);
-                    future.setHasPoints(false);
-                    future.setHasLines(true);
-                    future.setSquare(true);
-                    future.setStrokeWidth(2);
-                    future.setReverseYAxis(true);
-                    future.setPathEffect(new DashPathEffect(new float[]{14.0f, 8.0f}, 0));
-                    future.setColor(android.graphics.Color.argb(150,
-                            android.graphics.Color.red(basalColor),
-                            android.graphics.Color.green(basalColor),
-                            android.graphics.Color.blue(basalColor)));
-                    basalLines.add(future);
-
-                    // Extend the graph's future window so this projection (and any future IOB/COB) is
-                    // actually visible: cal is now at next midnight (end of the schedule day).
-                    final int aheadHours = (int) Math.ceil((cal.getTimeInMillis() - now) / (double) Constants.HOUR_IN_MS);
-                    predictivehours = Math.max(predictivehours, Math.max(1, Math.min(aheadHours, 24)));
+                    futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) safeBasalRate(basalProfile, h)));
                 }
-                return basalLines;
+                // hold the last hour's rate out to next midnight (end of the schedule day)
+                cal.setTimeInMillis(now);
+                cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+                cal.set(java.util.Calendar.MINUTE, 0);
+                cal.set(java.util.Calendar.SECOND, 0);
+                cal.set(java.util.Calendar.MILLISECOND, 0);
+                cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
+                futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) safeBasalRate(basalProfile, 23)));
+
+                final Line future = new Line(futurePts);
+                future.setHasPoints(false);
+                future.setHasLines(true);
+                future.setSquare(true);
+                future.setStrokeWidth(2);
+                future.setPathEffect(new DashPathEffect(new float[]{14.0f, 8.0f}, 0));
+                future.setColor(android.graphics.Color.argb(150,
+                        android.graphics.Color.red(basalColor),
+                        android.graphics.Color.green(basalColor),
+                        android.graphics.Color.blue(basalColor)));
+                lines.add(future);
+                basalChartHasData = true;
             }
-
-            // ---- relative (TBR %) rendering: original behaviour for non-absolute sources ----
-            if (!aplist.isEmpty()) {
-
-                // divider line
-
-                final Line dividerLine = new Line();
-                dividerLine.setTag("tbr"); // not quite true
-                dividerLine.setHasPoints(false);
-                dividerLine.setHasLines(true);
-                dividerLine.setStrokeWidth(1);
-                dividerLine.setColor(getCol(X.color_basal_tbr));
-                dividerLine.setPathEffect(new DashPathEffect(new float[]{10.0f, 10.0f}, 0));
-                dividerLine.setReverseYAxis(true);
-                dividerLine.setHasPoints(false);
-
-                final float one_hundred_percent = (100 * yscale) / 100f;
-                final List<PointValue> divider_points = new ArrayList<>(2);
-                divider_points.add(new HPointValue((double) loaded_start / FUZZER, one_hundred_percent));
-                dividerLine.setPointRadius(0);
-                divider_points.add(new HPointValue((double) loaded_end / FUZZER, one_hundred_percent));
-                dividerLine.setValues(divider_points);
-                basalLines.add(dividerLine);
-
-                final List<PointValue> points = new ArrayList<>(aplist.size());
-
-                int last_percent = -1;
-                double last_timestamp = Double.MIN_VALUE;
-
-                int count = aplist.size();
-                for (APStatus item : aplist) {
-                    val sanitized_percent = Math.min(BgReading.BG_READING_MAXIMUM_VALUE, Math.max(0, item.basal_percent)); // percent value plotted on glucose axis; capped to prevent Y-axis growth
-                    if (--count == 0 || (sanitized_percent != last_percent)) {
-                        float this_ypos = (sanitized_percent * yscale) / 100f;
-                        this_ypos = clampNonGlucoseY(this_ypos + panCompensationOffset);
-                        final double fuzzedT = (double) item.timestamp / FUZZER;
-                        if (fuzzedT != last_timestamp) {
-                            points.add(new HPointValue(fuzzedT, this_ypos));
-                            last_timestamp = fuzzedT;
-                            last_percent = sanitized_percent;
-                        } else {
-                            UserError.Log.d(TAG, "EXCLUDING APSTAT: " + fuzzedT + " " + this_ypos);
-                        }
+        } else if (!aplist.isEmpty()) {
+            // Percent fallback for sources without an absolute rate: stepped temp-basal %.
+            final List<PointValue> points = new ArrayList<>(aplist.size());
+            int last_percent = -1;
+            double last_timestamp = Double.MIN_VALUE;
+            int count = aplist.size();
+            for (APStatus item : aplist) {
+                final int pct = Math.min(BgReading.BG_READING_MAXIMUM_VALUE, Math.max(0, item.basal_percent));
+                if (--count == 0 || pct != last_percent) {
+                    final double fuzzedT = (double) item.timestamp / FUZZER;
+                    if (fuzzedT != last_timestamp) {
+                        points.add(new HPointValue(fuzzedT, (float) pct));
+                        last_timestamp = fuzzedT;
+                        last_percent = pct;
                     }
                 }
-
+            }
+            if (!points.isEmpty()) {
                 final Line line = new Line(points);
                 line.setFilled(true);
-                line.setFillFlipped(true);
                 line.setHasGradientToTransparent(true);
+                line.setGradientDivider(10f);
                 line.setHasPoints(false);
                 line.setStrokeWidth(1);
                 line.setHasLines(true);
                 line.setSquare(true);
-                line.setPointRadius(1);
-                line.setReverseYAxis(true);
-                line.setBackgroundUnclipped(true);
-                line.setGradientDivider(10f);
-                line.setColor(getCol(X.color_basal_tbr));
-                basalLines.add(line);
+                line.setColor(basalColor);
+                lines.add(line);
+                basalChartHasData = true;
             }
         }
 
-        return basalLines;
+        basalChartMaxRate = ref;
+        final LineChartData data = new LineChartData(lines);
+        data.setAxisYLeft(basalYAxis(ref, absoluteMode));
+        data.setAxisXBottom(null); // the main chart above carries the shared time axis
+        return data;
+    }
+
+    // Left Y axis for the basal mini-graph: 0 / mid / top, labelled U/hr (absolute) or % (fallback).
+    private Axis basalYAxis(final double ref, final boolean absoluteMode) {
+        final Axis axis = new Axis();
+        axis.setAutoGenerated(false);
+        final List<AxisValue> values = new ArrayList<>();
+        if (absoluteMode) {
+            values.add(new AxisValue(0).setLabel("0"));
+            if (ref >= 1.0) values.add(new AxisValue(ref / 2.0).setLabel(fmtRate(ref / 2.0)));
+            values.add(new AxisValue(ref).setLabel(fmtRate(ref) + "U"));
+        } else {
+            values.add(new AxisValue(0).setLabel("0"));
+            values.add(new AxisValue(100).setLabel("100%"));
+            if (ref > 100) values.add(new AxisValue(ref).setLabel((int) ref + "%"));
+        }
+        axis.setValues(values);
+        axis.setMaxLabelChars(5); // match the glucose axis so the plot areas line up horizontally
+        axis.setInside(true);
+        axis.setTextSize(axisTextSize);
+        axis.setHasLines(prefs.getBoolean("show_graph_grid_glucose", true));
+        return axis;
     }
 
     // line illustrating result from step counter
@@ -901,7 +918,10 @@ public class BgGraphBuilder {
                 if (Pref.getBoolean("motion_tracking_enabled", false) && Pref.getBoolean("plot_motion", false)) {
                     lines.addAll(motionLine());
                 }
-                lines.addAll(basalLines());
+                // Basal now lives on its own dedicated mini-graph (see basalChartData()); it is no
+                // longer overlaid on the glucose axis. We still extend the future window here so the
+                // main chart scrolls far enough to line up with the basal projection / future IOB/COB.
+                extendWindowForBasalProjection();
                 lines.addAll(heartLines());
                 lines.addAll(stepsLines());
                 lines.addAll(predictiveLines());
