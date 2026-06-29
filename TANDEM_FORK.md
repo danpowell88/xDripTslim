@@ -7,6 +7,40 @@ pump and can never change anything on it.
 > ⚠️ Unofficial research tool. **Not** affiliated with, approved by, or supported by Tandem or
 > Dexcom. Use only with a pump you own, and never for treatment decisions.
 
+## Features
+
+What this adds, and how each part works (no pump changes are ever possible — see the safety note above):
+
+- **Direct, read-only pump link.** Connects to the pump over Bluetooth (the pumpX2 protocol) and pairs
+  with the pump's 6-digit code. It can only *read* — there is no path that can change a pump setting
+  or deliver insulin.
+- **Background sync that survives restarts.** Runs as a foreground service with an ongoing
+  notification, so once enabled it keeps syncing in the background and reconnects on its own after a
+  phone restart or the app being closed.
+- **History import.** On connect it pulls the pump's event log — boluses, carbs and basal-rate
+  changes — into xDrip's normal treatment and basal stores. It remembers how far it got, so reconnects
+  only fetch what's new; the first sync pulls a recent window rather than the pump's entire history.
+- **Near-real-time updates.** While connected it reacts to the pump's own change notifications (a new
+  bolus, basal change or CGM reading shows within seconds) and also re-checks every 30 seconds as a
+  backstop. Requests are paced so the pump's Bluetooth link is never overloaded.
+- **Pick what to sync.** The Settings tab lets you opt in per data type — boluses, carbs, basal
+  delivery, basal profile, glucose — so you only pull what you want. Glucose is off by default to
+  avoid clashing with an existing CGM.
+- **Basal mini-graph.** Basal is shown on its own small graph above the glucose chart, in real
+  units/hour, with a labelled scale and the rate marked at each change. Solid is delivered basal; the
+  dashed line is the upcoming scheduled profile.
+- **"Now" line + shaded future.** Both graphs draw a vertical line at the current time and shade
+  everything to the right (the future) in grey, so projected/scheduled data is clearly distinct from
+  what has already happened.
+- **Basal profile import.** Reads the pump's active basal schedule into xDrip's basal-profile editor
+  and names the profile after the one on the pump.
+- **Live Pump tab.** A read-only status tab shows values xDrip otherwise has no home for — battery,
+  cartridge, insulin-on-board, current basal, sensor glucose + trend, Control-IQ state, total daily
+  insulin, and your active carb ratio / correction (ISF) / target / insulin duration — in your
+  configured glucose units.
+- **Clock anchoring.** If the pump's internal clock is off, recent events are re-anchored to your
+  phone's time so they land in the right place on the graph (older events keep their real time).
+
 ## What it looks like
 
 The pump screen has three tabs — **Sync** (connect / pair / status), **Pump** (live read-only
@@ -67,6 +101,25 @@ appear within seconds rather than only on a manual sync.
 The **Pump** tab shows live read-only extras that xDrip has no home for — model, battery, cartridge,
 insulin-on-board, current basal, sensor glucose, Control-IQ state, total daily insulin, and your
 active carb ratio / correction (ISF) / target / insulin duration.
+
+## Changes to existing xDrip behaviour
+
+Beyond adding the Tandem screen, this build changes a few things you may already know:
+
+- **Basal is drawn on its own graph**, not as a temp-basal percentage on the glucose axis. It reads in
+  real units/hour and a basal rate no longer appears up near a glucose value. The
+  **Settings → Graph Settings → "Show Basal TBR"** toggle still controls whether basal shows.
+- **The glucose chart gained a "now" line and a grey-shaded future region** — for everyone on this
+  build, not only Tandem users (a general graph-readability change).
+- **The default chart view extends a couple of hours into the future** so the next scheduled basal
+  change (and near-future IOB/COB) is visible, while keeping "now" on screen.
+- **The basal-profile editor can name profiles** — rename one yourself, or the name is set
+  automatically when a profile is imported from the pump.
+- **Minimum Android version is now 8.0 (API 26)**, up from 7.0 — the pump's Bluetooth library requires
+  it, so phones on Android 7 can no longer install this build. (The app still *targets* the older API
+  on purpose, to keep background collection reliable.)
+- **Pump values are units-aware** — glucose, ISF and target on the Pump tab show in whatever units
+  xDrip is set to (mg/dL or mmol/L).
 
 ## Tips & troubleshooting
 
