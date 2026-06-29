@@ -648,7 +648,10 @@ public class BgGraphBuilder {
         // Past/future separation: a translucent grey band over everything to the right of "now" plus a
         // vertical "now" line. Shade goes first (behind the basal lines), now-line last (on top).
         if (basalChartHasData) {
-            lines.add(0, futureShadeLine(ref));
+            // The basal chart is non-interactive (Home forces its viewport), so a generous far edge
+            // here is harmless — it just needs to cover the mirrored window.
+            final double basalFarX = (double) (JoH.tsl() + 25L * Constants.HOUR_IN_MS) / FUZZER;
+            lines.add(0, futureShadeLine(ref, basalFarX));
             lines.add(nowVerticalLine(ref));
         }
 
@@ -682,14 +685,15 @@ public class BgGraphBuilder {
         return axis;
     }
 
-    // Translucent grey band covering the future (now -> +25h), drawn behind data. topY sits at/above
+    // Translucent grey band covering the future (now -> farX), drawn behind data. topY sits at/above
     // the chart's Y range; the chart clips the overflow so the band spans the full visible height.
-    private Line futureShadeLine(final double topY) {
+    // farX must be the chart's existing right edge — extending beyond it would inflate the maximum
+    // viewport and anchor the default view out in empty future space.
+    private Line futureShadeLine(final double topY, final double farX) {
         final double nowX = (double) JoH.tsl() / FUZZER;
-        final double farX = (double) (JoH.tsl() + 25 * Constants.HOUR_IN_MS) / FUZZER;
         final List<PointValue> pts = new ArrayList<>(2);
         pts.add(new HPointValue(nowX, (float) topY));
-        pts.add(new HPointValue(farX, (float) topY));
+        pts.add(new HPointValue(Math.max(farX, nowX), (float) topY));
         final Line shade = new Line(pts);
         shade.setHasPoints(false);
         shade.setHasLines(false); // fill only — no visible top edge stroke
@@ -975,10 +979,6 @@ public class BgGraphBuilder {
             addBgReadingValues(simple);
 
             if (!simple) {
-                // Past/future separation: translucent grey band over the future, drawn first so it
-                // sits behind every data line (the matching "now" line is added on top at the end).
-                // Span to defaultMaxY (the existing max-line ceiling) so we don't expand the Y scale.
-                lines.add(futureShadeLine(defaultMaxY));
                 // motion lines
                 if (Pref.getBoolean("motion_tracking_enabled", false) && Pref.getBoolean("plot_motion", false)) {
                     lines.addAll(motionLine());
@@ -1070,7 +1070,11 @@ public class BgGraphBuilder {
             lines.add(treatments[4]); // annotations
 
             if (!simple) {
-                lines.add(nowVerticalLine(defaultMaxY)); // "now" marker, on top
+                // Past/future separation: grey band over the future + a "now" line. The band ends at
+                // predictive_end_time (the existing right edge) so it never inflates the max viewport;
+                // inserted at index 0 to sit behind data, with the now line added on top.
+                lines.add(0, futureShadeLine(defaultMaxY, predictive_end_time));
+                lines.add(nowVerticalLine(defaultMaxY));
             }
 
         } catch (Exception e) {
