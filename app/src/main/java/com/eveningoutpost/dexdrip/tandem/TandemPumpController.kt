@@ -144,8 +144,6 @@ class TandemPumpController private constructor(
         private const val WATCHDOG_MS = 2500L
         private const val MAX_STALLS = 12
         private const val CURSOR_KEY = "tandem_last_seq"
-        private fun uuidFor(kind: String, seq: Long): String =
-            java.util.UUID.nameUUIDFromBytes("tandem-$kind-$seq".toByteArray()).toString()
     }
 
     private val main = Handler(Looper.getMainLooper())
@@ -370,7 +368,7 @@ class TandemPumpController private constructor(
                     // records, so a steady basal stays one point until the rate changes; an actively-
                     // changing Control-IQ basal fills the line from the history rate-change events.)
                     if (TandemSync.isOn(TandemSync.BASAL)) {
-                        val pct = if (profileRate > 0.0) Math.round(rate / profileRate * 100.0).toInt() else 100
+                        val pct = TandemMapping.basalPercent(rate, profileRate)
                         try { APStatus.createEfficientRecord(System.currentTimeMillis(), pct, rate) } catch (_: Throwable) {}
                     }
                 }
@@ -456,10 +454,7 @@ class TandemPumpController private constructor(
         historyStarted = true; historyComplete = false
         histLast = resp.lastSequenceNum
         val cursor = PersistentStore.getLong(CURSOR_KEY)
-        startSeq = when {
-            cursor > 0 -> maxOf(resp.firstSequenceNum, cursor + 1)               // incremental: only new
-            else -> maxOf(resp.firstSequenceNum, histLast - MAX_INITIAL_LOGS + 1) // first sync: recent only
-        }
+        startSeq = TandemMapping.firstSyncStartSeq(resp.firstSequenceNum, histLast, cursor, MAX_INITIAL_LOGS)
         nextSeq = startSeq
         maxSeqSeen = startSeq - 1
         val sessionTotal = if (histLast >= startSeq) histLast - startSeq + 1 else 0
@@ -506,24 +501,24 @@ class TandemPumpController private constructor(
 
     private fun addBolus(seq: Long, units: Double, ts: Long) {
         if (units <= 0.0) return
-        val uuid = uuidFor("bolus", seq)
+        val uuid = TandemMapping.eventUuid("bolus", seq)
         try { if (Treatments.byuuid(uuid) == null) { Treatments.create(0.0, units, ts, uuid); meta.boluses++ } }
         catch (t: Throwable) { log("bolus insert failed seq$seq: ${t.message}") }
     }
 
     private fun addCarbs(seq: Long, grams: Double, ts: Long) {
         if (grams <= 0.0) return
-        val uuid = uuidFor("carb", seq)
+        val uuid = TandemMapping.eventUuid("carb", seq)
         try { if (Treatments.byuuid(uuid) == null) { Treatments.create(grams, 0.0, ts, uuid); meta.carbs++ } }
         catch (t: Throwable) { log("carb insert failed seq$seq: ${t.message}") }
     }
 
     private fun addBasal(rateUperHr: Double, profileRate: Double, ts: Long) {
         if (rateUperHr < 0.0) return
-        // xDrip's basal line plots basal_percent (delivered vs profile base). The history log carries
-        // both the commanded rate and the base profile rate, so compute the TBR% directly — otherwise
-        // createEfficientRecord can't derive it (no active xDrip profile) and the line draws at 0.
-        val pct = if (profileRate > 0.0) Math.round(rateUperHr / profileRate * 100.0).toInt() else 100
+        // xDrip's basal line plots basal_percent (delivered vs profile base); the history log carries
+        // both rates, so we derive the TBR% directly (createEfficientRecord can't, without an active
+        // xDrip profile, and would leave it -1 -> drawn at 0).
+        val pct = TandemMapping.basalPercent(rateUperHr, profileRate)
         try { APStatus.createEfficientRecord(ts, pct, rateUperHr); meta.basal++ }
         catch (t: Throwable) { log("basal insert failed: ${t.message}") }
     }
@@ -577,18 +572,8 @@ class TandemPumpController private constructor(
     /** Expand the collected IDP segments into xDrip's 24 hourly basal blocks and save the profile. */
     private fun saveBasalProfile() {
         try {
-            if (idpRates.isEmpty()) return
-            val perSeg = 60                               // xDrip basal profile granularity (minutes)
-            val blocks = 24 * 60 / perSeg                 // 24 hourly blocks/day — must match
-                                                          // BasalChart.segments or the editor ignores it
-            val starts = idpRates.keys.toList()           // ascending segment start-minutes
-            val rates = ArrayList<Double>(blocks)
-            for (b in 0 until blocks) {
-                val minute = b * perSeg
-                var rate = idpRates[starts.last()] ?: 0.0 // before first start -> last segment (midnight wrap)
-                for (s in starts) { if (s <= minute) rate = idpRates[s] ?: rate else break }
-                rates.add(rate)
-            }
+            val rates = TandemMapping.expandProfileToHourlyBlocks(idpRates)
+            if (rates.isEmpty()) return
             val ref = BasalProfile.getActiveRateName()
             BasalProfile.save(ref, rates)
             // Name the xDrip slot after the pump's profile (e.g. "Gym only"); user can rename in the editor.

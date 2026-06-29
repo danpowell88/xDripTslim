@@ -40,3 +40,8 @@ jobs:
           name: xdrip-tandem-fastDebug-apk
           path: app/build/outputs/apk/fast/debug/app-fast-debug.apk
           if-no-files-found: error
+
+      # Run just the Tandem unit tests (TandemMapping pure logic + TandemSync defaults). Kept after
+      # the upload so the APK is always produced even if a test regresses.
+      - name: Run Tandem unit tests
+        run: ./gradlew :app:testFastDebugUnitTest --tests "com.eveningoutpost.dexdrip.tandem.*" --stacktrace
