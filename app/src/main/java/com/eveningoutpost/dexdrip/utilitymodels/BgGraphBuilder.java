@@ -582,26 +582,40 @@ public class BgGraphBuilder {
                 final java.util.Calendar cal = java.util.Calendar.getInstance();
                 cal.setTimeInMillis(now);
                 final int nowHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-                futurePts.add(new HPointValue((double) now / FUZZER, (float) safeBasalRate(basalProfile, nowHour)));
+                double lastFutureRate = safeBasalRate(basalProfile, nowHour);
+                // Start at "now" (continues the delivered line, so no label here).
+                final HPointValue startP = new HPointValue((double) now / FUZZER, (float) lastFutureRate);
+                startP.setLabel("");
+                futurePts.add(startP);
+                // A stepped point with its U/hr label only where the scheduled rate changes.
                 for (int h = nowHour + 1; h < 24; h++) {
+                    final double rate = safeBasalRate(basalProfile, h);
+                    if (rate == lastFutureRate) continue;
                     cal.setTimeInMillis(now);
                     cal.set(java.util.Calendar.HOUR_OF_DAY, h);
                     cal.set(java.util.Calendar.MINUTE, 0);
                     cal.set(java.util.Calendar.SECOND, 0);
                     cal.set(java.util.Calendar.MILLISECOND, 0);
-                    futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) safeBasalRate(basalProfile, h)));
+                    final HPointValue p = new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) rate);
+                    p.setLabel(fmtRate(rate));
+                    futurePts.add(p);
+                    lastFutureRate = rate;
                 }
-                // hold the last hour's rate out to next midnight (end of the schedule day)
+                // hold the last hour's rate out to next midnight (end of the schedule day); no label
                 cal.setTimeInMillis(now);
                 cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
                 cal.set(java.util.Calendar.MINUTE, 0);
                 cal.set(java.util.Calendar.SECOND, 0);
                 cal.set(java.util.Calendar.MILLISECOND, 0);
                 cal.add(java.util.Calendar.DAY_OF_MONTH, 1);
-                futurePts.add(new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) safeBasalRate(basalProfile, 23)));
+                final HPointValue endP = new HPointValue((double) cal.getTimeInMillis() / FUZZER, (float) safeBasalRate(basalProfile, 23));
+                endP.setLabel("");
+                futurePts.add(endP);
 
                 final Line future = new Line(futurePts);
-                future.setHasPoints(false);
+                future.setHasPoints(true);
+                future.setPointRadius(1);
+                future.setHasLabels(true); // label each upcoming scheduled rate change
                 future.setHasLines(true);
                 future.setSquare(true);
                 future.setStrokeWidth(2);
@@ -698,8 +712,8 @@ public class BgGraphBuilder {
         shade.setHasPoints(false);
         shade.setHasLines(false); // fill only — no visible top edge stroke
         shade.setFilled(true);
-        shade.setColor(android.graphics.Color.rgb(150, 150, 150));
-        shade.setAreaTransparency(64); // grey fill — visible enough to read "future" at a glance
+        shade.setColor(android.graphics.Color.rgb(145, 145, 150));
+        shade.setAreaTransparency(110); // grey fill — clearly distinguishes the future region
         return shade;
     }
 
